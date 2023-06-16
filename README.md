@@ -19,3 +19,6 @@ Traccia generale :
 -Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java Spring, Spring Boot e PostgreSQL per lo sviluppo del sistema .
 
 -Integrazioni con i social di terze parti per la condivisione dei propri risultati di un gioco , possibilità di invitare altri utenti .
+
+
+esempio tipo di sito : https://jam.gg/en/
