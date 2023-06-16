@@ -13,7 +13,6 @@ Il Progetto finale da esporre al Demo Day di Epicode .
       -Dependency Injection
 
       
-      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Traccia principale/minima :
 
 -Creazione di un portale di giochi retrò stile moderno , esempio tipo di sito : https://jam.gg/en/
