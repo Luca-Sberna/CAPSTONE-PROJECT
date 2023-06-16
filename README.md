@@ -3,6 +3,7 @@ Il Progetto finale da esporre al Demo Day di Epicode .
 
    # nome progetto : Empire Of Gamers
       # simbolo o logo : EOG (scritta customizzata graficamente)
+      
       ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Traccia principale/minima :
 
