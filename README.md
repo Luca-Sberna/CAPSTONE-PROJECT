@@ -17,7 +17,7 @@ Traccia principale/minima :
 -Implementazione di una sezione abbonamento vip per acquistare un abbonamento a pagamento per usufruire illimitatamente ai giochi disponibili.
 
 
-Traccia per il completamento totale del progetto :
+Traccia per il completamento totale dell'idea :
 
 -Implementazione di una mini sezione social network all’interno del portale per consentire agli utenti di interagire tra loro e scambiarsi idee sui giochi, più una chat che un social.
 
