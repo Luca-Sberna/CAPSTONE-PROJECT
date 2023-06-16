@@ -3,7 +3,7 @@ Il Progetto finale da esporre al Demo Day di Epicode .
 
    # nome progetto : Empire Of Gamers
       # simbolo o logo : EOG (scritta customizzata graficamente)
-      
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Traccia principale/minima :
 
 -Creazione di un portale di giochi retrò stile moderno , esempio tipo di sito : https://jam.gg/en/
@@ -16,6 +16,7 @@ Traccia principale/minima :
 
 -Implementazione di una sezione abbonamento vip per acquistare un abbonamento a pagamento per usufruire illimitatamente ai giochi disponibili.
 
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Traccia per il completamento totale dell'idea :
 
@@ -25,6 +26,12 @@ Traccia per il completamento totale dell'idea :
 
 -Integrazioni con i social di terze parti per la condivisione dei propri risultati di un gioco , possibilità di invitare altri utenti .
 
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Tecnologie:
 -Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java, Spring, SpringBoot e PostgreSQL per lo sviluppo del sistema .
+
+Design Patterns:
+-Model-View-Controller (MVC)
+-Repository
+-Dependency Injection
