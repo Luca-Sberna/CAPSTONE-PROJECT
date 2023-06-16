@@ -4,7 +4,7 @@
 Il Progetto finale da esporre al Demo Day di Epicode . 
 Traccia generale :
 
--Creazione di un portale di giochi retrò stile moderno 
+-Creazione di un portale di giochi retrò stile moderno , esempio tipo di sito : https://jam.gg/en/
 
 -Gestione degli utenti con funzionalità di registrazione(con possibilità,inizialmente, di giocare ai giochi per un massimo di 2h, poi si dovrà acquistare un abbonamento VIP), login(anche con google) e profilo details,funzionalità di personalizzazione per consentire agli utenti di personalizzare il loro profilo(img,username) e di aggiungere e visualizzare giochi tra i preferiti .
 
@@ -23,4 +23,4 @@ Traccia generale :
 -Integrazioni con i social di terze parti per la condivisione dei propri risultati di un gioco , possibilità di invitare altri utenti .
 
 
-esempio tipo di sito : https://jam.gg/en/
+
