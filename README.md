@@ -1,8 +1,10 @@
 # CAPSTONE-PROJECT
+Il Progetto finale da esporre al Demo Day di Epicode . 
+
    # nome progetto : Empire Of Gamers
       # simbolo o logo : EOG (scritta customizzata graficamente)
-Il Progetto finale da esporre al Demo Day di Epicode . 
-Traccia generale :
+      
+Traccia principale/minima :
 
 -Creazione di un portale di giochi retrò stile moderno , esempio tipo di sito : https://jam.gg/en/
 
@@ -12,15 +14,17 @@ Traccia generale :
 
 -Creazione di una sezione dettagli per i giochi visualizzando le valutazioni degli utenti, descrizione del gioco,classifica e istruzioni su come giocare (i giochi partiranno da qui appena sotto/affianco le istruzioni).
 
--Implementazione di una mini sezione social network all’interno del portale per consentire agli utenti di interagire tra loro e scambiarsi idee sui giochi, più una chat che un social.
-
 -Implementazione di una sezione abbonamento vip per acquistare un abbonamento a pagamento per usufruire illimitatamente ai giochi disponibili.
 
--Implementazione di una classifica a premi semestrale che visualizzi i migliori player del sito, con premio di estensione dell'abbonamento ai primi 10.
 
--Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java Spring, Spring Boot e PostgreSQL per lo sviluppo del sistema .
+Traccia per il completamento totale del progetto :
+
+-Implementazione di una mini sezione social network all’interno del portale per consentire agli utenti di interagire tra loro e scambiarsi idee sui giochi, più una chat che un social.
+
+-Implementazione di una classifica a premi semestrale che visualizzi i migliori player del sito, con premio di estensione dell'abbonamento ai primi 10.
 
 -Integrazioni con i social di terze parti per la condivisione dei propri risultati di un gioco , possibilità di invitare altri utenti .
 
 
-
+Tecnologie:
+-Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java, Spring, SpringBoot e PostgreSQL per lo sviluppo del sistema .
