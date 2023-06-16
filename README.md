@@ -1,4 +1,5 @@
 # CAPSTONE-PROJECT
+# nome progetto : Empire Of Gamers / simbolo o logo : EOG (scritta customizzata graficamente)
 Il Progetto finale da esporre al Demo Day di Epicode . 
 Traccia generale :
 
