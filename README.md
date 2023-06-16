@@ -1,8 +1,7 @@
 # CAPSTONE-PROJECT
 Il Progetto finale da esporre al Demo Day di Epicode . 
-
    # nome progetto : Empire Of Gamers
-       simbolo o logo : EOG (scritta customizzata graficamente)
+   #simbolo o logo : EOG (scritta customizzata graficamente)
       
      Tecnologie:
       -Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java, Spring, SpringBoot e PostgreSQL per lo sviluppo del sistema .
