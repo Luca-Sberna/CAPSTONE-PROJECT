@@ -10,7 +10,11 @@ Il Progetto finale da esporre al Demo Day di Epicode .
       -Model-View-Controller (MVC)
       -Repository
       -Dependency Injection
-
+      -Observer
+      -Singleton
+      -Factory
+      -Strategy
+      -Decorator
       
 Traccia principale/minima :
 
