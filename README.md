@@ -5,7 +5,7 @@ Il Progetto finale da esporre al Demo Day di Epicode .
       
      Tecnologie:
       -Utilizzo di tecnologie come React.js, Redux, Sass, react-bootstrap , Java Spring, Java Springboot ,Spring Data JPA
-      Spring Security Web , JSON Web Token e PostgreSQL per lo sviluppo del sistema .
+      Spring Security Web & Bcrypt , JSON Web Token e PostgreSQL per lo sviluppo del sistema .
 
 
      Design Patterns che potrebbero essere utili:
