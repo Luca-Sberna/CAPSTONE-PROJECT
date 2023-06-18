@@ -4,7 +4,7 @@ Il Progetto finale da esporre al Demo Day di Epicode .
    simbolo o logo : EOG (scritta customizzata graficamente)
       
      Tecnologie:
-      -Utilizzo di tecnologie come React, Redux, Sass, react-bootstrap,(Typescript?) Java, Spring, SpringBoot e PostgreSQL per lo sviluppo del sistema .
+      -Utilizzo di tecnologie come React.js, Redux, Sass, react-bootstrap & bootstrap, Java, Java Spring, Java Springboot e PostgreSQL per lo sviluppo del sistema .
 
      Design Patterns:
       -Model-View-Controller (MVC)
@@ -16,7 +16,7 @@ Traccia principale/minima :
 
 -Creazione di un portale di giochi retrò stile moderno , esempio tipo di sito : https://jam.gg/en/
 
--Gestione degli utenti con funzionalità di registrazione(con possibilità,inizialmente, di giocare ai giochi per un massimo di 2h, poi si dovrà acquistare un abbonamento VIP), login(anche con google) e profilo details,funzionalità di personalizzazione per consentire agli utenti di personalizzare il loro profilo(img,username) e di aggiungere e visualizzare giochi tra i preferiti .
+-Gestione degli utenti con funzionalità di registrazione(con possibilità,inizialmente, di giocare ai giochi per un massimo di 2h, poi si dovrà acquistare un abbonamento VIP), login(anche con google) ,pagina di details per il profilo con funzionalità di personalizzazione per consentire agli utenti di customizzare il loro profilo(img-profile,img-background,username, + dati personali facoltativi) e di aggiungere e visualizzare i giochi tra i preferiti .
 
  -Giochi come Snake (snake quasi terminato manca grafica e UI), Scacchi(terminato manca grafica e UI) ,(con aggiunta se rimane tempo di un terzo semplice [endless runner game ] ) per le grafiche userò react-bootstrap e sass con aggiunte di png per elementi o personaggi .
 
