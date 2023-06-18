@@ -18,7 +18,7 @@ Traccia principale/minima :
 
 -Gestione degli utenti con funzionalità di registrazione(con possibilità,inizialmente, di giocare ai giochi per un massimo di 2h, poi si dovrà acquistare un abbonamento VIP), login(anche con google) e profilo details,funzionalità di personalizzazione per consentire agli utenti di personalizzare il loro profilo(img,username) e di aggiungere e visualizzare giochi tra i preferiti .
 
- -Giochi come Snake (snake quasi terminato), Dama e ,Scacchi (con aggiunta se rimane tempo di un quarto semplice [endless runner game ] ) per le grafiche userò react-bootstrap e sass con aggiunte di png per elementi o personaggi .
+ -Giochi come Snake (snake quasi terminato manca grafica e UI), Scacchi(terminato manca grafica e UI) ,(con aggiunta se rimane tempo di un terzo semplice [endless runner game ] ) per le grafiche userò react-bootstrap e sass con aggiunte di png per elementi o personaggi .
 
 -Creazione di una sezione dettagli per i giochi visualizzando le valutazioni degli utenti, descrizione del gioco,classifica e istruzioni su come giocare (i giochi partiranno da qui appena sotto/affianco le istruzioni).
 
