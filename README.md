@@ -45,7 +45,7 @@ Traccia per il completamento totale dell'idea :
 DIAGRAMMA ER:
 
 
-<img width="1537" alt="image" src="https://github.com/Luca-Sberna/CAPSTONE-PROJECT/assets/123188715/99d69786-05da-4039-b8be-b829e1bda366">
+<img width="1492" alt="image" src="https://github.com/Luca-Sberna/CAPSTONE-PROJECT/assets/123188715/80c410de-ff49-4d4a-988f-0dad0fa650a0">
 
 
 
