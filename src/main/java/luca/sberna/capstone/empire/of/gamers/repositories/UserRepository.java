@@ -11,4 +11,7 @@ import luca.sberna.capstone.empire.of.gamers.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 	Optional<User> findByEmail(String email);
+
+	Optional<User> findByUsername(String username);
+
 }

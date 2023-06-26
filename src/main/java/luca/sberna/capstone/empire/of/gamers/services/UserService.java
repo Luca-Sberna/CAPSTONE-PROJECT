@@ -60,6 +60,10 @@ public class UserService {
 		return ur.findByEmail(email).orElseThrow(() -> new NotFoundException());
 	}
 
+	public User findUserByUsername(String username) throws NotFoundException {
+		return ur.findByUsername(username).orElseThrow(() -> new NotFoundException());
+	}
+
 	public void deleteAllUsers() {
 		ur.deleteAll();
 	}
