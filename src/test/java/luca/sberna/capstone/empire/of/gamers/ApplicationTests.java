@@ -39,6 +39,7 @@ class ApplicationTests {
 	@InjectMocks
 	private UserService us;
 
+	// variabili che si possono ripetere molte volte
 	UUID idUser = UUID.randomUUID();
 	Date date = new Date();
 	User utenteProva = new User("usernameProva", "email@prova.it", "suPercalifragi12!", date);
