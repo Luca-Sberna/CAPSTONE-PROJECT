@@ -43,6 +43,8 @@ class ApplicationTests {
 	UUID idUser = UUID.randomUUID();
 	Date date = new Date();
 	User utenteProva = new User("usernameProva", "email@prova.it", "suPercalifragi12!", date);
+	String email = "test@example.com";
+	String username = "findUserByUsername";
 
 	// Parametri di paginazione
 	int page = 0;
@@ -62,6 +64,8 @@ class ApplicationTests {
 
 		// Calling the service method
 		Page<User> result = us.findAllUsers(0, 10, "sortBy");
+
+		verify(ur, times(1)).findAll(pageable);
 
 		// Assertions
 		assertNotNull(result);
@@ -84,6 +88,8 @@ class ApplicationTests {
 
 		// Call the createUser() method in the service
 		User result = us.createUser(payload);
+
+		verify(ur, times(1)).save(Mockito.any(User.class));
 
 		// Verify that the result is not null and has the expected values
 		assertNotNull(result);
@@ -116,6 +122,8 @@ class ApplicationTests {
 
 		User result = us.findUserById(idUser);
 
+		verify(ur, times(1)).findById(idUser);
+
 		assertNotNull(result);
 		assertEquals(idUser, result.getIdUser());
 	}
@@ -133,6 +141,9 @@ class ApplicationTests {
 
 		// Chiamata al metodo del servizio
 		User result = us.findUserByIdAndUpdate(idUser, updatedPayload);
+
+		verify(ur, times(1)).findById(idUser);
+		verify(ur, times(1)).save(utenteProva);
 
 		// Asserzioni
 		assertNotNull(result);
@@ -155,7 +166,6 @@ class ApplicationTests {
 
 	@Test
 	public void testFindUserByEmail() throws NotFoundException {
-		String email = "test@example.com";
 		utenteProva = new User("usernameProvaEmail", email, "suPercalifragi12", date);
 
 		// Mock del repository per restituire l'utente di prova
@@ -164,9 +174,28 @@ class ApplicationTests {
 		// Chiamata al metodo del servizio
 		User result = us.findUserByEmail(email);
 
+		verify(ur, times(1)).findByEmail(email);
+
 		// Asserzioni
 		assertNotNull(result);
 		assertEquals(email, result.getEmail());
+	}
+
+	@Test
+	public void testFindUserByUsername() throws NotFoundException {
+		utenteProva = new User(username, "test@example.com", "suPercalifragi12", date);
+
+		// Mock del repository per restituire l'utente di prova
+		when(ur.findByUsername(username)).thenReturn(Optional.of(utenteProva));
+
+		// Chiamata al metodo del servizio
+		us.findUserByUsername(username);
+
+		verify(ur, times(1)).findByUsername(username);
+
+		// Asserzioni
+		assertNotNull(utenteProva);
+		assertEquals(username, utenteProva.getUsername());
 	}
 
 }
