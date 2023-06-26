@@ -30,7 +30,7 @@ public class UserService {
 	}
 
 	public User createUser(UserRegistrationPayload u) {
-		ur.findByEmailUser(u.getEmail()).ifPresent(user -> {
+		ur.findByEmail(u.getEmail()).ifPresent(user -> {
 			throw new EmailAlreadyExistsException("Email " + user.getEmail() + "già in uso");
 		});
 		User newUtente = new User(u.getUsername(), u.getEmail(), u.getPassword(), u.getBirthDate());
@@ -47,7 +47,6 @@ public class UserService {
 		User foundUser = this.findUserById(id);
 		foundUser.setIdUser(id);
 		foundUser.setUsername(u.getUsername());
-
 		foundUser.setEmail(u.getEmail());
 		return ur.save(foundUser);
 	}
@@ -58,7 +57,7 @@ public class UserService {
 	}
 
 	public User findUserByEmail(String email) throws NotFoundException {
-		return ur.findByEmailUser(email).orElseThrow(() -> new NotFoundException());
+		return ur.findByEmail(email).orElseThrow(() -> new NotFoundException());
 	}
 
 	public void deleteAllUsers() {
