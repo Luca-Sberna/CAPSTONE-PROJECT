@@ -43,7 +43,7 @@ public class AuthController {
 			throws NotFoundException, org.springframework.data.crossstore.ChangeSetPersister.NotFoundException {
 
 		// cerco la mail inserita nel login tra quelle degli utenti
-		User user = usersService.findUserByEmail(body.getEmailUtente());
+		User user = usersService.findUserByEmail(body.getEmail());
 
 		// se la trovo faccio il check sulla password, se non corrisponde lancio errore
 		// 401

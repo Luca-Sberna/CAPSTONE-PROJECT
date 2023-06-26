@@ -30,30 +30,30 @@ public class UserController {
 
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)
-	public User saveUtente(@RequestBody @Validated UserRegistrationPayload body) {
+	public User saveUser(@RequestBody @Validated UserRegistrationPayload body) {
 		return userService.createUser(body);
 	}
 
 	@GetMapping("")
-	public Page<User> getUtenti(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "idUtente") String sortBy) {
-		return userService.findAllUser(page, size, sortBy);
+	public Page<User> getUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "idUser") String sortBy) {
+		return userService.findAllUsers(page, size, sortBy);
 	}
 
 	@GetMapping("/{userId}")
-	public User getUtenteById(@PathVariable UUID userId) throws NotFoundException {
+	public User getUserById(@PathVariable UUID userId) throws NotFoundException {
 		return userService.findUserById(userId);
 	}
 
 	@PutMapping("/{userId}")
-	public User updateUtente(@PathVariable UUID userId, @RequestBody UserRegistrationPayload body)
+	public User updateUser(@PathVariable UUID userId, @RequestBody UserRegistrationPayload body)
 			throws NotFoundException {
 		return userService.findUserByIdAndUpdate(userId, body);
 	}
 
 	@DeleteMapping("/{userId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deleteUtente(@PathVariable UUID userId) throws NotFoundException {
+	public void deleteUser(@PathVariable UUID userId) throws NotFoundException {
 		userService.findUserByIdAndDelete(userId);
 	}
 }

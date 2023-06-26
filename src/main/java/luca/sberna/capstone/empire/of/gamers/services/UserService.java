@@ -20,7 +20,7 @@ public class UserService {
 	@Autowired
 	private UserRepository ur;
 
-	public Page<User> findAllUser(int page, int size, String sortBy) {
+	public Page<User> findAllUsers(int page, int size, String sortBy) {
 		if (size < 0)
 			size = 10;
 		if (size > 100)
