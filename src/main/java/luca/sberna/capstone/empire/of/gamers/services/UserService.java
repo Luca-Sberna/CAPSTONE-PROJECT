@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.EmailAlreadyExistsException;
+import luca.sberna.capstone.empire.of.gamers.exceptions.InvalidEmailException;
+import luca.sberna.capstone.empire.of.gamers.exceptions.WeakPasswordException;
 import luca.sberna.capstone.empire.of.gamers.payloads.UserRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.UserRepository;
 
@@ -33,8 +35,29 @@ public class UserService {
 		ur.findByEmail(u.getEmail()).ifPresent(user -> {
 			throw new EmailAlreadyExistsException("Email " + user.getEmail() + "già in uso");
 		});
+
+		// Validazione dell'email
+		if (!isValidEmail(u.getEmail())) {
+			throw new InvalidEmailException("L'email inserita non è valida.");
+		}
+
+		// Validazione della password
+		if (!isStrongPassword(u.getPassword())) {
+			throw new WeakPasswordException("La password inserita non è sufficientemente sicura.");
+		}
+
 		User newUtente = new User(u.getUsername(), u.getEmail(), u.getPassword(), u.getBirthDate());
+
 		return ur.save(newUtente);
+	}
+
+	private boolean isValidEmail(String email) {
+
+		return email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}");
+	}
+
+	private boolean isStrongPassword(String password) {
+		return password.length() >= 8 && password.matches(".*\\d.*");
 	}
 
 	public User findUserById(UUID id) throws NotFoundException { // throws NotFoundException {
