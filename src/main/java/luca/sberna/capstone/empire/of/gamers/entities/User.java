@@ -1,7 +1,13 @@
 package luca.sberna.capstone.empire.of.gamers.entities;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,7 +26,7 @@ import luca.sberna.capstone.empire.of.gamers.utils.UserType;
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties({ "password" })
-public class User {
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue
 	private UUID idUser;
@@ -31,12 +37,48 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserType role;
 
-	public User(String username, String email, String password, Date birthDate, UserType role) {
+	public User(String username, String email, String password, Date birthDate) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.birthDate = birthDate;
 		this.role = UserType.USER;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(role.name()));
+
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -1,6 +1,9 @@
 package luca.sberna.capstone.empire.of.gamers.payloads;
 
+import java.util.Date;
+
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -10,10 +13,14 @@ public class UserRegistrationPayload {
 	private String username;
 
 	@Email(message = "Invalid email format")
-	private String emailUtente;
+	private String email;
 
 //	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\bd)(?=.*[@$!%*#?&])[A-Za-z\bd@$!%*#?&]{8,}$", 
 //			message = "Password must be at least 8 characters long and contain at least one digit, one letter, and one special character")
 	@Size(min = 8, message = "Password must be at least 8 characters long")
 	private String password;
+
+	@NotNull(message = "Put your birth date please")
+	private Date birthDate;
+
 }

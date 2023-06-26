@@ -60,9 +60,9 @@ public class SecurityConfig {
 
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
 
-//		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//		http.addFilterBefore(exceptionHandlerFilter, JWTAuthFilter.class);
+		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+		http.addFilterBefore(exceptionHandlerFilter, JWTAuthFilter.class);
 
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
@@ -71,7 +71,7 @@ public class SecurityConfig {
 
 	@Bean
 	PasswordEncoder pwEncoder() {
-		return new BCryptPasswordEncoder(10);
+		return new BCryptPasswordEncoder(12);
 	}
 
 }

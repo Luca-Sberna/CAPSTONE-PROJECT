@@ -1,5 +1,7 @@
 package luca.sberna.capstone.empire.of.gamers.auth;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.UnauthorizedException;
 
 @Component
@@ -29,13 +32,13 @@ public class JWTTools {
 		expiration = Integer.parseInt(expirationInDays) * 24 * 60 * 60 * 1000;
 	}
 
-//	static public String createToken(User u) {
-//		String token = Jwts.builder().setSubject(u.getEmail()).setIssuedAt(new Date(System.currentTimeMillis()))
-//				.setExpiration(new Date(System.currentTimeMillis() + expiration))
-//				.signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
-//		return token;
-//
-//	}
+	static public String createToken(User u) {
+		String token = Jwts.builder().setSubject(u.getEmail()).setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + expiration))
+				.signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();
+		return token;
+
+	}
 
 	static public void isTokenValid(String token) {
 		try {
