@@ -61,6 +61,22 @@ public class ExceptionsHandler {
 		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(InvalidEmailException.class)
+	public ResponseEntity<Object> handleInvalidEmailException(InvalidEmailException e) {
+
+		ErrorsPayload errorResponse = new ErrorsPayload(e.getMessage(), new Date(), 400);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(WeakPasswordException.class)
+	public ResponseEntity<Object> handleWeakPasswordException(WeakPasswordException e) {
+
+		ErrorsPayload errorResponse = new ErrorsPayload(e.getMessage(), new Date(), 400);
+
+		return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(GeneralErrorException.class)
 	public ResponseEntity<ErrorsPayload> handleGeneralError(GeneralErrorException e) {
 

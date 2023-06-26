@@ -28,6 +28,8 @@ import org.springframework.data.domain.Sort;
 
 import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.EmailAlreadyExistsException;
+import luca.sberna.capstone.empire.of.gamers.exceptions.InvalidEmailException;
+import luca.sberna.capstone.empire.of.gamers.exceptions.WeakPasswordException;
 import luca.sberna.capstone.empire.of.gamers.payloads.UserRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.UserRepository;
 import luca.sberna.capstone.empire.of.gamers.services.UserService;
@@ -114,6 +116,32 @@ class ApplicationTests {
 	}
 
 	@Test
+	public void testCreateUser_InvalidEmail() {
+		// Create a user registration payload with an invalid email
+		UserRegistrationPayload payload = new UserRegistrationPayload();
+		payload.setUsername("user1");
+		payload.setEmail("invalid_email");
+		payload.setPassword("password1");
+		payload.setBirthDate(date);
+
+		// Call the createUser() method in the service
+		assertThatExceptionOfType(InvalidEmailException.class).isThrownBy(() -> us.createUser(payload));
+	}
+
+	@Test
+	public void testCreateUser_WeakPassword() {
+		// Create a user registration payload with a weak password
+		UserRegistrationPayload payload = new UserRegistrationPayload();
+		payload.setUsername("user1");
+		payload.setEmail("user1@example.com");
+		payload.setPassword("weak");
+		payload.setBirthDate(date);
+
+		// Call the createUser() method in the service
+		assertThatExceptionOfType(WeakPasswordException.class).isThrownBy(() -> us.createUser(payload));
+	}
+
+	@Test
 	public void testFindUserById() throws NotFoundException {
 		utenteProva.setIdUser(idUser);
 
@@ -126,6 +154,15 @@ class ApplicationTests {
 
 		assertNotNull(result);
 		assertEquals(idUser, result.getIdUser());
+	}
+
+	@Test
+	public void testFindUserById_UserNotFound() {
+	    // Configure the behavior of the mock repository to return an empty optional
+	    when(ur.findById(idUser)).thenReturn(Optional.empty());
+
+	    // Call the findUserById() method in the service and expect a NotFoundException
+	    assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> us.findUserById(idUser));
 	}
 
 	@Test
@@ -162,6 +199,15 @@ class ApplicationTests {
 		us.findUserByIdAndDelete(idUser);
 
 		verify(ur, times(1)).delete(utenteProva);
+	}
+
+	@Test
+	public void testFindUserByIdAndDelete_UserNotFound() {
+	    // Configure the behavior of the mock repository to return an empty optional
+	    when(ur.findById(idUser)).thenReturn(Optional.empty());
+
+	    // Call the findUserByIdAndDelete() method in the service and expect a NotFoundException
+	    assertThatExceptionOfType(NotFoundException.class).isThrownBy(() -> us.findUserByIdAndDelete(idUser));
 	}
 
 	@Test
