@@ -1,9 +1,9 @@
 package luca.sberna.capstone.empire.of.gamers.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
@@ -29,10 +30,10 @@ public class CreditCardController {
 		this.creditCardService = creditCardService;
 	}
 
-	@GetMapping
-	public ResponseEntity<List<CreditCard>> getAllCreditCards() {
-		List<CreditCard> creditCards = creditCardService.getAllCreditCards();
-		return ResponseEntity.ok(creditCards);
+	@GetMapping("")
+	public Page<CreditCard> getAllCreditCards(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy) {
+		return creditCardService.getAllCreditCards(page, size, sortBy);
 	}
 
 	@GetMapping("/{id}")
@@ -45,7 +46,7 @@ public class CreditCardController {
 		}
 	}
 
-	@PostMapping
+	@PostMapping("")
 	public ResponseEntity<CreditCard> createCreditCard(@RequestBody CreditCardRegistrationPayload payload) {
 		CreditCard createdCard = creditCardService.createCreditCard(payload);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdCard);

@@ -299,18 +299,23 @@ class ApplicationTests {
 
 	@Test
 	public void testGetAllCreditCards() {
+		int page = 0;
+		int size = 10;
+		String sortBy = "name";
+
 		List<CreditCard> creditCards = new ArrayList<>();
 		creditCards.add(new CreditCard());
 		creditCards.add(new CreditCard());
-		when(creditCardRepository.findAll()).thenReturn(creditCards);
+		Page<CreditCard> creditCardPage = new PageImpl<>(creditCards);
+		when(creditCardRepository.findAll(any(Pageable.class))).thenReturn(creditCardPage);
 
 		// Act
-		List<CreditCard> retrievedCards = creditCardService.getAllCreditCards();
+		Page<CreditCard> retrievedCards = creditCardService.getAllCreditCards(page, size, sortBy);
 
 		// Assert
 		assertNotNull(retrievedCards);
-		assertEquals(creditCards.size(), retrievedCards.size());
-		verify(creditCardRepository, times(1)).findAll();
+		assertEquals(creditCards.size(), retrievedCards.getSize());
+		verify(creditCardRepository, times(1)).findAll(any(Pageable.class));
 	}
 
 	@Test
