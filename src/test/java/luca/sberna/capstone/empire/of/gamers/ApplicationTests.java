@@ -3,11 +3,13 @@ package luca.sberna.capstone.empire.of.gamers;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
@@ -26,20 +30,30 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
 import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.EmailAlreadyExistsException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.InvalidEmailException;
+import luca.sberna.capstone.empire.of.gamers.exceptions.ValidationException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.WeakPasswordException;
+import luca.sberna.capstone.empire.of.gamers.payloads.CreditCardRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.payloads.UserRegistrationPayload;
+import luca.sberna.capstone.empire.of.gamers.repositories.CreditCardRepository;
 import luca.sberna.capstone.empire.of.gamers.repositories.UserRepository;
+import luca.sberna.capstone.empire.of.gamers.services.CreditCardService;
 import luca.sberna.capstone.empire.of.gamers.services.UserService;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ApplicationTests {
 	@Mock
 	private UserRepository ur;
 	@InjectMocks
 	private UserService us;
+	@Mock
+	private CreditCardRepository creditCardRepository;
+	@InjectMocks
+	private CreditCardService creditCardService;
 
 	// variabili che si possono ripetere molte volte
 	UUID idUser = UUID.randomUUID();
@@ -52,6 +66,8 @@ class ApplicationTests {
 	int page = 0;
 	int size = 10;
 	String sortBy = "idUser";
+
+	// ----------------------USER TEST------------------------
 
 	@Test
 	public void testFindAllUsers() {
@@ -244,4 +260,167 @@ class ApplicationTests {
 		assertEquals(username, utenteProva.getUsername());
 	}
 
+	// --------------------CREDIT CARD TEST------------------------------
+
+	@Test
+	public void testCreateCreditCard() {
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1234567890123456"));
+		payload.setExpirationDate(new Date());
+		payload.setCvv(123);
+		payload.setName("John");
+		payload.setSurname("Doe");
+
+		when(creditCardRepository.save(Mockito.any(CreditCard.class))).thenReturn(new CreditCard());
+
+		// Act
+		CreditCard createdCard = creditCardService.createCreditCard(payload);
+
+		// Assert
+		assertNotNull(createdCard);
+
+	}
+
+	@Test
+	public void testGetCreditCardById() {
+		UUID creditCardId = UUID.randomUUID();
+		CreditCard creditCard = new CreditCard();
+		creditCard.setId(creditCardId);
+		when(creditCardRepository.findById(creditCardId)).thenReturn(Optional.of(creditCard));
+
+		// Act
+		CreditCard retrievedCard = creditCardService.getCreditCardById(creditCardId);
+
+		// Assert
+		assertNotNull(retrievedCard);
+		assertEquals(creditCardId, retrievedCard.getId());
+		verify(creditCardRepository, times(1)).findById(creditCardId);
+	}
+
+	@Test
+	public void testGetAllCreditCards() {
+		List<CreditCard> creditCards = new ArrayList<>();
+		creditCards.add(new CreditCard());
+		creditCards.add(new CreditCard());
+		when(creditCardRepository.findAll()).thenReturn(creditCards);
+
+		// Act
+		List<CreditCard> retrievedCards = creditCardService.getAllCreditCards();
+
+		// Assert
+		assertNotNull(retrievedCards);
+		assertEquals(creditCards.size(), retrievedCards.size());
+		verify(creditCardRepository, times(1)).findAll();
+	}
+
+	@Test
+	public void testDeleteCreditCard() {
+		UUID creditCardId = UUID.randomUUID();
+
+		// Act
+		creditCardService.deleteCreditCard(creditCardId);
+
+		// Assert
+		verify(creditCardRepository, times(1)).deleteById(creditCardId);
+	}
+
+	@Test
+	public void testUpdateCreditCard() {
+		UUID creditCardId = UUID.randomUUID();
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1231231231231231"));
+		payload.setCvv(321);
+		CreditCard existingCard = new CreditCard();
+		existingCard.setId(creditCardId);
+		existingCard.setCardNumber(new BigInteger("1231231231231231"));
+		existingCard.setCvv(123);
+		when(creditCardRepository.findById(creditCardId)).thenReturn(Optional.of(existingCard));
+		when(creditCardRepository.save(any(CreditCard.class))).thenReturn(existingCard);
+
+		// Act
+		CreditCard updatedCard = creditCardService.updateCreditCard(creditCardId, payload);
+
+		// Assert
+		assertNotNull(updatedCard);
+		assertEquals(existingCard.getId(), updatedCard.getId());
+		assertEquals(payload.getCardNumber(), updatedCard.getCardNumber());
+		assertEquals(payload.getCvv(), updatedCard.getCvv());
+		verify(creditCardRepository, times(1)).findById(creditCardId);
+		verify(creditCardRepository, times(1)).save(any(CreditCard.class));
+	}
+
+	// verifica solo che il valore del CVV convertito sia corretto dopo la creazione
+	// della carta di credito
+	@Test
+	public void testConvertCVV() {
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1231231231231231"));
+		payload.setCvv(123);
+		CreditCard savedCreditCard = new CreditCard();
+		savedCreditCard.setId(UUID.randomUUID());
+		savedCreditCard.setCardNumber(new BigInteger("1231231231231231"));
+		savedCreditCard.setCvv(321); // Converted CVV value
+		when(creditCardRepository.save(any(CreditCard.class))).thenReturn(savedCreditCard);
+
+		// Act
+		CreditCard createdCard = creditCardService.createCreditCard(payload);
+
+		// Assert
+		assertEquals(savedCreditCard.getCvv(), createdCard.getCvv());
+	}
+
+	@Test
+	public void testValidPayload() {
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1234567890123456"));
+		payload.setExpirationDate(new Date());
+		payload.setCvv(123);
+		payload.setName("John");
+		payload.setSurname("Doe");
+
+		CreditCard creditCard = new CreditCard();
+		creditCard.setCardNumber(payload.getCardNumber());
+		creditCard.setExpirationDate(payload.getExpirationDate());
+		creditCard.setCvv(payload.getCvv());
+		creditCard.setName(payload.getName());
+		creditCard.setSurname(payload.getSurname());
+
+		when(creditCardRepository.save(any(CreditCard.class))).thenReturn(creditCard);
+
+		// Act
+		CreditCard createdCard = creditCardService.createCreditCard(payload);
+
+		// Assert
+		assertNotNull(createdCard);
+	}
+
+	@Test
+	public void testInvalidCvv() {
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1234567890123456"));
+		payload.setExpirationDate(new Date());
+		payload.setCvv(12);
+		payload.setName("John");
+		payload.setSurname("Doe");
+
+		// Assert and expect a ValidationException
+		assertThatExceptionOfType(ValidationException.class).isThrownBy(() -> {
+			creditCardService.createCreditCard(payload);
+		});
+	}
+
+	@Test
+	public void testInvalidCardNumber() {
+		CreditCardRegistrationPayload payload = new CreditCardRegistrationPayload();
+		payload.setCardNumber(new BigInteger("1234"));
+		payload.setExpirationDate(new Date());
+		payload.setCvv(123);
+		payload.setName("John");
+		payload.setSurname("Doe");
+
+		// Assert and expect a ValidationException
+		assertThatExceptionOfType(ValidationException.class).isThrownBy(() -> {
+			creditCardService.createCreditCard(payload);
+		});
+	}
 }
