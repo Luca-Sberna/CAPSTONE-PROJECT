@@ -41,6 +41,7 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(auth -> {
 			auth.requestMatchers(HttpMethod.GET, "/creditCards").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/creditCards/**").hasAnyAuthority("USER", "ADMIN");
 			auth.requestMatchers("/creditCards/**").hasAuthority("ADMIN");
 		});
 

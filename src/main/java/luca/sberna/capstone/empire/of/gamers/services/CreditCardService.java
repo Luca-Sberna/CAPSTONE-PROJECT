@@ -1,6 +1,5 @@
 package luca.sberna.capstone.empire.of.gamers.services;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
+import luca.sberna.capstone.empire.of.gamers.exceptions.NotFoundException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.ValidationException;
 import luca.sberna.capstone.empire.of.gamers.payloads.CreditCardRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.CreditCardRepository;
@@ -45,14 +45,15 @@ public class CreditCardService {
 		}
 	}
 
-	public void deleteCreditCard(UUID id) {
-		creditCardRepository.findById(id);
-		creditCardRepository.deleteById(id);
+	public void deleteCreditCard(UUID id) throws NotFoundException {
+		CreditCard foundCreditCard = this.getCreditCardById(id);
+		creditCardRepository.delete(foundCreditCard);
+		;
 	}
 
-	public CreditCard getCreditCardById(UUID id) {
-		Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(id);
-		return optionalCreditCard.orElse(null);
+	public CreditCard getCreditCardById(UUID id) throws NotFoundException {
+		return creditCardRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Carta di credito non trovata"));
 	}
 
 	public Page<CreditCard> getAllCreditCards(int page, int size, String sortBy) {
@@ -65,18 +66,14 @@ public class CreditCardService {
 		return creditCardRepository.findAll(pageable);
 	}
 
-	public CreditCard updateCreditCard(UUID id, CreditCardRegistrationPayload payload) {
-		Optional<CreditCard> optionalCreditCard = creditCardRepository.findById(id);
-		if (optionalCreditCard.isPresent()) {
-			CreditCard creditCard = optionalCreditCard.get();
-			creditCard.setCardNumber(payload.getCardNumber());
-			creditCard.setExpirationDate(payload.getExpirationDate());
-			creditCard.setCvv(payload.getCvv());
-			creditCard.setName(payload.getName());
-			creditCard.setSurname(payload.getSurname());
-			return creditCardRepository.save(creditCard);
-		} else {
-			return null;
-		}
+	public CreditCard updateCreditCard(UUID id, CreditCardRegistrationPayload payload) throws NotFoundException {
+		CreditCard foundCreditCard = this.getCreditCardById(id);
+		foundCreditCard.setId(id);
+		foundCreditCard.setCardNumber(payload.getCardNumber());
+		foundCreditCard.setCvv(payload.getCvv());
+		foundCreditCard.setExpirationDate(payload.getExpirationDate());
+		foundCreditCard.setName(payload.getName());
+		foundCreditCard.setSurname(payload.getSurname());
+		return creditCardRepository.save(foundCreditCard);
 	}
 }

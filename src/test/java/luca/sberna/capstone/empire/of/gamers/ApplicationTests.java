@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,7 @@ class ApplicationTests {
 	UUID idUser = UUID.randomUUID();
 	Date date = new Date();
 	User utenteProva = new User("usernameProva", "email@prova.it", "suPercalifragi12!", date);
+	CreditCard cartaProva = new CreditCard(new BigInteger("1234567890123456"), date, 123, "nome", "cognome");
 	String email = "test@example.com";
 	String username = "findUserByUsername";
 
@@ -319,14 +321,20 @@ class ApplicationTests {
 	}
 
 	@Test
-	public void testDeleteCreditCard() {
+	public void testDeleteCreditCard() throws NotFoundException {
 		UUID creditCardId = UUID.randomUUID();
+		cartaProva.setId(creditCardId);
+
+		CreditCardRepository creditCardRepositoryMock = mock(CreditCardRepository.class);
+		when(creditCardRepositoryMock.findById(creditCardId)).thenReturn(Optional.of(cartaProva));
+
+		CreditCardService creditCardService = new CreditCardService(creditCardRepositoryMock);
 
 		// Act
 		creditCardService.deleteCreditCard(creditCardId);
 
 		// Assert
-		verify(creditCardRepository, times(1)).deleteById(creditCardId);
+		verify(creditCardRepositoryMock, times(1)).delete(cartaProva);
 	}
 
 	@Test

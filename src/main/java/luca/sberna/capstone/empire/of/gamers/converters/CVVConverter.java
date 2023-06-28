@@ -1,14 +1,8 @@
 package luca.sberna.capstone.empire.of.gamers.converters;
 
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import jakarta.persistence.AttributeConverter;
@@ -22,34 +16,30 @@ public class CVVConverter implements AttributeConverter<Integer, String> {
 	@Override
 	public String convertToDatabaseColumn(Integer cvv) {
 		try {
-			Key key = new SecretKeySpec(secret.getBytes(), "AES");
-			Cipher c = Cipher.getInstance(ALGORITHM);
+			SecretKeySpec key = new SecretKeySpec(secret.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance(ALGORITHM);
+			cipher.init(Cipher.ENCRYPT_MODE, key);
 
-			c.init(Cipher.ENCRYPT_MODE, key);
-
-			return Base64.getEncoder().encodeToString(c.doFinal(String.valueOf(cvv).getBytes()));
-
-		} catch (RuntimeException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
-				| IllegalBlockSizeException | BadPaddingException e) {
-			System.out.println(e);
-			throw new RuntimeException();
+			byte[] encryptedBytes = cipher.doFinal(String.valueOf(cvv).getBytes());
+			return Base64.getEncoder().encodeToString(encryptedBytes);
+		} catch (Exception e) {
+			throw new RuntimeException("Errore durante la conversione del CVV per il database", e);
 		}
-
 	}
 
 	@Override
 	public Integer convertToEntityAttribute(String encryptedCvv) {
-		Key key = new SecretKeySpec(secret.getBytes(), "AES");
 		try {
-			Cipher c = Cipher.getInstance(ALGORITHM);
-			c.init(Cipher.DECRYPT_MODE, key);
+			SecretKeySpec key = new SecretKeySpec(secret.getBytes(), "AES");
+			Cipher cipher = Cipher.getInstance(ALGORITHM);
+			cipher.init(Cipher.DECRYPT_MODE, key);
 
-			return Integer.parseInt(new String(c.doFinal(Base64.getDecoder().decode(encryptedCvv))));
+			byte[] decodedBytes = Base64.getDecoder().decode(encryptedCvv);
+			byte[] decryptedBytes = cipher.doFinal(decodedBytes);
 
+			return Integer.parseInt(new String(decryptedBytes));
 		} catch (Exception e) {
-			System.out.println(e);
-			throw new RuntimeException();
+			throw new RuntimeException("Errore durante la conversione del CVV per l'entità", e);
 		}
-
 	}
 }
