@@ -40,23 +40,20 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<AuthenticationSuccessfullPayload> login(@RequestBody UserLoginPayload body)
-			throws NotFoundException, org.springframework.data.crossstore.ChangeSetPersister.NotFoundException {
+			throws org.springframework.data.crossstore.ChangeSetPersister.NotFoundException {
+		try {
+			User user = usersService.findUserByEmail(body.getEmail());
+			String plainPW = body.getPassword();
+			String hashedPW = user.getPassword();
 
-		// cerco la mail inserita nel login tra quelle degli utenti
-		User user = usersService.findUserByEmail(body.getEmail());
+			if (!bcrypt.matches(plainPW, hashedPW)) {
+				throw new UnauthorizedException("Credenziali non valide");
+			}
 
-		// se la trovo faccio il check sulla password, se non corrisponde lancio errore
-		// 401
-		// if(!body.getPassword().matches(user.getPassword())) throw new
-		// UnauthorizedException("Credenziali non valide");
-		String plainPW = body.getPassword();
-		String hashedPW = user.getPassword();
-
-		if (!bcrypt.matches(plainPW, hashedPW))
-			throw new UnauthorizedException("Credenziali non valide");
-		// se corrisponde creo token
-		String token = JWTTools.createToken(user);
-
-		return new ResponseEntity<>(new AuthenticationSuccessfullPayload(token), HttpStatus.OK);
+			String token = JWTTools.createToken(user);
+			return new ResponseEntity<>(new AuthenticationSuccessfullPayload(token), HttpStatus.OK);
+		} catch (NotFoundException ex) {
+			throw new org.springframework.data.crossstore.ChangeSetPersister.NotFoundException();
+		}
 	}
 }
