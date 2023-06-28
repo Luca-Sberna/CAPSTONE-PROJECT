@@ -35,7 +35,14 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(auth -> {
 			auth.requestMatchers(HttpMethod.GET, "/users").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/users/**").hasAnyAuthority("USER", "ADMIN");
 			auth.requestMatchers("/users/**").hasAuthority("ADMIN");
+		});
+
+		http.authorizeHttpRequests(auth -> {
+			auth.requestMatchers(HttpMethod.GET, "/creditCards").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/creditCards/**").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers("/creditCards/**").hasAnyAuthority("USER", "ADMIN");
 		});
 
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);

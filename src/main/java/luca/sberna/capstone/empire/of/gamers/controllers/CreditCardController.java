@@ -23,6 +23,7 @@ import luca.sberna.capstone.empire.of.gamers.services.CreditCardService;
 @RestController
 @RequestMapping("/creditCards")
 public class CreditCardController {
+	@Autowired
 	private final CreditCardService creditCardService;
 
 	@Autowired
