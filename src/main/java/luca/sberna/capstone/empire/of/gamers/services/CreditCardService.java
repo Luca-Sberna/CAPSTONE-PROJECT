@@ -46,6 +46,7 @@ public class CreditCardService {
 	}
 
 	public void deleteCreditCard(UUID id) {
+		creditCardRepository.findById(id);
 		creditCardRepository.deleteById(id);
 	}
 
