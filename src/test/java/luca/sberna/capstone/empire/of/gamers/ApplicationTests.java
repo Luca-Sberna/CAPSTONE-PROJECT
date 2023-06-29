@@ -33,6 +33,7 @@ import org.springframework.data.domain.Sort;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
 import luca.sberna.capstone.empire.of.gamers.entities.User;
+import luca.sberna.capstone.empire.of.gamers.entities.UserProfile;
 import luca.sberna.capstone.empire.of.gamers.exceptions.EmailAlreadyExistsException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.InvalidEmailException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.ValidationException;
@@ -40,8 +41,10 @@ import luca.sberna.capstone.empire.of.gamers.exceptions.WeakPasswordException;
 import luca.sberna.capstone.empire.of.gamers.payloads.CreditCardRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.payloads.UserRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.CreditCardRepository;
+import luca.sberna.capstone.empire.of.gamers.repositories.UserProfileRepository;
 import luca.sberna.capstone.empire.of.gamers.repositories.UserRepository;
 import luca.sberna.capstone.empire.of.gamers.services.CreditCardService;
+import luca.sberna.capstone.empire.of.gamers.services.UserProfileService;
 import luca.sberna.capstone.empire.of.gamers.services.UserService;
 
 @SpringBootTest
@@ -55,6 +58,10 @@ class ApplicationTests {
 	private CreditCardRepository creditCardRepository;
 	@InjectMocks
 	private CreditCardService creditCardService;
+	@Mock
+	private UserProfileRepository userProfileRepo;
+	@InjectMocks
+	private UserProfileService userProfileService;
 
 	// variabili che si possono ripetere molte volte
 	UUID idUser = UUID.randomUUID();
@@ -436,4 +443,135 @@ class ApplicationTests {
 			creditCardService.createCreditCard(payload);
 		});
 	}
+
+	// -------------------- USERS PROFILE ------------------------------
+
+	@Test
+	void testCreateUserProfile() {
+		// Mocking
+		UserProfile userProfile = new UserProfile();
+		when(userProfileRepo.save(userProfile)).thenReturn(userProfile);
+
+		// Test
+		UserProfile result = userProfileService.createUserProfile(userProfile);
+
+		// Verify
+		verify(userProfileRepo, times(1)).save(userProfile);
+		assertNotNull(result);
+		assertEquals(userProfile, result);
+	}
+
+	@Test
+	void testGetUserProfileById() {
+		// Mocking
+		UUID idProfile = UUID.randomUUID();
+		UserProfile userProfile = new UserProfile();
+		when(userProfileRepo.findById(idProfile)).thenReturn(Optional.of(userProfile));
+
+		// Test
+		UserProfile result = userProfileService.getUserProfileById(idProfile);
+
+		// Verify
+		verify(userProfileRepo, times(1)).findById(idProfile);
+		assertNotNull(result);
+		assertEquals(userProfile, result);
+	}
+
+	@Test
+	void testUpdateUserProfile() {
+		// Mocking
+		UUID idProfile = UUID.randomUUID();
+		UserProfile existingUserProfile = new UserProfile();
+		existingUserProfile.setId(idProfile);
+		existingUserProfile.setName("Old Name");
+		// Set other properties as needed
+
+		when(userProfileRepo.findById(idProfile)).thenReturn(Optional.of(existingUserProfile));
+		when(userProfileRepo.save(existingUserProfile)).thenReturn(existingUserProfile);
+
+		// Test
+		UserProfile updatedUserProfile = new UserProfile();
+		updatedUserProfile.setId(idProfile);
+		updatedUserProfile.setName("New Name");
+		// Set other properties as needed
+
+		UserProfile result = userProfileService.updateUserProfile(idProfile, updatedUserProfile);
+
+		// Verify
+		verify(userProfileRepo, times(1)).findById(idProfile);
+		verify(userProfileRepo, times(1)).save(existingUserProfile);
+		assertNotNull(result);
+		assertEquals(updatedUserProfile.getName(), result.getName());
+		// Verify other properties as needed
+	}
+
+	@Test
+	void testDeleteUserProfile() {
+		// Test
+		UUID idProfile = UUID.randomUUID();
+		userProfileService.deleteUserProfile(idProfile);
+
+		// Verify
+		verify(userProfileRepo, times(1)).deleteById(idProfile);
+	}
+
+	@Test
+	void testUpdateUserProfileImage() {
+		// Mocking
+		UUID idUser = UUID.randomUUID();
+		byte[] profileImage = new byte[10];
+		UserProfile userProfile = new UserProfile();
+		when(userProfileRepo.findById(idUser)).thenReturn(Optional.of(userProfile));
+		when(userProfileRepo.save(userProfile)).thenReturn(userProfile);
+
+		// Test
+		UserProfile result = userProfileService.updateUserProfileImage(idUser, profileImage);
+
+		// Verify
+		verify(userProfileRepo, times(1)).findById(idUser);
+		verify(userProfileRepo, times(1)).save(userProfile);
+		assertNotNull(result);
+		assertEquals(profileImage, userProfile.getImgProfile());
+	}
+
+	@Test
+	void testUpdateUserProfileBackground() {
+		// Mocking
+		UUID idUser = UUID.randomUUID();
+		byte[] background = new byte[10];
+		UserProfile userProfile = new UserProfile();
+		when(userProfileRepo.findById(idUser)).thenReturn(Optional.of(userProfile));
+		when(userProfileRepo.save(userProfile)).thenReturn(userProfile);
+
+		// Test
+		UserProfile result = userProfileService.updateUserProfileBackground(idUser, background);
+
+		// Verify
+		verify(userProfileRepo, times(1)).findById(idUser);
+		verify(userProfileRepo, times(1)).save(userProfile);
+		assertNotNull(result);
+		assertEquals(background, userProfile.getImgBackground());
+	}
+
+	@Test
+	public void testGetAllUsersProfile() {
+		int page = 0;
+		int size = 10;
+		String sortBy = "username";
+
+		List<UserProfile> userProfiles = new ArrayList<>();
+		userProfiles.add(new UserProfile());
+		userProfiles.add(new UserProfile());
+		Page<UserProfile> userProfilePage = new PageImpl<>(userProfiles);
+		when(userProfileRepo.findAll(any(Pageable.class))).thenReturn(userProfilePage);
+
+		// Act
+		Page<UserProfile> retrievedUserProfile = userProfileService.getAllUserProfiles(page, size, sortBy);
+
+		// Assert
+		assertNotNull(retrievedUserProfile);
+		assertEquals(userProfiles.size(), retrievedUserProfile.getSize());
+		verify(userProfileRepo, times(1)).findAll(any(Pageable.class));
+	}
+
 }
