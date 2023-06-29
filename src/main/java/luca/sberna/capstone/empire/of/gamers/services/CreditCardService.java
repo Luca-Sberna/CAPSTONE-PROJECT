@@ -11,15 +11,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
+import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.NotFoundException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.ValidationException;
 import luca.sberna.capstone.empire.of.gamers.payloads.CreditCardRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.CreditCardRepository;
+import luca.sberna.capstone.empire.of.gamers.utils.UserRepositoryUtils;
 
 @Service
 public class CreditCardService {
 	@Autowired
 	private CreditCardRepository creditCardRepository;
+	@Autowired
+	private UserRepositoryUtils userRepositoryUtils;
 
 	@Autowired
 	public CreditCardService(CreditCardRepository creditCardRepository) {
@@ -38,6 +42,10 @@ public class CreditCardService {
 
 			CreditCard creditCard = new CreditCard(p.getCardNumber(), p.getExpirationDate(), p.getCvv(), p.getName(),
 					p.getSurname());
+
+			// Set the current user
+			User currentUser = userRepositoryUtils.getCurrentUser();
+			creditCard.setUser(currentUser);
 
 			return creditCardRepository.save(creditCard);
 		} catch (DataIntegrityViolationException e) {

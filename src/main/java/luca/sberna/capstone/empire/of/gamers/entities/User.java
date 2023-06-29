@@ -1,5 +1,6 @@
 package luca.sberna.capstone.empire.of.gamers.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -9,17 +10,25 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import luca.sberna.capstone.empire.of.gamers.utils.UserType;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "Users")
@@ -28,14 +37,25 @@ import luca.sberna.capstone.empire.of.gamers.utils.UserType;
 @JsonIgnoreProperties({ "password" })
 public class User implements UserDetails {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID idUser;
 	private String username;
 	private String email;
 	private String password;
 	private Date birthDate;
+
 	@Enumerated(EnumType.STRING)
 	private UserType role;
+
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonBackReference
+	@JsonIgnore
+	private UserProfile userProfile;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
+	@JsonManagedReference
+	@JsonIgnoreProperties("user")
+	private List<CreditCard> creditCards = new ArrayList<>();
 
 	public User(String username, String email, String password, Date birthDate) {
 		this.username = username;

@@ -4,12 +4,15 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +38,11 @@ public class CreditCard {
 	private String name;
 
 	private String surname;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	@JsonBackReference
+	private User user;
 
 	public CreditCard(BigInteger cardNumber, Date expirationDate, Integer cvv, String name, String surname) {
 		super();
