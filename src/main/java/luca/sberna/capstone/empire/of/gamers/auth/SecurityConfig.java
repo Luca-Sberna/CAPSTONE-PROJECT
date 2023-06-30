@@ -60,6 +60,12 @@ public class SecurityConfig {
 			auth.requestMatchers("/vipUser/**").hasAnyAuthority("USER", "ADMIN");
 		});
 
+		http.authorizeHttpRequests(auth -> {
+			auth.requestMatchers(HttpMethod.GET, "/game").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/game/**").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers("/game/**").hasAnyAuthority("USER", "ADMIN");
+		});
+
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
 
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
