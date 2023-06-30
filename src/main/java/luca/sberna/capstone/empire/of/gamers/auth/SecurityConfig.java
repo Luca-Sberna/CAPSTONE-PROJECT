@@ -54,6 +54,12 @@ public class SecurityConfig {
 
 		});
 
+		http.authorizeHttpRequests(auth -> {
+			auth.requestMatchers(HttpMethod.GET, "/vipUser").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/vipUser/**").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers("/vipUser/**").hasAnyAuthority("USER", "ADMIN");
+		});
+
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
 
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

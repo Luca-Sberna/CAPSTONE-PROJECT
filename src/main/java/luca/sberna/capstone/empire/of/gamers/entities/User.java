@@ -34,7 +34,7 @@ import net.minidev.json.annotate.JsonIgnore;
 @Table(name = "Users")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({ "password" })
+@JsonIgnoreProperties({ "password", "hibernateLazyInitializer" })
 public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -52,9 +52,10 @@ public class User implements UserDetails {
 	@JsonIgnore
 	private UserProfile userProfile;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER) 
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonManagedReference
 	@JsonIgnoreProperties("user")
+	@JsonIgnore
 	private List<CreditCard> creditCards = new ArrayList<>();
 
 	public User(String username, String email, String password, Date birthDate) {
