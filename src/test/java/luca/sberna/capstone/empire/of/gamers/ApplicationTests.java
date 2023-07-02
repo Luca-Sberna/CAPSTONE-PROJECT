@@ -525,4 +525,40 @@ class ApplicationTests {
 
 	}
 
+	// --------------- REVIEW TEST --------------------
+	@Test
+	public void createReview() {
+
+	}
+
+	@Test
+	public void getAllReviews() {
+
+	}
+
+	@Test
+	public void getReviewById() {
+
+	}
+
+	@Test
+	public void updateReview() {
+
+	}
+
+	@Test
+	public void deleteReview() {
+
+	}
+
+	@Test
+	public void getReviewsByUser() {
+
+	}
+
+	@Test
+	public void getReviewsByGame() {
+
+	}
+
 }

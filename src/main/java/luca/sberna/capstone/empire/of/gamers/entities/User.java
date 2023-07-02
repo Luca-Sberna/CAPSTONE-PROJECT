@@ -58,9 +58,14 @@ public class User implements UserDetails {
 	@JsonIgnore
 	private List<CreditCard> creditCards = new ArrayList<>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Ranking> rankings;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@JsonIgnore
+	private List<Review> reviews;
 
 	public User(String username, String email, String password, Date birthDate) {
 		this.username = username;
