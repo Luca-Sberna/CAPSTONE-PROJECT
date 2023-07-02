@@ -90,4 +90,9 @@ public class UserProfileService {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
 		return userProfileRepo.findAll(pageable);
 	}
+
+	public Page<UserProfile> getUserProfileByUser(User user, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return userProfileRepo.findByUser(user, pageable);
+	}
 }
