@@ -22,7 +22,6 @@ import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.NotFoundException;
 import luca.sberna.capstone.empire.of.gamers.payloads.ReviewPayload;
 import luca.sberna.capstone.empire.of.gamers.repositories.GameRepository;
-import luca.sberna.capstone.empire.of.gamers.repositories.UserRepository;
 import luca.sberna.capstone.empire.of.gamers.services.ReviewService;
 import luca.sberna.capstone.empire.of.gamers.utils.UserRepositoryUtils;
 
@@ -35,8 +34,6 @@ public class ReviewController {
 	private ReviewService reviewService;
 	@Autowired
 	private GameRepository gameRepository;
-	@Autowired
-	private UserRepository userRepository;
 
 	@PostMapping("/{gameId}")
 	public ResponseEntity<Review> createReview(@PathVariable UUID gameId, @RequestBody ReviewPayload reviewPayload) {

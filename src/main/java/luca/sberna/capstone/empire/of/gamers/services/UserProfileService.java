@@ -19,8 +19,7 @@ import luca.sberna.capstone.empire.of.gamers.utils.UserRepositoryUtils;
 public class UserProfileService {
 	@Autowired
 	private final UserProfileRepository userProfileRepo;
-	@Autowired
-	private final UserRepository userRepository;
+
 	@Autowired
 	private UserRepositoryUtils userRepositoryUtils;
 
@@ -29,7 +28,6 @@ public class UserProfileService {
 			UserRepository userRepository) {
 		this.userProfileRepo = userProfileRepo;
 		this.userRepositoryUtils = userRepositoryUtils;
-		this.userRepository = userRepository;
 	}
 
 	public UserProfile createUserProfile(UserProfile userProfile) {
