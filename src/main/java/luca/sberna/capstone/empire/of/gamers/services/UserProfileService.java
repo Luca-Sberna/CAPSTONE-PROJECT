@@ -70,14 +70,14 @@ public class UserProfileService {
 		userProfileRepo.deleteById(idProfile);
 	}
 
-	public UserProfile updateUserProfileImage(UUID idUser, byte[] profileImage) {
+	public UserProfile updateUserProfileImage(UUID idUser, String profileImage) {
 		UserProfile userProfile = userProfileRepo.findById(idUser)
 				.orElseThrow(() -> new RuntimeException("UserProfile not found with ID: " + idUser));
 		userProfile.setImgProfile(profileImage);
 		return userProfileRepo.save(userProfile);
 	}
 
-	public UserProfile updateUserProfileBackground(UUID idUser, byte[] background) {
+	public UserProfile updateUserProfileBackground(UUID idUser, String background) {
 		UserProfile userProfile = userProfileRepo.findById(idUser)
 				.orElseThrow(() -> new RuntimeException("UserProfile not found with ID: " + idUser));
 		userProfile.setImgBackground(background);
