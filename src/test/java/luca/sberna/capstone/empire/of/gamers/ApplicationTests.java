@@ -493,4 +493,36 @@ class ApplicationTests {
 
 	}
 
+	// ------------------ RANKING TEST ------------------------------
+
+	@Test
+	public void testCreateRanking() {
+
+	}
+
+	@Test
+	public void testGetAllRankings() {
+
+	}
+
+	@Test
+	public void testGetRankingsByUser() {
+
+	}
+
+	@Test
+	public void testGetRankingById() {
+
+	}
+
+	@Test
+	public void testUpdateRanking() {
+
+	}
+
+	@Test
+	public void testDeleteRanking() {
+
+	}
+
 }
