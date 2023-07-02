@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -28,7 +29,6 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import luca.sberna.capstone.empire.of.gamers.utils.UserType;
-import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "Users")
@@ -57,6 +57,10 @@ public class User implements UserDetails {
 	@JsonIgnoreProperties("user")
 	@JsonIgnore
 	private List<CreditCard> creditCards = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Ranking> rankings;
 
 	public User(String username, String email, String password, Date birthDate) {
 		this.username = username;

@@ -66,6 +66,12 @@ public class SecurityConfig {
 			auth.requestMatchers("/game/**").hasAnyAuthority("USER", "ADMIN");
 		});
 
+		http.authorizeHttpRequests(auth -> {
+			auth.requestMatchers(HttpMethod.GET, "/ranking").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers(HttpMethod.PUT, "/ranking/**").hasAnyAuthority("USER", "ADMIN");
+			auth.requestMatchers("/ranking/**").hasAnyAuthority("USER", "ADMIN");
+		});
+
 		http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
 
 		http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

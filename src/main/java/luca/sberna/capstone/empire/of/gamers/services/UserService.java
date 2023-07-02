@@ -1,5 +1,6 @@
 package luca.sberna.capstone.empire.of.gamers.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import luca.sberna.capstone.empire.of.gamers.entities.Ranking;
 import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.exceptions.EmailAlreadyExistsException;
 import luca.sberna.capstone.empire.of.gamers.exceptions.InvalidEmailException;
@@ -89,6 +91,11 @@ public class UserService {
 
 	public void deleteAllUsers() {
 		ur.deleteAll();
+	}
+
+	public List<Ranking> getUserRankings(UUID userId) throws NotFoundException {
+		User user = ur.findById(userId).orElseThrow(() -> new NotFoundException());
+		return user.getRankings();
 	}
 
 }
