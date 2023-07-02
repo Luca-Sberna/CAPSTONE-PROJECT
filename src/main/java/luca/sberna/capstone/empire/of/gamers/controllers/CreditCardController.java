@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
+import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.payloads.CreditCardRegistrationPayload;
 import luca.sberna.capstone.empire.of.gamers.services.CreditCardService;
 
@@ -68,5 +69,18 @@ public class CreditCardController {
 	public ResponseEntity<Void> deleteCreditCard(@PathVariable UUID id) {
 		creditCardService.deleteCreditCard(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<Page<CreditCard>> getCreditCardsByUser(@PathVariable UUID userId,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+		User user = new User();
+		user.setIdUser(userId);
+		Page<CreditCard> creditCards = creditCardService.getCreditCardsByUser(user, page, size);
+		if (creditCards.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.ok(creditCards);
+		}
 	}
 }

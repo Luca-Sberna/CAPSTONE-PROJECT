@@ -88,4 +88,9 @@ public class VipUserService {
 		vipUserRepository.deleteById(id);
 		;
 	}
+
+	public Page<VipUser> getVipUsersByUser(User user, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return vipUserRepository.findByUser(user, pageable);
+	}
 }

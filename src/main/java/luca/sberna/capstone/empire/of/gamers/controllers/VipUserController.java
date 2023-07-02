@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.entities.VipUser;
 import luca.sberna.capstone.empire.of.gamers.exceptions.NotFoundException;
 import luca.sberna.capstone.empire.of.gamers.services.UserService;
@@ -77,6 +78,19 @@ public class VipUserController {
 			return ResponseEntity.noContent().build();
 		} catch (NotFoundException e) {
 			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<Page<VipUser>> getVipUsersByUser(@PathVariable UUID userId,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+		User user = new User();
+		user.setIdUser(userId);
+		Page<VipUser> vipUsers = vipUserService.getVipUsersByUser(user, page, size);
+		if (vipUsers.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(vipUsers);
 		}
 	}
 }

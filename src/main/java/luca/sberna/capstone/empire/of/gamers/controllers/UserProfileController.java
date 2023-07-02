@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import luca.sberna.capstone.empire.of.gamers.entities.User;
 import luca.sberna.capstone.empire.of.gamers.entities.UserProfile;
 import luca.sberna.capstone.empire.of.gamers.services.UserProfileService;
 
@@ -67,5 +68,13 @@ public class UserProfileController {
 	public ResponseEntity<Void> deleteUserProfile(@PathVariable UUID id) {
 		userProfileService.deleteUserProfile(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/user/{userId}")
+	public Page<UserProfile> getUserProfileByUser(@PathVariable UUID userId, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		User user = new User();
+		user.setIdUser(userId);
+		return userProfileService.getUserProfileByUser(user, page, size);
 	}
 }

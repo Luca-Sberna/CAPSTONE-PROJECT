@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +65,10 @@ public class GameService {
 			return gameRepository.save(game);
 		}
 		throw new NotFoundException("Game not found");
+	}
+
+	public Page<Game> getGamesByRatings(int ratings, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return gameRepository.findByRatings(ratings, pageable);
 	}
 }

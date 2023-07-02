@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import luca.sberna.capstone.empire.of.gamers.entities.Game;
@@ -58,5 +59,11 @@ public class GameController {
 	public ResponseEntity<Game> updateGame(@PathVariable UUID idGame, @RequestBody GameRegistrationPayload payload) {
 		Game updatedGame = gameService.updateGame(idGame, payload);
 		return ResponseEntity.ok(updatedGame);
+	}
+
+	@GetMapping("/ratings/{ratings}")
+	public Page<Game> getGamesByRatings(@PathVariable Integer ratings, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		return gameService.getGamesByRatings(ratings, page, size);
 	}
 }

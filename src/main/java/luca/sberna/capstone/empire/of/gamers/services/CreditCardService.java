@@ -84,4 +84,9 @@ public class CreditCardService {
 		foundCreditCard.setSurname(payload.getSurname());
 		return creditCardRepository.save(foundCreditCard);
 	}
+
+	public Page<CreditCard> getCreditCardsByUser(User user, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		return creditCardRepository.findByUser(user, pageable);
+	}
 }
