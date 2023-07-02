@@ -26,13 +26,10 @@ import luca.sberna.capstone.empire.of.gamers.services.VipUserService;
 public class VipUserController {
 	@Autowired
 	private final VipUserService vipUserService;
-	@Autowired
-	private final UserService userService;
 
 	@Autowired
 	public VipUserController(VipUserService vipUserService, UserService userService) {
 		this.vipUserService = vipUserService;
-		this.userService = userService;
 	}
 
 	@PostMapping("")

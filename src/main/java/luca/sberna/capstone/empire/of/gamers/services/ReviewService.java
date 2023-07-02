@@ -18,6 +18,7 @@ import luca.sberna.capstone.empire.of.gamers.repositories.ReviewRepository;
 
 @Service
 public class ReviewService {
+	@Autowired
 	private final ReviewRepository reviewRepository;
 
 	@Autowired
