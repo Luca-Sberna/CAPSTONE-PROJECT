@@ -1,0 +1,87 @@
+.header {
+    z-index: 1;
+}
+
+.header ul {
+    overflow: hidden;
+}
+
+.header ul a {
+    display: block;
+    padding: 5px 50px;
+}
+
+.header ul a:hover {
+    /* border-radius: 10px; */
+    background-color: #181818;
+}
+
+.header .logo {
+    font-size: 25px;
+    padding: 7px 15px;
+}
+
+.header .menu {
+    clear: both;
+    max-height: 0px;
+    transition: max-height 0.2s ease-out;
+    overflow: hidden;
+}
+
+.header .menu-btn {
+    display: none;
+}
+
+.header .menu-icon {
+    padding: 20px 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.header .menu-icon .nav-icon {
+    background-color: gray;
+    transition: background-color 0.2s ease-out;
+    width: 15px;
+    height: 2px;
+    position: relative;
+}
+
+.header .menu-icon .nav-icon::before,
+.header .menu-icon .nav-icon::after {
+    background-color: gray;
+    content: "";
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s ease-out;
+    position: absolute;
+}
+
+.header .menu-icon .nav-icon::before {
+    top: 5px;
+}
+
+.header .menu-icon .nav-icon::after {
+    top: -5px;
+}
+
+.header .menu-icon.open .nav-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.header .menu-icon.open .nav-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+.header .menu .dropdown-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.header .menu .dropdown-toggle .profile-image {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border-radius: 2rem;
+}
