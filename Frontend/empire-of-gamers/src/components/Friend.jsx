@@ -13,8 +13,12 @@ const Friend = () => {
 
   return (
     <Container className="friend-container position-absolute d-flex overflow-hidden custom-dropdown-friends">
-      <Row className="friend-header bg-transparent" onClick={toggleDropdown}>
-        <Col xs={""} className="d-flex align-items-center ">
+      <Row className="friend-header bg-transparent">
+        <Col
+          xs={""}
+          className="d-flex align-items-center "
+          onClick={(e) => toggleDropdown(e)}
+        >
           <h5 className="me-2  mb-0 bg-transparent">Your Friends</h5>
           <span className={`arrow ${isDropdownOpen ? "down" : "up"}`}>
             {isDropdownOpen ? toggleDown : toggleUp}
