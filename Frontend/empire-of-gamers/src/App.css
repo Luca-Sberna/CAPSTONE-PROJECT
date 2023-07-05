@@ -18,18 +18,21 @@
 .header ul a {
     display: block;
     padding: 5px 50px;
+    transition: all .2s ease-out;
 }
 
 .header ul a:hover {
     border-radius: 5px;
-    background-color: #181818;
+    background-color: #000000c0;
+    transition: all .2s ease-out;
 }
 
 
 .header ul .dropdown-toggle:hover {
     /* border-radius: 10px; */
-    background-color: #181818;
+    background-color: #000000c0;
     width: 100%;
+    transition: all .2s ease-out;
 }
 
 .header .logo {
@@ -149,35 +152,46 @@
 }
 
 .link-navbar-lg:hover {
-    background-color: #181818;
+    background-color: #000000c0;
+    transition: all .2s ease-out;
+
 }
 
 .profile-image:hover,
 .fb-icon:hover,
-.twitter-icon:hover {
+.twitter-icon:hover,
+.insta-icon:hover,
+.linkedin-icon:hover {
     box-shadow: 1px 1px 2px 2px black;
-    transform: scale(1.1);
+    transform: scale(1.2);
     border-radius: 100%;
 }
 
 .insta-icon:hover {
-    box-shadow: 1px 1px 2px 2px black;
-    transform: scale(1.1);
     border-radius: 30%;
 }
 
 .linkedin-icon:hover {
-    box-shadow: 1px 1px 2px 2px black;
-    transform: scale(1.1);
     border-radius: 10%;
+}
+
+.profile-image:hover {
+    transform: scale(1.5);
+
 }
 
 .custom-dropdown .dropdown-toggle {
     color: #A4C639;
+
+}
+
+.custom-dropdown {
+    transition: all .2s ease-out;
 }
 
 .custom-dropdown :hover {
-    background-color: #181818;
+    background-color: #000000c0;
+    transition: all .3s ease-out;
     color: #FF5722;
 }
 
@@ -186,13 +200,17 @@
 
 }
 
-.icons-color {
+.bg-elements {
+    background-color: #181818d7;
+}
 
+.icons-color {
+    transition: all .2s ease-out;
     color: #A4C639;
 }
 
 .icons-color :hover {
-
+    transition: all .2s ease-out;
     color: #9C27B0;
 }
 
@@ -202,12 +220,13 @@
 }
 
 .special-text-link {
+    transition: all .2s ease-out;
     color: #9C27B0;
 }
 
 .elements {
     background-color: #9C27B0;
-    ;
+    height: 3px;
 }
 
 .elements:hover {
@@ -220,6 +239,7 @@
 
 .special-text-link:hover {
     color: var(--random-color);
+    transition: all .1s ease-out;
 }
 
 /* Definizione delle variabili per i colori */
@@ -236,5 +256,5 @@
 
 .dropdown-custom-hover:hover {
     transform: scale(1.1);
-
+    transition: all .2s ease-out;
 }

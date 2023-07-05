@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="header bg-dark shadow-lg   position-fixed w-100 d-flex flex-column ">
+      <header className="header bg-elements shadow-lg   position-fixed w-100 d-flex flex-column ">
         <Row>
           <Col className="d-flex align-items-center justify-content-between navbar-lg">
             <Link
@@ -112,7 +112,7 @@ const Navbar = () => {
                   Your Profile
                 </span>
               </Dropdown.Toggle>
-              <Dropdown.Menu className="bg-dark mt-1 ms-5 overflow-hidden ">
+              <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden ">
                 {/* Esempi di elementi nella dropdown */}
                 <Dropdown.Item
                   href="#action1"
@@ -126,7 +126,7 @@ const Navbar = () => {
                 >
                   Action 2
                 </Dropdown.Item>
-                <Dropdown.Divider className="elements" />
+                <Dropdown.Divider className="elements " />
                 <Dropdown.Item
                   href="#action3"
                   className="dropdown-custom-hover text-link"
