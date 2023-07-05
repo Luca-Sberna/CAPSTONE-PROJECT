@@ -17,7 +17,8 @@ const NavbarLg = () => {
                 to={"/"}
                 className="text-link link-navbar-lg d-flex text-decoration-none align-items-center  px-2 py-3 rounded-1"
               >
-                <Col>👑</Col> <Col className=" ">Vip</Col>
+                <Col className="bg-transparent">👑</Col>{" "}
+                <Col className="bg-transparent">Vip</Col>
               </Link>
             </Col>
 
@@ -58,7 +59,7 @@ const NavbarLg = () => {
                 <Dropdown.Toggle
                   variant="link"
                   id="dropdown-basic"
-                  className="text-decoration-none d-flex align-items-center  "
+                  className="text-decoration-none d-flex align-items-center bg-transparent "
                 >
                   <Image
                     fluid
@@ -67,7 +68,7 @@ const NavbarLg = () => {
                     alt="Profile"
                   />
 
-                  <span className="align-middle px-2 text-link">
+                  <span className="align-middle px-2 text-link bg-transparent">
                     Your Profile
                   </span>
                 </Dropdown.Toggle>
