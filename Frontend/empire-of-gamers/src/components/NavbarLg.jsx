@@ -71,7 +71,7 @@ const NavbarLg = () => {
                     Your Profile
                   </span>
                 </Dropdown.Toggle>
-                <Dropdown.Menu className="bg-dark mt-1 ms-5 overflow-hidden">
+                <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
                   {/* Esempi di elementi nella dropdown */}
                   <Dropdown.Item
                     href="#action1"
