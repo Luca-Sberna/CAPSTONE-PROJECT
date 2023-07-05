@@ -4,6 +4,7 @@ import { Row, Col, Dropdown, Image } from "react-bootstrap";
 import avatar from "../assets/imgs/avatar.png";
 import NavbarLg from "./NavbarLg";
 import $ from "jquery";
+import logo2 from "../assets/imgs/logo-7.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,9 +30,15 @@ const Navbar = () => {
           <Col className="d-flex align-items-center justify-content-between navbar-lg">
             <Link
               to={"/"}
-              className="logo text-decoration-none special-text-link"
+              className="logo text-decoration-none special-text-link p-0"
             >
-              EoG
+              <Image
+                width={62}
+                fluid
+                src={logo2}
+                alt="logo"
+                className=" ms-1"
+              />
             </Link>
 
             <NavbarLg />
