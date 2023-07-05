@@ -286,9 +286,28 @@
 
 .friend-content {
     margin-top: 10px;
+
+}
+
+.friend-content-element {
+    color: #A4C639;
+}
+
+.friend-content-element:hover {
+    color: #FF5722;
 }
 
 
 .arrow {
     transition: transform .5s ease;
+}
+
+.custom-dropdown-friends {
+    transition: all .2s ease-out;
+}
+
+.custom-dropdown-friends :hover {
+    background-color: #000000c0;
+    transition: all .3s ease-out;
+    color: #FF5722;
 }

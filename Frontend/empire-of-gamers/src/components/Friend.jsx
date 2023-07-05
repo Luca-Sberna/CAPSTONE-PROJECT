@@ -3,6 +3,8 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const Friend = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleUp = <span className="icons-color bg-transparent">▲</span>;
+  const toggleDown = <span className="icons-color bg-transparent">▼</span>;
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -10,18 +12,34 @@ const Friend = () => {
 
   return (
     <Container className="friend-container position-absolute d-flex overflow-hidden ">
-      <Row className="friend-header" onClick={toggleDropdown}>
-        <Col xs={""} className="d-flex align-items-center">
+      <Row
+        className="friend-header custom-dropdown-friends"
+        onClick={toggleDropdown}
+      >
+        <Col xs={""} className="d-flex align-items-center ">
           <h5 className="me-2  mb-0 ">Your Friends</h5>
           <span className={`arrow ${isDropdownOpen ? "down" : "up"}`}>
-            {isDropdownOpen ? "▼" : "▲"}
+            {isDropdownOpen ? toggleDown : toggleUp}
           </span>
         </Col>
         {isDropdownOpen && (
-          <div className="friend-content">
-            {/* Contenuto della dropdown */}
-            <p>Contenuto della dropdown</p>
-          </div>
+          <Row className="friend-content bg-transparent">
+            <span className="friend-content-element mb-2">
+              Contenuto della dropdown
+            </span>
+            <span className="friend-content-element mb-2">
+              Contenuto della dropdown
+            </span>
+            <span className="friend-content-element mb-2">
+              Contenuto della dropdown
+            </span>
+            <span className="friend-content-element mb-2">
+              Contenuto della dropdown
+            </span>
+            <span className="friend-content-element">
+              Contenuto della dropdown
+            </span>
+          </Row>
         )}
       </Row>
     </Container>
