@@ -13,7 +13,7 @@ const Friend = () => {
 
   return (
     <Container className="friend-container position-absolute d-flex overflow-hidden custom-dropdown-friends">
-      <Row className="friend-header bg-transparent">
+      <Row className="friend-header ">
         <Col
           xs={""}
           className="d-flex align-items-center "

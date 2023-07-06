@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="footer bg-elements text-light text-center py-3">
-      <Container>
+    <footer className="footer bg-home text-light text-center">
+      <Container fluid className="bg-elements py-2">
         <Row>
           <Col xs={"12"} className="">
             <h5 className="m-0">Follow us everywhere!</h5>

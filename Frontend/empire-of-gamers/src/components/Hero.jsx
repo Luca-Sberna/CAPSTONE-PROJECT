@@ -1,5 +1,6 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
+import hero from "../assets/imgs/hero1.png";
 
 const Hero = () => {
   return (
@@ -7,7 +8,7 @@ const Hero = () => {
       fluid
       className="hero-container overflow-hidden  bg-elements rounded-1 p-2 text-link "
     >
-      Hero
+      <Image alt="hero-img" src={hero} width={250} className="" />
     </Container>
   );
 };
