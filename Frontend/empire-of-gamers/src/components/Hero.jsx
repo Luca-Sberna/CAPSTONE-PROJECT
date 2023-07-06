@@ -3,7 +3,10 @@ import { Container } from "react-bootstrap";
 
 const Hero = () => {
   return (
-    <Container className="hero-container overflow-hidden  bg-elements rounded-1 p-2 text-link ">
+    <Container
+      fluid
+      className="hero-container overflow-hidden  bg-elements rounded-1 p-2 text-link "
+    >
       Hero
     </Container>
   );
