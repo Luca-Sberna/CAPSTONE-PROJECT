@@ -352,3 +352,22 @@
 
     z-index: 1000000;
 }
+
+.img-game {
+    rotate: 45deg;
+
+}
+
+.img-hero {
+    top: 0;
+}
+
+.img-filters {
+    right: -1rem;
+    top: -.2rem;
+}
+
+.img-filters-2 {
+    right: -.6rem;
+    top: -.6rem;
+}
