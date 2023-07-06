@@ -7,19 +7,20 @@ import HomeContent from "./HomeContent";
 
 const Home = () => {
   return (
-    <Container
-      fluid
-      className="p-0 bg-home d-flex flex-column min-vh-100 overflow-hidden"
-    >
-      <Navbar />
+    <>
+      <Container
+        fluid
+        className="p-0 bg-home d-flex flex-column min-vh-100 overflow-hidden"
+      >
+        <Navbar />
 
-      <div fluid className="p-0 flex-grow-1 position-relative">
-        <HomeContent />
-        <Friend />
-      </div>
-
+        <div fluid className="p-0 flex-grow-1 position-relative">
+          <HomeContent />
+          <Friend />
+        </div>
+      </Container>
       <Footer />
-    </Container>
+    </>
   );
 };
 

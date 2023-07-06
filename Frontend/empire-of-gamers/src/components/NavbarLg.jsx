@@ -12,7 +12,7 @@ const NavbarLg = () => {
       <Row className="menu-2 list-unstyled d-flex align-items-center m-0  ">
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex ">
-            <Col className="d-flex align-items-center custom-dropdown">
+            <Col className="d-flex align-items-center custom-dropdown me-xxl-3">
               <Link
                 to={"/vip"}
                 className="text-link link-navbar-lg d-flex text-decoration-none align-items-center  px-2 py-3 rounded-1"
@@ -22,7 +22,7 @@ const NavbarLg = () => {
               </Link>
             </Col>
 
-            <Col className="d-flex align-items-center mx-4 custom-dropdown">
+            <Col className="d-flex align-items-center mx-4 custom-dropdown d-xxl-none">
               <Link
                 to={"/ranking"}
                 className=" text-link link-navbar-lg text-decoration-none  px-2 py-3 rounded-1"
@@ -33,7 +33,8 @@ const NavbarLg = () => {
 
             <Col
               lg={"4"}
-              className=" d-flex align-items-center me-2 custom-dropdown"
+              xxl={"6"}
+              className=" d-flex align-items-center me-2 me-xxl-0 custom-dropdown"
             >
               <Link
                 to={"/"}
@@ -43,7 +44,11 @@ const NavbarLg = () => {
               </Link>
             </Col>
 
-            <Col lg={"3"} className="d-flex align-items-center custom-dropdown">
+            <Col
+              lg={"3"}
+              xxl={"4"}
+              className="d-flex align-items-center custom-dropdown"
+            >
               <Link
                 to={"/about"}
                 className="text-link link-navbar-lg text-decoration-none  px-2 py-3 rounded-1"
