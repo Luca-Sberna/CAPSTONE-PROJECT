@@ -14,7 +14,7 @@ const NavbarLg = () => {
           <div className="d-flex ">
             <Col className="d-flex align-items-center custom-dropdown">
               <Link
-                to={"/"}
+                to={"/vip"}
                 className="text-link link-navbar-lg d-flex text-decoration-none align-items-center  px-2 py-3 rounded-1"
               >
                 <Col className="bg-transparent">👑</Col>{" "}
@@ -24,7 +24,7 @@ const NavbarLg = () => {
 
             <Col className="d-flex align-items-center mx-4 custom-dropdown">
               <Link
-                to={"/"}
+                to={"/ranking"}
                 className=" text-link link-navbar-lg text-decoration-none  px-2 py-3 rounded-1"
               >
                 Ranking
@@ -45,7 +45,7 @@ const NavbarLg = () => {
 
             <Col lg={"3"} className="d-flex align-items-center custom-dropdown">
               <Link
-                to={"/"}
+                to={"/about"}
                 className="text-link link-navbar-lg text-decoration-none  px-2 py-3 rounded-1"
               >
                 About Us

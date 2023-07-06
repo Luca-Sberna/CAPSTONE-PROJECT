@@ -19,6 +19,7 @@
     display: block;
     padding: 5px 50px;
     transition: all .2s ease-out;
+
 }
 
 .header ul a:hover {
@@ -33,6 +34,7 @@
     background-color: #000000c0;
     width: 100%;
     transition: all .2s ease-out;
+
 }
 
 .header .logo {
@@ -92,11 +94,13 @@
 .header .menu-icon.open .nav-icon::after {
     transform: rotate(-45deg);
     top: 0;
+
 }
 
 .header .menu .dropdown-toggle {
     display: flex;
     align-items: center;
+
 }
 
 .header .menu .dropdown-toggle .profile-image {
@@ -140,6 +144,7 @@
 
 .navbar-lg .menu-2 {
     justify-content: center;
+
 
 }
 
@@ -187,6 +192,7 @@
 
 .custom-dropdown {
     transition: all .2s ease-out;
+
 }
 
 .custom-dropdown :hover {
@@ -323,4 +329,26 @@
     background-color: #000000c0;
     transition: all .3s ease-out;
     color: #FF5722;
+}
+
+.game-container {
+    border: 2px solid #9C27B0;
+
+}
+
+.news-container {
+    border: 2px solid #9C27B0;
+
+
+}
+
+.hero-container {
+    border: 2px solid #9C27B0;
+
+
+}
+
+.drop-lg {
+
+    z-index: 1000000;
 }

@@ -25,15 +25,15 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="header bg-elements shadow-lg   position-fixed w-100 d-flex flex-column ">
-        <Row>
-          <Col className="d-flex align-items-center justify-content-between navbar-lg">
+      <header className="header bg-elements shadow position-sticky  w-100 d-flex flex-column ">
+        <Row className="">
+          <Col className="d-flex align-items-center justify-content-between navbar-lg ">
             <Link
               to={"/"}
               className="logo text-decoration-none special-text-link p-0"
             >
               <Image
-                width={62}
+                width={61}
                 fluid
                 src={logo2}
                 alt="logo"
@@ -82,12 +82,12 @@ const Navbar = () => {
           style={{ maxHeight: menuOpen ? "300px" : "0px" }}
         >
           <li className="my-2 my-lg-0 custom-dropdown text-link">
-            <Link to={"/"} className="text-decoration-none text-link">
+            <Link to={"/vip"} className="text-decoration-none text-link">
               Vip 👑 Premium
             </Link>
           </li>
           <li className="my-2 my-lg-0 custom-dropdown">
-            <Link to={"/"} className="text-decoration-none text-link">
+            <Link to={"/ranking"} className="text-decoration-none text-link">
               Ranking
             </Link>
           </li>
@@ -97,7 +97,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="mt-2 mt-lg-0 custom-dropdown">
-            <Link to={"/"} className="text-decoration-none text-link">
+            <Link to={"/about"} className="text-decoration-none text-link">
               About Us
             </Link>
           </li>
@@ -119,7 +119,7 @@ const Navbar = () => {
                   Your Profile
                 </span>
               </Dropdown.Toggle>
-              <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden ">
+              <Dropdown.Menu className=" bg-elements mt-1 ms-5 overflow-hidden ">
                 {/* Esempi di elementi nella dropdown */}
                 <Dropdown.Item
                   href="#action1"
