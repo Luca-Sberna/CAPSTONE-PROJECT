@@ -150,7 +150,7 @@ const HomeContent = () => {
           <Game />
         </Col>
 
-        <Col className="d-none d-xxl-flex hero-container  bg-elements rounded-1 p-2 text-link me-3 position-relative h-50">
+        <Col className="d-none d-xxl-flex  rounded-1 p-2 text-link me-3 position-relative h-50">
           <Image
             className="img-ranking position-absolute  "
             src={img4}

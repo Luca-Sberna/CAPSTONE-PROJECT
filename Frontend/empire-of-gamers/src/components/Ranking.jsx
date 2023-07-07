@@ -2,8 +2,15 @@ import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
 const Ranking = () => {
+  const rankingData = [
+    { position: 1, user: "User 1", score: 100 },
+    { position: 2, user: "User 2", score: 90 },
+    { position: 3, user: "User 3", score: 80 },
+    // Aggiungi altri dati della classifica ottenuti dalla fetch
+  ];
+
   return (
-    <Container>
+    <Container className="hero-container bg-elements p-3">
       <h3>Ranking</h3>
       <hr className="divisori" />
       <Row>
@@ -17,23 +24,13 @@ const Ranking = () => {
           <h5>Score</h5>
         </Col>
       </Row>
-      {/* Esempi di righe della classifica */}
-      <Row>
-        <Col xs={3}>1.</Col>
-        <Col xs={6}>User 1</Col>
-        <Col xs={3}>100</Col>
-      </Row>
-      <Row>
-        <Col xs={3}>2.</Col>
-        <Col xs={6}>User 2</Col>
-        <Col xs={3}>90</Col>
-      </Row>
-      <Row>
-        <Col xs={3}>3.</Col>
-        <Col xs={6}>User 3</Col>
-        <Col xs={3}>80</Col>
-      </Row>
-      {/* Altre righe della classifica */}
+      {rankingData.map((item) => (
+        <Row key={item.position}>
+          <Col xs={3}>{item.position}.</Col>
+          <Col xs={6}>{item.user}</Col>
+          <Col xs={3}>{item.score}</Col>
+        </Row>
+      ))}
     </Container>
   );
 };
