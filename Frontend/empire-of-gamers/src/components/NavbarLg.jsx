@@ -83,7 +83,13 @@ const NavbarLg = () => {
                     href="#action2"
                     className="dropdown-custom-hover text-link"
                   >
-                    Impostazioni profilo
+                    <Link
+                      className="text-decoration-none text-link"
+                      to={"/profile/:id"}
+                    >
+                      {" "}
+                      Impostazioni profilo
+                    </Link>{" "}
                   </Dropdown.Item>
                   <Dropdown.Divider className="elements" />
                   <Dropdown.Item
