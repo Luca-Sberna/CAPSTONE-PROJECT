@@ -114,7 +114,6 @@ const Navbar = () => {
                   src={avatar}
                   alt="Profile"
                 />
-
                 <span className="align-middle px-2 text-link">
                   Your Profile
                 </span>
@@ -125,15 +124,11 @@ const Navbar = () => {
                   href="#action1"
                   className="dropdown-custom-hover text-link"
                 >
-                  Action 1
+                  Impostazioni profilo
                 </Dropdown.Item>
-                <Dropdown.Item
-                  href="#action2"
-                  className="dropdown-custom-hover text-link"
-                >
-                  Action 2
-                </Dropdown.Item>
+
                 <Dropdown.Divider className="elements " />
+
                 <Dropdown.Item
                   href="#action3"
                   className="dropdown-custom-hover text-link"

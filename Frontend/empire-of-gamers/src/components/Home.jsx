@@ -14,7 +14,7 @@ const Home = () => {
       >
         <Navbar />
 
-        <div fluid className="p-0 flex-grow-1 position-relative">
+        <div fluid className="flex-grow-1 position-relative home-container">
           <HomeContent />
           <Friend />
         </div>
