@@ -29,7 +29,8 @@ const HomeContent = () => {
     setSectionVisible(!isSectionVisible);
   };
   return (
-    <Container fluid className="p-0 pt-5  px-1 position-relative">
+    <Container fluid className=" pt-5  px-1 position-relative">
+      {/* hero section */}
       <Row className="d-flex pb-3 pb-5 justify-content-center">
         <Col md={"12"} xxl={"8"} className="">
           <Image
@@ -88,7 +89,8 @@ const HomeContent = () => {
         </Col>
       </Row>
 
-      <Row className="game-container-size">
+      {/* Componente news del sito */}
+      <Row className="game-container-size pb-5">
         <Col md={"3"} className="pb-5 pb-md-0 position-relative">
           <Image
             className="img-news position-absolute   "
@@ -114,7 +116,7 @@ const HomeContent = () => {
                   className="btn-filter rounded-4 px-1 py-1"
                   onClick={toggleSection}
                 >
-                  <Image fluid width={45} src={filtro} alt="img-filtro" />
+                  <Image fluid width={30} src={filtro} alt="img-filtro" />
                 </button>
               </Col>
             </Row>
@@ -138,10 +140,11 @@ const HomeContent = () => {
                 </Row>
               </>
             )}
-            <hr className="pb-3" />
+            <hr className="pb-3 divisori " />
           </div>
         </Col>
 
+        {/* Componente dei giochi del sito disponibili */}
         <Col xs={"9"} xxl={"6"} className="position-relative ">
           <Image fluid className="img-game  " src={img2} alt="img" width={70} />
           <Game />

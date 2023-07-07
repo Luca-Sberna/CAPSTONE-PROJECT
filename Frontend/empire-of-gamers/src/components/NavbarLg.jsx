@@ -80,16 +80,10 @@ const NavbarLg = () => {
                 <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
                   {/* Esempi di elementi nella dropdown */}
                   <Dropdown.Item
-                    href="#action1"
-                    className="dropdown-custom-hover text-link  "
-                  >
-                    Action 1
-                  </Dropdown.Item>
-                  <Dropdown.Item
                     href="#action2"
                     className="dropdown-custom-hover text-link"
                   >
-                    Action 2
+                    Impostazioni profilo
                   </Dropdown.Item>
                   <Dropdown.Divider className="elements" />
                   <Dropdown.Item

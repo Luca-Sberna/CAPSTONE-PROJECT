@@ -192,6 +192,7 @@
 
 .custom-dropdown {
     transition: all .2s ease-out;
+    cursor: pointer;
 
 }
 
@@ -275,7 +276,36 @@
     border: 2px solid #9C27B0;
     transition: all 0.3s ease;
     border-radius: .2rem;
+
 }
+
+.friend-list-container {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+
+
+}
+
+.friend-list-container::-webkit-scrollbar {
+    width: 8px;
+    /* Larghezza sottile */
+
+}
+
+.friend-list-container::-webkit-scrollbar-thumb {
+    background-color: #A4C639;
+    /* Colore del pollice */
+}
+
+.friend-list-container::-webkit-scrollbar-track {
+    background-color: #a5c63970;
+    /* Colore della traccia */
+
+}
+
+
 
 .friend-container.open {
     transition: all .5s ease-out;
@@ -333,6 +363,7 @@
 
 .game-container {
     border: 2px solid #9C27B0;
+    box-shadow: 10px 10px 25px 1px black;
 
 }
 
@@ -345,15 +376,17 @@
 
 .news-container {
     border: 2px solid #9C27B0;
-
+    box-shadow: 10px 10px 25px 1px black;
 
 }
 
 .hero-container {
     border: 2px solid #9C27B0;
+    box-shadow: 10px 10px 25px 1px black;
 
 
 }
+
 
 .drop-lg {
 
@@ -414,6 +447,10 @@
     }
 }
 
+.title-news {
+    color: #9C27B0;
+}
+
 .img-star-rates {
     cursor: pointer;
 }
@@ -425,4 +462,57 @@
 .img-star-rates .star:hover,
 .img-star-rates .star.selected-star {
     opacity: 1;
+}
+
+.game-img {
+    cursor: pointer;
+    border-radius: 10%;
+    transition: all .2s ease-in-out;
+    opacity: 70%;
+
+}
+
+.game-img:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: 1px 7px 10px 1px #A4C639;
+    opacity: unset;
+}
+
+.game-title {
+    display: none;
+}
+
+.game-card:hover .game-title {
+    display: block;
+}
+
+.game-card {
+    position: relative;
+}
+
+.game-title {
+    position: absolute;
+    top: 78%;
+    left: 63.1%;
+    transform: translate(-50%, -50%);
+    background-color: #FF5722;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 25%;
+    box-shadow: 0px 0px 10px 0px black;
+    border: 1px solid #9C27B0;
+}
+
+.game-card:hover .game-title {
+    opacity: 1;
+}
+
+.divisori {
+    color: #A4C639;
+
+
 }
