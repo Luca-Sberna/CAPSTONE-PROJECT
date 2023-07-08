@@ -595,3 +595,31 @@
     right: 7.5rem;
     top: .9rem;
 }
+
+.login-btn,
+.signup-btn {
+    cursor: pointer;
+    border: 1px solid #9C27B0;
+}
+
+.login-btn {
+    background-color: #a5c639a8;
+}
+
+.login-btn:hover {
+    background-color: #A4C639;
+    box-shadow: 0px 5px 10px 0px black;
+    color: #FF5722;
+}
+
+.signup-btn {
+    background-color: #ff56227c;
+
+}
+
+.signup-btn:hover {
+    background-color: #FF5722;
+    color: #A4C639;
+    box-shadow: 0px 5px 10px 0px black;
+
+}

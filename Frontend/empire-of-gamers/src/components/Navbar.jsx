@@ -7,7 +7,12 @@ import logo2 from "../assets/imgs/logo-7.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Stato di accesso dell'utente
 
+  const handleLogout = () => {
+    // Implementa qui la logica per effettuare il logout
+    setIsLoggedIn(false);
+  };
   return (
     <>
       <Container
@@ -20,13 +25,7 @@ const Navbar = () => {
               to={"/"}
               className="logo text-decoration-none special-text-link p-0 "
             >
-              <Image
-                width={61}
-                fluid
-                src={logo2}
-                alt="logo"
-                className=" ms-1"
-              />
+              <Image width={61} fluid src={logo2} alt="logo" className=" " />
             </Link>
 
             <NavbarLg />
@@ -46,23 +45,44 @@ const Navbar = () => {
             />
           </Col>
 
-          <Col xs="auto" className="d-flex d-lg-none  justify-content-end">
-            <label
-              htmlFor="menu-btn"
-              className={`menu-icon d-flex align-items-center justify-content-center ${
-                menuOpen ? "open" : ""
-              }`}
-            >
-              <span
-                className="nav-icon"
-                style={{
-                  backgroundColor: menuOpen ? "transparent" : "#A4C639",
-                }}
-              ></span>
-            </label>
+          <Col
+            xs="auto"
+            className="d-flex d-lg-none  justify-content-end align-items-center"
+          >
+            {isLoggedIn && ( // Mostra il menu solo se l'utente è loggato
+              <label
+                htmlFor="menu-btn"
+                className={`menu-icon d-flex align-items-center justify-content-center ${
+                  menuOpen ? "open" : ""
+                }`}
+              >
+                <span
+                  className="nav-icon"
+                  style={{
+                    backgroundColor: menuOpen ? "transparent" : "#A4C639",
+                  }}
+                ></span>
+              </label>
+            )}
+            {!isLoggedIn && ( // Mostra i bottoni di login e signup solo se l'utente non è loggato
+              <>
+                <Link to={"/login"} className="text-decoration-none text-black">
+                  <span className="login-btn rounded-start-pill p-1">
+                    Login
+                  </span>
+                </Link>
+                <Link
+                  to={"/signup"}
+                  className="text-decoration-none text-black"
+                >
+                  <span className="signup-btn rounded-end-pill p-1">
+                    SignUp
+                  </span>
+                </Link>
+              </>
+            )}
           </Col>
         </Row>
-
         <ul
           className={`menu list-unstyled d-lg-none justify-content-center align-items-center   m-0 ${
             menuOpen ? "" : "ul-mobile"
@@ -89,6 +109,7 @@ const Navbar = () => {
               About Us
             </Link>
           </li>
+
           <li className="mb-2 mb-lg-0 d-flex align-items-center custom-dropdown">
             <Dropdown>
               <Dropdown.Toggle
@@ -109,7 +130,6 @@ const Navbar = () => {
                 </span>
               </Dropdown.Toggle>
               <Dropdown.Menu className=" bg-elements mt-1 ms-5 overflow-hidden ">
-                {/* Esempi di elementi nella dropdown */}
                 <Dropdown.Item
                   href="#action1"
                   className="dropdown-custom-hover text-link"

@@ -47,7 +47,7 @@ const Vip = () => {
             <li>👑 Personalizzazione del profilo su richiesta</li>
             <hr className="divisori" />
 
-            <li>👑 La possibilità di diventare Admin</li>
+            <li>👑 Possibilità di diventare Admin</li>
           </ul>
         </Col>
       </Row>
