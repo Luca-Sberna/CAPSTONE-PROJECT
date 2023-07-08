@@ -1,62 +1,54 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 
 const SignUp = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    birthDate: "",
+    name: "",
+    surname: "",
+    nationality: "",
+    profileImage: "",
+    backgroundImage: "",
+  });
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const navigate = useNavigate();
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleDateOfBirthChange = (event) => {
-    setDateOfBirth(event.target.value);
-  };
-
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-
-  const handleNationalityChange = (event) => {
-    setNationality(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSignupSubmit = async (event) => {
     event.preventDefault();
-    // Esegui la registrazione con i dati inseriti
-    // Implementa qui la logica per gestire la registrazione
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Data di nascita:", dateOfBirth);
-    console.log("Nome:", firstName);
-    console.log("Cognome:", lastName);
-    console.log("Nazionalità:", nationality);
-    // Ripristina i campi di input
-    setUsername("");
-    setEmail("");
-    setPassword("");
-    setDateOfBirth("");
-    setFirstName("");
-    setLastName("");
-    setNationality("");
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/registration`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+      const data = await response.json();
+      if (response.ok) {
+        navigate("/");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -67,13 +59,14 @@ const SignUp = () => {
             <h2>Registrazione</h2>
             <hr className="divisori" />
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSignupSubmit}>
               <Form.Group controlId="formUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
+                  name="username"
                   type="text"
-                  value={username}
-                  onChange={handleUsernameChange}
+                  value={formData.username}
+                  onChange={handleInputChange}
                   required
                 />
               </Form.Group>
@@ -81,9 +74,10 @@ const SignUp = () => {
               <Form.Group controlId="formEmail">
                 <Form.Label>Email:</Form.Label>
                 <Form.Control
+                  name="email"
                   type="email"
-                  value={email}
-                  onChange={handleEmailChange}
+                  value={formData.email}
+                  onChange={handleInputChange}
                   required
                 />
               </Form.Group>
@@ -91,47 +85,71 @@ const SignUp = () => {
               <Form.Group controlId="formPassword">
                 <Form.Label>Password:</Form.Label>
                 <Form.Control
+                  name="password"
                   type="password"
-                  value={password}
-                  onChange={handlePasswordChange}
+                  value={formData.password}
+                  onChange={handleInputChange}
                   required
                 />
               </Form.Group>
 
-              <Form.Group controlId="formDateOfBirth">
+              <Form.Group controlId="formBirthDate">
                 <Form.Label>Data di nascita:</Form.Label>
                 <Form.Control
+                  name="birthDate"
                   type="date"
-                  value={dateOfBirth}
-                  onChange={handleDateOfBirthChange}
+                  value={formData.birthDate}
+                  onChange={handleInputChange}
                   required
                 />
               </Form.Group>
 
-              <Form.Group controlId="formFirstName">
+              <Form.Group controlId="formName">
                 <Form.Label>Nome:</Form.Label>
                 <Form.Control
+                  name="name"
                   type="text"
-                  value={firstName}
-                  onChange={handleFirstNameChange}
+                  value={formData.firstName}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
 
-              <Form.Group controlId="formLastName">
+              <Form.Group controlId="formSurname">
                 <Form.Label>Cognome:</Form.Label>
                 <Form.Control
+                  name="surname"
                   type="text"
-                  value={lastName}
-                  onChange={handleLastNameChange}
+                  value={formData.lastName}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
 
               <Form.Group controlId="formNationality">
                 <Form.Label>Nazionalità:</Form.Label>
                 <Form.Control
+                  name="nationality"
                   type="text"
-                  value={nationality}
-                  onChange={handleNationalityChange}
+                  value={formData.nationality}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formProfileImage">
+                <Form.Label>Immagine del Profilo:</Form.Label>
+                <Form.Control
+                  name="profileImage"
+                  type="file"
+                  value={formData.profileImage}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="formBackgroundImage">
+                <Form.Label>Immagine di sfondo del Profilo:</Form.Label>
+                <Form.Control
+                  name="backgroundImage"
+                  type="file"
+                  value={formData.backgroundImage}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
 
