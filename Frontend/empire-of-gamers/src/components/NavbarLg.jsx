@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import avatar from "../assets/imgs/avatar.png";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/userSlice";
 
 const NavbarLg = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Stato di accesso dell'utente
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     // Implementa qui la logica per effettuare il logout
-    setIsLoggedIn(false);
+    dispatch(logout());
   };
   return (
     <Container
@@ -125,6 +128,7 @@ const NavbarLg = () => {
                     <Dropdown.Item
                       href="#action3"
                       className="dropdown-custom-hover text-link"
+                      onClick={handleLogout}
                     >
                       Log Out
                     </Dropdown.Item>

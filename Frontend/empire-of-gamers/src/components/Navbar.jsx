@@ -4,14 +4,17 @@ import { Row, Col, Dropdown, Image, Container } from "react-bootstrap";
 import avatar from "../assets/imgs/avatar.png";
 import NavbarLg from "./NavbarLg";
 import logo2 from "../assets/imgs/logo-7.png";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/userSlice";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Stato di accesso dell'utente
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // Implementa qui la logica per effettuare il logout
-    setIsLoggedIn(false);
+    dispatch(logout());
+    setMenuOpen(false);
   };
   return (
     <>
@@ -148,6 +151,7 @@ const Navbar = () => {
                 <Dropdown.Item
                   href="#action3"
                   className="dropdown-custom-hover text-link"
+                  onClick={handleLogout}
                 >
                   Log Out
                 </Dropdown.Item>

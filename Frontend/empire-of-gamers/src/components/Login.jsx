@@ -1,42 +1,66 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import { isLoggedIn, setToken } from "../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+  const navigate = useNavigate();
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    // Esegui l'accesso con l'email e la password inserite
-    // Implementa qui la logica per verificare le credenziali e gestire l'accesso
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Ripristina i campi di input
-    setEmail("");
-    setPassword("");
-  };
 
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+      const data = await response.json();
+      if (response.ok) {
+        dispatch(setToken(data.accessToken));
+        dispatch(isLoggedIn(true));
+        navigate("/");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Container className="hero-container rounded-1 bg-elements p-2 mt-5">
       <Row className=" justify-content-center text-link">
         <Col xs={12} sm={8} md={6} lg={4}>
           <h2>Login</h2>
           <hr className="divisori" />
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleLoginSubmit}>
             <Form.Group controlId="formEmail">
               <Form.Label>Email:</Form.Label>
               <Form.Control
+                name="email"
                 type="email"
-                value={email}
-                onChange={handleEmailChange}
+                value={formData.email}
+                onChange={handleInputChange}
                 required
               />
             </Form.Group>
@@ -44,9 +68,10 @@ const LoginPage = () => {
             <Form.Group controlId="formPassword">
               <Form.Label>Password:</Form.Label>
               <Form.Control
+                name="password"
                 type="password"
-                value={password}
-                onChange={handlePasswordChange}
+                value={formData.password}
+                onChange={handleInputChange}
                 required
               />
             </Form.Group>
