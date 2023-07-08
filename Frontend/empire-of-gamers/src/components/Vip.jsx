@@ -3,7 +3,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 
 const Vip = () => {
   return (
-    <Container fluid className="pb-5 bg-home">
+    <Container fluid className="pb-5 bg-home h-100">
       <Row className="gap-4 pt-5 px-5">
         <Col className="hero-container bg-elements h-75 p-2 rounded-1">
           <h1 className="text-link pb-2">Empire Vip Premium</h1>
