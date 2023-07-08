@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import avatar from "../assets/imgs/avatar.png";
 
 const NavbarLg = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Stato di accesso dell'utente
+
+  const handleLogout = () => {
+    // Implementa qui la logica per effettuare il logout
+    setIsLoggedIn(false);
+  };
   return (
     <Container
       fluid
@@ -57,55 +63,75 @@ const NavbarLg = () => {
               </Link>
             </Col>
           </div>
-
           <div>
-            <Col className="custom-dropdown">
-              <Dropdown className="link-navbar-lg  py-2 rounded-1 ">
-                <Dropdown.Toggle
-                  variant="link"
-                  id="dropdown-basic"
-                  className="text-decoration-none d-flex align-items-center bg-transparent "
-                >
-                  {" "}
-                  <Link
-                    to={"/profile/:id"}
-                    className="p-0 text-decoration-none"
-                  >
-                    <Image
-                      fluid
-                      className="profile-image "
-                      src={avatar}
-                      alt="Profile"
-                    />
-                  </Link>
-                  <span className="align-middle px-2 text-link bg-transparent">
-                    Your Profile
+            {!isLoggedIn && ( // Mostra i bottoni di login e signup solo se l'utente non è loggato
+              <>
+                <Link to={"/login"} className="text-decoration-none text-black">
+                  <span className="login-btn rounded-start-pill p-1">
+                    Login
                   </span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
-                  {/* Esempi di elementi nella dropdown */}
-                  <Dropdown.Item
-                    href="#action2"
-                    className="dropdown-custom-hover text-link"
+                </Link>
+                <Link
+                  to={"/signup"}
+                  className="text-decoration-none text-black"
+                >
+                  <span className="signup-btn rounded-end-pill p-1">
+                    SignUp
+                  </span>
+                </Link>
+              </>
+            )}
+          </div>
+          <div>
+            {isLoggedIn && ( // Mostra la dropdown del profilo solo se l'utente è loggato
+              <Col className="custom-dropdown">
+                <Dropdown className="link-navbar-lg  py-2 rounded-1 ">
+                  <Dropdown.Toggle
+                    variant="link"
+                    id="dropdown-basic"
+                    className="text-decoration-none d-flex align-items-center bg-transparent "
                   >
+                    {" "}
                     <Link
-                      className="text-decoration-none text-link"
-                      to={"/profile-settings/:id"}
+                      to={"/profile/:id"}
+                      className="p-0 text-decoration-none"
                     >
-                      {" "}
-                      Impostazioni profilo
-                    </Link>{" "}
-                  </Dropdown.Item>
-                  <Dropdown.Divider className="elements" />
-                  <Dropdown.Item
-                    href="#action3"
-                    className="dropdown-custom-hover text-link"
-                  >
-                    Log Out
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Col>
+                      <Image
+                        fluid
+                        className="profile-image "
+                        src={avatar}
+                        alt="Profile"
+                      />
+                    </Link>
+                    <span className="align-middle px-2 text-link bg-transparent">
+                      Your Profile
+                    </span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
+                    {/* Esempi di elementi nella dropdown */}
+                    <Dropdown.Item
+                      href="#action2"
+                      className="dropdown-custom-hover text-link"
+                    >
+                      <Link
+                        className="text-decoration-none text-link"
+                        to={"/profile-settings/:id"}
+                      >
+                        {" "}
+                        Impostazioni profilo
+                      </Link>{" "}
+                    </Dropdown.Item>
+                    <Dropdown.Divider className="elements" />
+                    <Dropdown.Item
+                      href="#action3"
+                      className="dropdown-custom-hover text-link"
+                    >
+                      Log Out
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+            )}
           </div>
         </div>
       </Row>
