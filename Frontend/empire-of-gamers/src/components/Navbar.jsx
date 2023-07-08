@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Dropdown, Image } from "react-bootstrap";
+import { Row, Col, Dropdown, Image, Container } from "react-bootstrap";
 import avatar from "../assets/imgs/avatar.png";
 import NavbarLg from "./NavbarLg";
-import $ from "jquery";
 import logo2 from "../assets/imgs/logo-7.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  //funzione per l'animazione dei testi speciali
-  useEffect(() => {
-    $(".special-text-link").on("mouseenter", function () {
-      var colors = getComputedStyle(document.documentElement)
-        .getPropertyValue("--random-color")
-        .split(", ");
-      var randomColor = colors[Math.floor(Math.random() * colors.length)];
-      $(this).css("color", randomColor);
-    });
-
-    $(".special-text-link").on("mouseleave", function () {
-      $(this).css("color", ""); // Ripristina il colore originale
-    });
-  }, []);
 
   return (
     <>
-      <header className="header bg-elements shadow position-sticky  w-100 d-flex flex-column ">
+      <Container
+        fluid
+        className="header   bg-elements  shadow position-sticky  w-100 d-flex flex-column "
+      >
         <Row className="">
           <Col className="d-flex align-items-center justify-content-between navbar-lg ">
             <Link
               to={"/"}
-              className="logo text-decoration-none special-text-link p-0"
+              className="logo text-decoration-none special-text-link p-0 "
             >
               <Image
                 width={61}
@@ -76,7 +64,7 @@ const Navbar = () => {
         </Row>
 
         <ul
-          className={`menu list-unstyled d-lg-none justify-content-center align-items-center m-0 ${
+          className={`menu list-unstyled d-lg-none justify-content-center align-items-center   m-0 ${
             menuOpen ? "" : "ul-mobile"
           }`}
           style={{ maxHeight: menuOpen ? "300px" : "0px" }}
@@ -92,7 +80,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="my-2 my-lg-0 custom-dropdown">
-            <Link to={"/"} className="text-decoration-none text-link">
+            <Link to={"/social"} className="text-decoration-none text-link">
               Empire Social{" "}
             </Link>
           </li>
@@ -108,12 +96,14 @@ const Navbar = () => {
                 id="dropdown-basic"
                 className="text-decoration-none d-flex align-items-center "
               >
-                <Image
-                  fluid
-                  className="profile-image "
-                  src={avatar}
-                  alt="Profile"
-                />
+                <Link to={"/profile/:id"} className="p-0 text-decoration-none">
+                  <Image
+                    fluid
+                    className="profile-image "
+                    src={avatar}
+                    alt="Profile"
+                  />
+                </Link>
                 <span className="align-middle px-2 text-link">
                   Your Profile
                 </span>
@@ -124,9 +114,10 @@ const Navbar = () => {
                   href="#action1"
                   className="dropdown-custom-hover text-link"
                 >
+                  {" "}
                   <Link
-                    className="text-decoration-none text-link bg-transparent"
-                    to={"/profile/:id"}
+                    className="text-decoration-none text-link"
+                    to={"/profile-settings/:id"}
                   >
                     Impostazioni profilo
                   </Link>
@@ -144,7 +135,7 @@ const Navbar = () => {
             </Dropdown>
           </li>
         </ul>
-      </header>
+      </Container>
     </>
   );
 };

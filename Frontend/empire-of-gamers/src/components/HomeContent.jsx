@@ -45,7 +45,7 @@ const HomeContent = () => {
       </Row>
 
       {/* componente dei filtri per tablet in su */}
-      <Row className="d-none d-md-flex ">
+      <Row className="d-none d-md-flex pb-2">
         <Col md={"3"}></Col>
         <Col md={"5"} className="mb-1 position-relative">
           <Image
@@ -150,7 +150,7 @@ const HomeContent = () => {
           <Game />
         </Col>
 
-        <Col className="d-none d-xxl-flex  rounded-1 p-2 text-link me-3 position-relative h-50">
+        <Col className="d-none d-xxl-flex   rounded-1 p-2 py-3 text-link me-3  position-relative h-50">
           <Image
             className="img-ranking position-absolute  "
             src={img4}

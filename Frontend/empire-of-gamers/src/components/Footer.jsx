@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { FaInstagram, FaFacebook, FaTwitter, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import $ from "jquery";
 
 const Footer = () => {
+  //funzione per l'animazione dei testi speciali
+  useEffect(() => {
+    $(".special-text-link").on("mouseenter", function () {
+      var colors = getComputedStyle(document.documentElement)
+        .getPropertyValue("--random-color")
+        .split(", ");
+      var randomColor = colors[Math.floor(Math.random() * colors.length)];
+      $(this).css("color", randomColor);
+    });
+
+    $(".special-text-link").on("mouseleave", function () {
+      $(this).css("color", ""); // Ripristina il colore originale
+    });
+  }, []);
+
   return (
     <footer className="footer bg-home text-light text-center">
       <Container fluid className="bg-elements py-2">

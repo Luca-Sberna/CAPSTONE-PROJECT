@@ -66,13 +66,18 @@ const NavbarLg = () => {
                   id="dropdown-basic"
                   className="text-decoration-none d-flex align-items-center bg-transparent "
                 >
-                  <Image
-                    fluid
-                    className="profile-image "
-                    src={avatar}
-                    alt="Profile"
-                  />
-
+                  {" "}
+                  <Link
+                    to={"/profile/:id"}
+                    className="p-0 text-decoration-none"
+                  >
+                    <Image
+                      fluid
+                      className="profile-image "
+                      src={avatar}
+                      alt="Profile"
+                    />
+                  </Link>
                   <span className="align-middle px-2 text-link bg-transparent">
                     Your Profile
                   </span>
@@ -85,7 +90,7 @@ const NavbarLg = () => {
                   >
                     <Link
                       className="text-decoration-none text-link"
-                      to={"/profile/:id"}
+                      to={"/profile-settings/:id"}
                     >
                       {" "}
                       Impostazioni profilo
