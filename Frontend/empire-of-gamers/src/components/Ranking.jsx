@@ -12,7 +12,7 @@ const Ranking = () => {
 
   return (
     <Container fluid className="px-xs-2 px-md-0 pt-5">
-      <Container className="hero-container bg-elements   p-3 text-link ">
+      <Container className="hero-container bg-elements  rounded-1 p-3 text-link ">
         <h3>Ranking</h3>
         <hr className="divisori" />
         <Row>
