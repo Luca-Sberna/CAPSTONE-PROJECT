@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import avatar from "../assets/imgs/avatar.png";
+import { Link } from "react-router-dom";
 
 const FriendList = () => {
   const onlineImg = <span className=" bg-transparent">🟢</span>;
@@ -38,13 +39,16 @@ const FriendList = () => {
         >
           <Col xs={12} className="custom-dropdown">
             <Row className="align-items-center">
-              <Col xs={2} className="p-0">
-                <Image
-                  fluid
-                  className="profile-image rounded-circle ms-2"
-                  src={avatar}
-                  alt="profile-img"
-                />
+              <Col xs={2} className="p-0 py-2 ms-1">
+                {" "}
+                <Link to={"/profile/:id"} className="p-0 text-decoration-none">
+                  <Image
+                    fluid
+                    className="profile-image rounded-circle ms-2"
+                    src={avatar}
+                    alt="profile-img"
+                  />
+                </Link>
               </Col>
               <Col className="bg-transparent pe-0 text-truncate custom-dropdown-friends">
                 <span className="friend-content-element mb-2">

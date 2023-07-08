@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
-import avatar from "../assets/imgs/avatar.png";
+import friends from "../assets/imgs/friends.png";
 import FriendList from "./FriendList";
 
 const Friend = () => {
@@ -13,14 +13,16 @@ const Friend = () => {
   };
 
   return (
-    <Container className="friend-container position-fixed bottom-0 end-0 d-flex overflow-hidden">
+    <Container className="friend-container position-fixed bottom-0 end-0 d-flex overflow-hidden d-flex align-items-center justify-content-center">
       <Row className="friend-header ">
         <Col
           xs={""}
-          className="d-flex align-items-center "
+          className="d-flex align-items-center justify-content-center"
           onClick={(e) => toggleDropdown(e)}
         >
-          <h5 className="me-2  mb-0 bg-transparent ">Your Friends</h5>
+          <h5 className="me-2  mb-0 bg-transparent d-flex ">
+            <Image src={friends} alt="friend-icon-list" width={45} />
+          </h5>
           <span className={`arrow ${isDropdownOpen ? "down" : "up"}`}>
             {isDropdownOpen ? toggleDown : toggleUp}
           </span>
