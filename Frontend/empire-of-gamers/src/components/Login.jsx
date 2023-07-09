@@ -55,30 +55,34 @@ const LoginPage = () => {
           <hr className="divisori" />
           <Form onSubmit={handleLoginSubmit}>
             <Form.Group controlId="formEmail">
-              <Form.Label>Email:</Form.Label>
+              <Form.Label className="green-text">Email:</Form.Label>
               <Form.Control
                 name="email"
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                className="form-container"
                 required
               />
             </Form.Group>
 
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password:</Form.Label>
+            <Form.Group controlId="formPassword" className="py-3">
+              <Form.Label className="green-text">Password:</Form.Label>
               <Form.Control
                 name="password"
                 type="password"
                 value={formData.password}
                 onChange={handleInputChange}
+                className="form-container"
                 required
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Accedi
-            </Button>
+            <div className="d-flex justify-content-end">
+              <button type="submit" className="btn-vip rounded-1">
+                Login
+              </button>
+            </div>
           </Form>
         </Col>
       </Row>

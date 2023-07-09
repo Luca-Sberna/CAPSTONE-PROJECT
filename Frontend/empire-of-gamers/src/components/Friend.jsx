@@ -21,7 +21,7 @@ const Friend = () => {
           onClick={(e) => toggleDropdown(e)}
         >
           <h5 className="me-2  mb-0 bg-transparent d-flex ">
-            <Image src={friends} alt="friend-icon-list" width={45} />
+            <Image src={friends} alt="friend-icon-list" width={40} />
           </h5>
           <span className={`arrow ${isDropdownOpen ? "down" : "up"}`}>
             {isDropdownOpen ? toggleDown : toggleUp}
