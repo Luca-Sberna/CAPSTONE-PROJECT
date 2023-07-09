@@ -23,12 +23,12 @@ const Navbar = () => {
         className="header   bg-elements  shadow position-sticky  w-100 d-flex flex-column "
       >
         <Row className="">
-          <Col className="d-flex align-items-center justify-content-between navbar-lg ">
+          <Col className="px-0 d-flex align-items-center justify-content-between navbar-lg ">
             <Link
               to={"/"}
               className="logo text-decoration-none special-text-link p-0 "
             >
-              <Image width={61} fluid src={logo2} alt="logo" className=" " />
+              <Image width={51} src={logo2} alt="logo" className=" " />
             </Link>
 
             <NavbarLg />
@@ -36,7 +36,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search a game..."
-              className="input-search rounded-4   me-lg-3"
+              className="input-search rounded-4  my-1  me-lg-3"
             />
 
             <input
