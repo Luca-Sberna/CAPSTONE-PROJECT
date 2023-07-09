@@ -136,9 +136,7 @@ body {
     border: 2px solid;
     background-color: #f7f7f7;
     color: #FF5722;
-
     border-color: #9C27B0;
-
 }
 
 .header .input-search:focus {
@@ -651,7 +649,7 @@ body {
     color: #FF5722;
 }
 
-/* hero section */
+/*----------------------- hero section -------------------------------- */
 
 .img-hero-snake {
     left: -2rem;
@@ -675,4 +673,28 @@ body {
         right: .3rem;
         width: 113px
     }
+}
+
+/* -------------------form---------------------------------------------- */
+
+.form-container {
+    box-shadow: 10px 10px 25px 1px black;
+    background-color: transparent;
+    border-color: #9C27B0;
+    color: #f7f7f7;
+}
+
+
+.form-container:focus {
+    outline: none;
+    border-color: #A4C639;
+
+    background-color: transparent;
+    color: #f7f7f7;
+
+}
+
+.form-container::placeholder {
+    opacity: 80%;
+
 }
