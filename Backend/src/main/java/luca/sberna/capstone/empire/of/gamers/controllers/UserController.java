@@ -8,6 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,5 +65,12 @@ public class UserController {
 	public ResponseEntity<List<Ranking>> getUserRankings(@PathVariable UUID userId) throws NotFoundException {
 		List<Ranking> rankings = userService.getUserRankings(userId);
 		return ResponseEntity.ok(rankings);
+	}
+
+	@GetMapping("/me")
+	public User getCurrentUser(Authentication authentication) throws NotFoundException {
+		User userDetails = (User) authentication.getPrincipal();
+		UUID userId = userDetails.getIdUser();
+		return userService.findUserById(userId);
 	}
 }

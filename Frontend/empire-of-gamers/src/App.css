@@ -601,6 +601,14 @@ body {
     top: .5rem;
 }
 
+
+.btn-modal-2 {
+    background-color: rgba(0, 0, 0, 0.619);
+    border-color: #A4C639;
+    left: .5rem;
+    top: .5rem;
+}
+
 .btn-modal-game {
     background-color: transparent;
     border-color: #A4C639;
@@ -698,3 +706,27 @@ body {
     opacity: 80%;
 
 }
+
+.accordion-body {
+    background-color: transparent;
+    color: #f7f7f7;
+}
+
+.accordion-header {
+    color: #9C27B0;
+}
+
+.bg-card-container {
+    background-image: url("https://th.bing.com/th/id/OIG.lm8BqXDrYwK9.kgQbrlh?pid=ImgGn");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.bg-card-container:hover {
+    transition: all .3s ease-in-out;
+    transform: scale(1.1);
+}
+
+.accordion-button {}
