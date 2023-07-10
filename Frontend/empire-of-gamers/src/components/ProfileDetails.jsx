@@ -9,12 +9,11 @@ const ProfileDetails = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const [showModal, setShowModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const currentUser = useSelector((state) => state.user.currentUser);
   const token = useSelector((state) => state.user.token);
-  const idUserProfile = useSelector((state) => state.user.idUserProfile);
   const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState({});
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -50,41 +49,13 @@ const ProfileDetails = () => {
         setIsRequestSuccessful(true);
         navigate("/profile/:id");
         setShowCreateModal(false);
+        setUserProfile(data.id);
       } else {
         setIsRequestSuccessful(false);
         console.log(data.error);
       }
     } catch (error) {
       setIsRequestSuccessful(false);
-      console.log("Errore:", error);
-      alert(
-        "Si è verificato un errore durante la richiesta. Riprova più tardi.",
-      );
-    }
-  };
-
-  const handleModalSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const putResponse = await fetch(
-        `${process.env.REACT_APP_API_URL}/userProfile/${idUserProfile}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-      const putData = await putResponse.json();
-      if (putResponse.ok) {
-        navigate("/profile/:id");
-        setShowModal(false);
-      } else {
-        console.log(putData.error);
-      }
-    } catch (error) {
       console.log("Errore:", error);
       alert(
         "Si è verificato un errore durante la richiesta. Riprova più tardi.",
@@ -115,6 +86,36 @@ const ProfileDetails = () => {
     }
   }, [dispatch, isLoggedIn, token, currentUserId]);
 
+  const handleModalSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const putResponse = await fetch(
+        `${process.env.REACT_APP_API_URL}/userProfile/${userProfile.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+      const putData = await putResponse.json();
+      if (putResponse.ok) {
+        navigate("/profile/:id");
+        setShowModal(false);
+        window.location.reload();
+      } else {
+        console.log(putData.error);
+      }
+    } catch (error) {
+      console.log("Errore:", error);
+      alert(
+        "Si è verificato un errore durante la richiesta. Riprova più tardi.",
+      );
+    }
+  };
+
   return (
     <Container fluid className="bg-home px-0 py-5 ">
       <Container className="rounded-1 hero-container rounded-5 px-5 pb-3   background-image position-relative">
@@ -123,23 +124,13 @@ const ProfileDetails = () => {
           src={userProfile.imgBackground}
           alt="img-bg"
         />
-        {isRequestSuccessful && (
-          <button
-            className="btn-modal position-absolute   bg-transparent rounded-pill "
-            onClick={() => setShowModal(true)}
-          >
-            ✏️
-          </button>
-        )}
 
-        {!isRequestSuccessful && (
-          <button
-            className="btn-modal-2 position-absolute    rounded-pill "
-            onClick={() => setShowCreateModal(true)}
-          >
-            ➕
-          </button>
-        )}
+        <button
+          className="btn-modal position-absolute   bg-transparent rounded-pill "
+          onClick={() => setShowModal(true)}
+        >
+          ✏️
+        </button>
 
         <Row className="my-4 ">
           <Col
@@ -214,6 +205,11 @@ const ProfileDetails = () => {
         <Modal.Header closeButton>
           <Modal.Title>Modifica il tuo profilo</Modal.Title>
         </Modal.Header>
+        <Modal.Header>
+          <Modal.Title>
+            Inserisci tutti i dati e aggiorna la pagina!
+          </Modal.Title>
+        </Modal.Header>
         <Form onSubmit={handleModalSubmit}>
           <Modal.Body>
             <Form.Group controlId="formProfileImage" className="mb-3">
@@ -277,89 +273,6 @@ const ProfileDetails = () => {
           </Modal.Body>
           <Modal.Footer>
             <button variant="secondary" onClick={() => setShowModal(false)}>
-              Back
-            </button>
-            <button type="submit" variant="primary">
-              Save
-            </button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-
-      <Modal
-        className=""
-        show={showCreateModal}
-        onHide={() => setShowCreateModal(false)}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Crea il tuo profilo iniziale</Modal.Title>
-        </Modal.Header>
-        <Form onSubmit={handleModalCreateSubmit}>
-          <Modal.Body>
-            <Form.Group controlId="formProfileImage" className="mb-3">
-              <Form.Label className="form-label">
-                Profile Image (URL)
-              </Form.Label>
-              <Form.Control
-                value={formData.imgProfile}
-                onChange={handleModalInputChange}
-                type="text"
-                className="form-control"
-                name="imgProfile"
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBackgroundImage" className="mb-3">
-              <Form.Label className="form-label">
-                Background Image (URL)
-              </Form.Label>
-              <Form.Control
-                value={formData.imgBackground}
-                onChange={handleModalInputChange}
-                type="text"
-                className="form-control"
-                name="imgBackground"
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formName" className="mb-3">
-              <Form.Label className="form-label">Name</Form.Label>
-              <Form.Control
-                name="name"
-                value={formData.name}
-                type="text"
-                className="form-control"
-                onChange={handleModalInputChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formSurname" className="mb-3">
-              <Form.Label className="form-label">Surname</Form.Label>
-              <Form.Control
-                onChange={handleModalInputChange}
-                value={formData.surname}
-                name="surname"
-                type="text"
-                className="form-control"
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formNationality" className="mb-3">
-              <Form.Label className="form-label">Nationality</Form.Label>
-              <Form.Control
-                onChange={handleModalInputChange}
-                value={formData.nationality}
-                name="nationality"
-                type="text"
-                className="form-control"
-              />
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <button
-              variant="secondary"
-              onClick={() => setShowCreateModal(false)}
-            >
               Back
             </button>
             <button type="submit" variant="primary">

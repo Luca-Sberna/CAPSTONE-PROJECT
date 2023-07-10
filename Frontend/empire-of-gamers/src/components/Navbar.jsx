@@ -61,12 +61,28 @@ const Navbar = () => {
           },
         );
         const currentUserProfile = response.data.content[0];
-        setUserProfile(currentUserProfile);
+        if (currentUserProfile) {
+          setUserProfile(currentUserProfile);
+        } else {
+          // L'utente non ha un profilo associato, creane uno di default
+          const defaultUserProfile = {
+            imgProfile: "", // Valore vuoto o un URL di immagine di default
+          };
+          const createProfileResponse = await axios.post(
+            `${process.env.REACT_APP_API_URL}/userProfile`,
+            defaultUserProfile,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+          setUserProfile(createProfileResponse.data);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-
     if (isLoggedIn) {
       fetchCurrentUser();
       fetchCurrentUserProfile();
