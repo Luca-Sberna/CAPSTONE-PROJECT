@@ -5,7 +5,9 @@ const initialState = {
     loading: false,
     error: null,
     isLoggedIn: false,
-    token: '', // Aggiungi lo stato del token
+    token: '',
+    currentUser: '',
+    currentUserId: '',
 };
 
 const userSlice = createSlice({
@@ -33,6 +35,14 @@ const userSlice = createSlice({
         logout(state, action) {
             state.isLoggedIn = false;
             state.token = ""; // Rimuovi o azzera il token
+
+        },
+        setCurrentUser(state, action) {
+            state.currentUser = action.payload;
+
+        },
+        setCurrentUserId(state, action) {
+            state.currentUserId = action.payload;
         },
     },
 });
@@ -44,6 +54,8 @@ export const {
     isLoggedIn,
     logout,
     setToken, // Aggiungi l'azione per impostare il token
+    setCurrentUser,
+    setCurrentUserId
 } = userSlice.actions;
 
 export default userSlice.reducer;

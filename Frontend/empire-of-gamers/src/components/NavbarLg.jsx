@@ -1,18 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/imgs/avatar.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../redux/slices/userSlice";
+import {
+  logout,
+  setCurrentUser,
+  setCurrentUserId,
+} from "../redux/slices/userSlice";
+import axios from "axios";
 
 const NavbarLg = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.user.token);
+  const currentUserId = useSelector((state) => state.user.currentUserId);
+  const [userProfile, setUserProfile] = useState({});
 
   const handleLogout = () => {
-    // Implementa qui la logica per effettuare il logout
     dispatch(logout());
+    navigate("/");
   };
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const currentUser = response.data.username;
+        dispatch(setCurrentUser(currentUser));
+        const currentUserId = response.data.idUser;
+        dispatch(setCurrentUserId(currentUserId));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchCurrentUserProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/userProfile/user/${currentUserId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const currentUserProfile = response.data.content[0];
+        setUserProfile(currentUserProfile);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchCurrentUser();
+      fetchCurrentUserProfile();
+    }
+  }, [dispatch, isLoggedIn, token, currentUserId]);
   return (
     <Container
       fluid
@@ -102,12 +154,12 @@ const NavbarLg = () => {
                       <Image
                         fluid
                         className="profile-image "
-                        src={avatar}
+                        src={userProfile.imgProfile}
                         alt="Profile"
                       />
                     </Link>
                     <span className="align-middle px-2 text-link bg-transparent">
-                      Your Profile
+                      {currentUser}
                     </span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">

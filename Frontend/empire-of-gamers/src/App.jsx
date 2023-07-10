@@ -17,7 +17,7 @@ import SignUp from "./components/SignUp";
 
 function App() {
   return (
-    <Container fluid className="p-0 bg-home-ranking ">
+    <Container fluid className="px-0 bg-home-ranking ">
       <BrowserRouter>
         <Navbar />
         <Friend />

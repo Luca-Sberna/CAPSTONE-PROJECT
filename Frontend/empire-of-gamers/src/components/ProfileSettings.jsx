@@ -8,7 +8,9 @@ import {
   Accordion,
   Card,
   Modal,
+  Image,
 } from "react-bootstrap";
+import bgCard from "../assets/imgs/bg-card.png";
 
 const ProfileSettings = () => {
   const [showModal, setShowModal] = useState(false);
@@ -31,69 +33,61 @@ const ProfileSettings = () => {
   ];
   return (
     <>
-      <Container fluid className="mt-5">
-        <Row className="pb-5 bg-home px-5">
+      <Container fluid className=" bg-home py-5 px-3 px-sm-4 px-md-5">
+        <Row className="pb-5  ">
           <Col className="hero-container bg-elements rounded-1 text-link p-2 ">
             <h2>Profile Settings</h2>
             <hr className="divisori" />
-            <Form onSubmit={handleSubmit}>
-              <h3>Modifica i tuoi dati</h3>
-              <Form.Group className="mb-3" controlId="formEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Inserisci la tua email"
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Salva le modifiche
-              </Button>
-              <Form.Group className="mb-3" controlId="formOldPassword">
-                <Form.Label>Vecchia password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Inserisci la tua vecchia password"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formNewPassword">
-                <Form.Label>Nuova password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Inserisci la tua nuova password"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formConfirmPassword">
-                <Form.Label>Conferma password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Conferma la tua password"
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Salva le modifiche
-              </Button>
+            <Form onSubmit={handleSubmit} className="">
+              <div className="px-3">
+                <h3>Modifica i tuoi dati</h3>
+                <Form.Group className="mb-3" controlId="formEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" className="form-container " />
+                </Form.Group>
+                <button type="submit" className="btn-vip rounded-1 mt-2">
+                  Salva email
+                </button>
+                <Form.Group className="mb-3" controlId="formOldPassword">
+                  <Form.Label className="pt-4">Vecchia password</Form.Label>
+                  <Form.Control type="password" className="form-container " />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formNewPassword">
+                  <Form.Label>Nuova password</Form.Label>
+                  <Form.Control type="password" className="form-container " />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formConfirmPassword">
+                  <Form.Label>Conferma password</Form.Label>
+                  <Form.Control type="password" className="form-container " />
+                </Form.Group>
+                <button type="submit" className="btn-vip rounded-1 mt-2">
+                  Salva password
+                </button>
+              </div>
               <hr className="divisori" />
-              <Accordion>
-                <Accordion.Item eventKey="0">
+              <Accordion className="accordion my-2">
+                <Accordion.Item eventKey="0" className=" bg-transparent">
                   <Accordion.Header>
-                    Aggiungi una carta di credito
+                    <h5 className="m-0 accordion-header ">
+                      Aggiungi una carta di credito
+                    </h5>
                   </Accordion.Header>{" "}
-                  <Accordion.Body>
+                  <Accordion.Body className="accordion-body">
                     <Form.Group className="mb-3" controlId="formCardNumber">
                       <Form.Label>Numero della carta di credito</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Inserisci il numero della tua carta di credito"
-                      />
+                      <Form.Control type="text" className="form-container" />
                     </Form.Group>
                     <Row>
-                      <Col>
+                      <Col xs={"12"} sm={"6"}>
                         <Form.Group
                           className="mb-3"
                           controlId="formExpirationDate"
                         >
                           <Form.Label>Data di scadenza</Form.Label>
-                          <Form.Control type="text" placeholder="MM/AA" />
+                          <Form.Control
+                            type="text"
+                            className="form-container"
+                          />
                         </Form.Group>
                       </Col>
                       <Col>
@@ -101,18 +95,18 @@ const ProfileSettings = () => {
                           <Form.Label>CVV</Form.Label>
                           <Form.Control
                             type="text"
-                            placeholder="Inserisci il CVV"
+                            className="form-container"
                           />
                         </Form.Group>
                       </Col>
                     </Row>
                     <Row>
-                      <Col>
+                      <Col xs={"12"} sm={"6"}>
                         <Form.Group className="mb-3" controlId="formFirstName">
                           <Form.Label>Nome</Form.Label>
                           <Form.Control
                             type="text"
-                            placeholder="Inserisci il tuo nome"
+                            className="form-container"
                           />
                         </Form.Group>
                       </Col>
@@ -121,21 +115,29 @@ const ProfileSettings = () => {
                           <Form.Label>Cognome</Form.Label>
                           <Form.Control
                             type="text"
-                            placeholder="Inserisci il tuo cognome"
+                            className="form-container"
                           />
                         </Form.Group>
                       </Col>
                     </Row>
-                    <Button variant="primary" type="submit">
-                      Salva le modifiche
-                    </Button>
+                    <button type="submit" className="mt-3 btn-vip rounded-1">
+                      Aggiungi carta di credito
+                    </button>
 
                     <hr className="divisori" />
                     <h4>Le tue carte di credito</h4>
-                    <Row xs={1} md={2} className="g-4">
+                    <Row xs={1} md={2} className="g-4 py-4 ">
                       {creditCards.map((creditCard, index) => (
-                        <Col key={index}>
-                          <Card className="shadow position-relative">
+                        <Col
+                          xs={"12"}
+                          sm={"6"}
+                          md={"6"}
+                          lg={"4"}
+                          xl={"3"}
+                          key={index}
+                          className=""
+                        >
+                          <Card className=" position-relative form-container bg-card-container">
                             <button
                               className="btn-modal position-absolute   bg-transparent rounded-pill "
                               onClick={() => {
@@ -144,7 +146,8 @@ const ProfileSettings = () => {
                             >
                               ✏️
                             </button>
-                            <Card.Body>
+                            <Card.Body className="card-body px-1 ">
+                              <Image fluid className="bg-card  " />
                               <Card.Title>{creditCard.cardNumber}</Card.Title>
                               <Card.Text>
                                 Data di scadenza: {creditCard.expirationDate}
