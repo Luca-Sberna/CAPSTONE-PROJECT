@@ -16,7 +16,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
-  const imgProfile = useSelector((state) => state.user.imgProfile);
   const navigate = useNavigate();
   const token = useSelector((state) => state.user.token);
   const currentUser = useSelector((state) => state.user.currentUser);

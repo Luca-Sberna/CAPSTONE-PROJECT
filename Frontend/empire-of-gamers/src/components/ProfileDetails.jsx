@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setIdUserProfile } from "../redux/slices/userSlice";
 import axios from "axios";
 
 const ProfileDetails = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const [showModal, setShowModal] = useState(false);
-  const [showCreateModal, setShowCreateModal] = useState(false);
   const token = useSelector((state) => state.user.token);
-  const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState({});
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -28,39 +25,6 @@ const ProfileDetails = () => {
       ...formData,
       [event.target.name]: event.target.value,
     });
-  };
-
-  const handleModalCreateSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/userProfile`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(formData),
-        },
-      );
-      const data = await response.json();
-      if (response.ok) {
-        setIsRequestSuccessful(true);
-        navigate("/profile/:id");
-        setShowCreateModal(false);
-        setUserProfile(data.id);
-      } else {
-        setIsRequestSuccessful(false);
-        console.log(data.error);
-      }
-    } catch (error) {
-      setIsRequestSuccessful(false);
-      console.log("Errore:", error);
-      alert(
-        "Si è verificato un errore durante la richiesta. Riprova più tardi.",
-      );
-    }
   };
 
   useEffect(() => {

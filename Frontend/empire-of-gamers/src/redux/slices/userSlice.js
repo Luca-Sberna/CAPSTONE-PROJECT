@@ -8,6 +8,9 @@ const initialState = {
     token: '',
     currentUser: '',
     currentUserId: '',
+    selectedCard: {},
+    creditCard: '',
+    creditCardId: ''
 };
 
 const userSlice = createSlice({
@@ -44,6 +47,15 @@ const userSlice = createSlice({
         setCurrentUserId(state, action) {
             state.currentUserId = action.payload;
         },
+        setSelectedCard(state, action) {
+            state.selectedCard = action.payload;
+        },
+        setCreditCard(state, action) {
+            state.creditCard = action.payload;
+        },
+        setCreditCardId(state, action) {
+            state.creditCardId = action.payload;
+        },
     },
 });
 
@@ -55,7 +67,10 @@ export const {
     logout,
     setToken, // Aggiungi l'azione per impostare il token
     setCurrentUser,
-    setCurrentUserId
+    setSelectedCard,
+    setCurrentUserId,
+    setCreditCard,
+    setCreditCardId
 } = userSlice.actions;
 
 export default userSlice.reducer;

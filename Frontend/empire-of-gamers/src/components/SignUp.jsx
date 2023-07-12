@@ -55,7 +55,7 @@ const SignUp = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        navigate("/");
+        navigate("/login");
       } else {
         alert(data.message);
       }
