@@ -683,7 +683,7 @@ body {
     }
 }
 
-/* -------------------form---------------------------------------------- */
+/* -------------------form and accordion---------------------------------------------- */
 
 .form-container {
     box-shadow: 10px 10px 25px 1px black;
@@ -730,3 +730,114 @@ body {
 }
 
 .accordion-button {}
+
+/* --------------------snake--------------------------- */
+
+.Board {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+    background-color: lightgray;
+}
+
+.Row {
+    display: flex;
+    flex-direction: row;
+}
+
+.Cell {
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+}
+
+.Snake {
+    background-color: green;
+}
+
+.Food {
+    background-color: red;
+}
+
+
+/* ---------------chess---------------- */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+}
+
+.title-center {
+    text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+.overlay-alert {
+    width: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 1px 2px 1px 2px rgba(0, 0, 0, 0.414);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.overlay-alert.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.overlay-alert:hover {
+    box-shadow: 2px 4px 2px 4px rgba(0, 0, 0, 0.504);
+}
+
+/* Customize React Bootstrap classes */
+.alert {
+    margin-bottom: 0;
+    /* Remove default margin-bottom */
+}
+
+.btn-outline-success {
+    margin-top: 10px;
+    border-radius: 20rem;
+    box-shadow: 2px 2px 1px 0px gray;
+    border: 0;
+    font-weight: bold;
+}
+
+.btn-outline-success:hover {
+    box-shadow: 4px 4px 2px 0px gray;
+    background-color: black;
+    color: white;
+    transition: 0.1;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.square-55d63 {
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s;
+
+    &.selected {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+
+    &.highlight1,
+    &.highlight2 {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+}

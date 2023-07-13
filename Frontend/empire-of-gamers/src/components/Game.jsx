@@ -101,25 +101,26 @@ const Game = () => {
         </div>
         <hr className="divisori" />
         <Row className="text-center">
-          {games.map((game, index) => (
-            <Col key={index} xs={6} md={4} lg={3} className="mb-3">
-              <div className="game-card pb-3">
-                {" "}
-                <Link
-                  to={`/game/${game.idGame}`}
-                  className="p-0 text-decoration-none"
-                >
-                  <img
-                    width={150}
-                    src={game.image}
-                    alt={game.name}
-                    className="game-img"
-                  />
-                  <div className="game-title">{game.name}</div>
-                </Link>
-              </div>
-            </Col>
-          ))}
+          {games &&
+            games.map((game, index) => (
+              <Col key={index} xs={6} md={4} lg={3} className="mb-3">
+                <div className="game-card pb-3">
+                  {" "}
+                  <Link
+                    to={`/game/${game.idGame}`}
+                    className="p-0 text-decoration-none"
+                  >
+                    <img
+                      width={150}
+                      src={game.image}
+                      alt={game.name}
+                      className="game-img"
+                    />
+                    <div className="game-title">{game.name}</div>
+                  </Link>
+                </div>
+              </Col>
+            ))}
         </Row>
       </Container>
       <Modal show={showModal} onHide={() => setShowModal(false)}>

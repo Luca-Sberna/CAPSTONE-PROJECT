@@ -30,7 +30,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile/:id" element={<ProfileDetails />} />
           <Route path="/profile-settings/:id" element={<ProfileSettings />} />
-          <Route path="/game/:id" element={<GameDetails />} />
+          <Route path="/game/:idGame" element={<GameDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

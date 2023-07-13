@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -10,34 +10,25 @@ import {
 } from "react-bootstrap";
 import { useParams } from "react-router";
 import Snake from "./Snake";
-import Chess from "./Chess";
+import Chess from "./ChessGame";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setGame } from "../redux/slices/userSlice";
 
 const GameDetails = () => {
   const [showModal, setShowModal] = useState(false);
-  const { gameId } = useParams();
+  const { idGame } = useParams();
+  const game = useSelector((state) => state.user.game);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
 
   let gameComponent;
-  if (gameId === "1") {
+  if (idGame === "155d3957-1857-48f7-bcdc-9d56fce1712b") {
     gameComponent = <Snake />;
-  } else if (gameId === "2") {
+  } else if (idGame === "f69314d6-23c1-48d1-aa8c-1ec30071c603") {
     gameComponent = <Chess />;
   }
-  // Dati del gioco
-  const game = {
-    name: "Nome del gioco",
-    image: "https://via.placeholder.com/500",
-    description: "Descrizione del gioco",
-    rating: 4,
-    howToPlay: "Descrizione su come giocare",
-    controls: "Comandi da usare",
-    leaderboard: [
-      { name: "Utente 1", score: 100 },
-      { name: "Utente 2", score: 90 },
-      { name: "Utente 3", score: 80 },
-      { name: "Utente 4", score: 70 },
-      { name: "Utente 5", score: 60 },
-    ],
-  };
+
   const handleEditGame = () => {
     // function to handle adding a new game
     // make Put request to backend to insert game into database
@@ -49,9 +40,33 @@ const GameDetails = () => {
     // make delete request to backend to insert game into database
     // update Redux store using slices
   };
+
+  useEffect(() => {
+    const fetchGameDetails = async () => {
+      try {
+        // Effettua la richiesta al backend per recuperare i dettagli del gioco
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/game/${idGame}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const game = response.data;
+
+        // Aggiorna lo stato del gioco nel tuo store Redux
+        dispatch(setGame(game));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchGameDetails();
+  }, [idGame, token, dispatch]);
   return (
     <>
-      <Container fluid className=" py-5 px-5 justify-content-center ">
+      <Container fluid className=" py-5 px-5 justify-content-center bg-home">
         <Row className="py-3 text-link">
           <Col
             xs={12}
@@ -74,11 +89,11 @@ const GameDetails = () => {
               </button>
             </div>
             <p>{game.description}</p>
-            <p>Valutazione: {game.rating}/5</p>
+            <p>Valutazione: {game.ratings}/5</p>
             <h3>Come giocare</h3>
-            <p>{game.howToPlay}</p>
+            <p>{game.infoToPlay}</p>
             <h3>Comandi</h3>
-            <p>{game.controls}</p>
+            <p>{game.commands}</p>
           </Col>
           <Col
             xs={12}
@@ -87,14 +102,16 @@ const GameDetails = () => {
           >
             <h3 className="pt-3">Classifica</h3>
             <ListGroup className=" ">
-              {game.leaderboard.map((player, index) => (
-                <ListGroup.Item
-                  className="hero-container bg-elements text-link"
-                  key={index}
-                >
-                  {player.name}: {player.score}
-                </ListGroup.Item>
-              ))}
+              {game &&
+                game.leaderboard &&
+                game.leaderboard.map((player, index) => (
+                  <ListGroup.Item
+                    className="hero-container bg-elements text-link"
+                    key={index}
+                  >
+                    {player.name}: {player.score}
+                  </ListGroup.Item>
+                ))}
             </ListGroup>
           </Col>
         </Row>
