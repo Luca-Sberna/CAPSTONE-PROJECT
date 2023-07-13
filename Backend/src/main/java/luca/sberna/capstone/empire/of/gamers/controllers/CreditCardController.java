@@ -3,6 +3,7 @@ package luca.sberna.capstone.empire.of.gamers.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
@@ -66,9 +68,9 @@ public class CreditCardController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteCreditCard(@PathVariable UUID id) {
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteCreditCard(@PathVariable UUID id) throws NotFoundException {
 		creditCardService.deleteCreditCard(id);
-		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/user/{userId}")

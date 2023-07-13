@@ -704,7 +704,7 @@ body {
 
 .form-container::placeholder {
     opacity: 80%;
-
+    color: #f7f7f7;
 }
 
 .accordion-body {

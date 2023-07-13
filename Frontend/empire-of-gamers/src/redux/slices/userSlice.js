@@ -7,10 +7,12 @@ const initialState = {
     isLoggedIn: false,
     token: '',
     currentUser: '',
+    currentUserEmail: '',
     currentUserId: '',
-    selectedCard: {},
     creditCard: '',
-    creditCardId: ''
+    creditCardId: '',
+    userCurrent: {},
+    creditCardObj: {}
 };
 
 const userSlice = createSlice({
@@ -38,23 +40,28 @@ const userSlice = createSlice({
         logout(state, action) {
             state.isLoggedIn = false;
             state.token = ""; // Rimuovi o azzera il token
-
         },
         setCurrentUser(state, action) {
             state.currentUser = action.payload;
-
+        },
+        setCurrentUserEmail(state, action) {
+            state.currentUserEmail = action.payload;
         },
         setCurrentUserId(state, action) {
             state.currentUserId = action.payload;
         },
-        setSelectedCard(state, action) {
-            state.selectedCard = action.payload;
-        },
+
         setCreditCard(state, action) {
             state.creditCard = action.payload;
         },
+        setCreditCardObj(state, action) {
+            state.creditCardObj = action.payload;
+        },
         setCreditCardId(state, action) {
             state.creditCardId = action.payload;
+        },
+        setUserCurrent(state, action) {
+            state.userCurrent = action.payload;
         },
     },
 });
@@ -67,10 +74,12 @@ export const {
     logout,
     setToken, // Aggiungi l'azione per impostare il token
     setCurrentUser,
-    setSelectedCard,
+    setCurrentUserEmail,
     setCurrentUserId,
     setCreditCard,
-    setCreditCardId
+    setCreditCardObj,
+    setCreditCardId,
+    setUserCurrent,
 } = userSlice.actions;
 
 export default userSlice.reducer;

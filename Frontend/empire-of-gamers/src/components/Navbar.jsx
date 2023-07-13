@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   logout,
   setCurrentUser,
+  setCurrentUserEmail,
   setCurrentUserId,
+  setUserCurrent,
 } from "../redux/slices/userSlice";
 import axios from "axios";
 
@@ -40,8 +42,12 @@ const Navbar = () => {
             },
           },
         );
+        const userCurrent = response.data;
+        dispatch(setUserCurrent(userCurrent));
         const currentUser = response.data.username;
         dispatch(setCurrentUser(currentUser));
+        const currentUserEmail = response.data.email;
+        dispatch(setCurrentUserEmail(currentUserEmail));
         const currentUserId = response.data.idUser;
         dispatch(setCurrentUserId(currentUserId));
       } catch (error) {
@@ -204,6 +210,19 @@ const Navbar = () => {
                 </span>
               </Dropdown.Toggle>
               <Dropdown.Menu className=" bg-elements mt-1 ms-5 overflow-hidden ">
+                <Dropdown.Item
+                  href="#action1"
+                  className="dropdown-custom-hover text-link"
+                >
+                  {" "}
+                  <Link
+                    className="text-decoration-none text-link"
+                    to={"/profile/:id"}
+                  >
+                    Profilo utente
+                  </Link>
+                </Dropdown.Item>
+
                 <Dropdown.Item
                   href="#action1"
                   className="dropdown-custom-hover text-link"

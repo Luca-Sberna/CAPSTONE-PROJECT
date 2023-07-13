@@ -9,6 +9,7 @@ import {
   Card,
   Modal,
   Image,
+  Alert,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,34 +17,44 @@ import {
   setCurrentUserId,
   setCurrentUser,
   logout,
-  setSelectedCard,
   setCreditCard,
+  setCreditCardObj,
 } from "../redux/slices/userSlice";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { async } from "q";
 
 const ProfileSettings = () => {
+  const userCurrent = useSelector((state) => state.user.userCurrent); //username
   const [creditCards, setCreditCards] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const selectedCard = useSelector((state) => state.user.selectedCard);
-
-  const currentUser = useSelector((state) => state.user.currentUser); //username
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedCardId, setSelectedCardId] = useState(null); // Stato per l'ID della carta selezionata
   const currentUserId = useSelector((state) => state.user.currentUserId);
+  const creditCardObj = useSelector((state) => state.user.creditCardObj);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState({});
   const navigate = useNavigate();
+  const [selectedCardIdToDelete, setSelectedCardIdToDelete] = useState(null);
+  const birthDate = userCurrent.birthDate.substring(0, 10);
+  const expirationDate = creditCardObj.expirationDate.substring(0, 10);
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: "",
     birthDate: "",
   });
 
   const [formDataCard, setFormDataCard] = useState({
+    cardNumber: "",
+    expirationDate: "",
+    cvv: "",
+    name: "",
+    surname: "",
+  });
+
+  const [formDataEditCard, setFormDataEditCard] = useState({
     cardNumber: "",
     expirationDate: "",
     cvv: "",
@@ -66,7 +77,10 @@ const ProfileSettings = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        dispatch(setCreditCard());
+        const cardId = data.id;
+        setSelectedCardId(cardId);
+        const creditCardObj = data;
+        dispatch(setCreditCardObj(creditCardObj));
         window.location.reload();
       } else {
         alert(data.message);
@@ -79,7 +93,7 @@ const ProfileSettings = () => {
   const fetchAllCreditCards = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/creditCards/user/${currentUserId}`, // Sostituisci con l'URL corretto dell'API
+        `${process.env.REACT_APP_API_URL}/creditCards/user/${currentUserId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,31 +102,9 @@ const ProfileSettings = () => {
       );
       const dataGetAll = await response.json();
       if (response.ok) {
-        setCreditCards(dataGetAll.content); // Salva le carte di credito nello stato
+        dispatch(setCreditCards(dataGetAll.content));
       } else {
         alert(dataGetAll.message);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchDeleteCreditCard = async (creditCardId) => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/creditCards/${creditCardId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const dataDelete = await response.json();
-      if (response.ok) {
-        window.location.reload();
-      } else {
-        alert(dataDelete.message);
       }
     } catch (error) {
       console.log(error);
@@ -126,6 +118,10 @@ const ProfileSettings = () => {
     });
     setFormDataCard({
       ...formDataCard,
+      [event.target.name]: event.target.value,
+    });
+    setFormDataEditCard({
+      ...formDataEditCard,
       [event.target.name]: event.target.value,
     });
   };
@@ -165,14 +161,23 @@ const ProfileSettings = () => {
       console.log(error);
     }
   };
-  const handleConfirm = () => {
+
+  const handleConfirm = (event) => {
     setShowAlert(false);
-    handleSubmit();
+    handleSubmit(event);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!formData.username || !formData.email || !formData.birthDate) {
+      // Mostra un messaggio di avviso o esegui altre azioni necessarie
+      return (
+        <>
+          <Alert>Compila tutti i campi</Alert>
+        </>
+      );
+    }
     try {
-      // esegui la richiesta PUT per aggiornare i dati dell'utente
       const putResponse = await fetch(
         `${process.env.REACT_APP_API_URL}/users/${currentUserId}`,
         {
@@ -186,13 +191,91 @@ const ProfileSettings = () => {
       );
       const putData = await putResponse.json();
       if (putResponse.ok) {
-        // se la richiesta PUT ha esito positivo, esegui le richieste GET per ottenere i dati aggiornati dell'utente e del profilo utente
+        console.log("Utente aggiornato con successo");
+        // Aggiorna le carte di credito se è stata selezionata una carta
         fetchCurrentUser();
         fetchCurrentUserProfile();
         handleLogout();
       } else {
-        // gestisci l'errore della richiesta PUT qui
         console.log(putData.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmitCard = async (selectedCardIdToDelete) => {
+    try {
+      const putCreditCardResponse = await fetch(
+        `${process.env.REACT_APP_API_URL}/creditCards/${selectedCardIdToDelete}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formDataEditCard),
+        },
+      );
+      const putCreditCardData = await putCreditCardResponse.json();
+      if (putCreditCardResponse.ok) {
+        setShowModal(false);
+        window.location.reload();
+        fetchAllCreditCards();
+        console.log("Carta di credito aggiornata con successo");
+      } else {
+        console.log(putCreditCardData.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function handleEditCard(cardId) {
+    // Trova la carta di credito corrispondente all'ID
+    const creditCard = creditCards.find((card) => card.id === cardId);
+    setSelectedCardIdToDelete(cardId); // Set the selected card ID for deletion
+    const creditCardObj = creditCard;
+    dispatch(setCreditCardObj(creditCardObj));
+    if (creditCard) {
+      // Aggiorna lo stato del form con i dati della carta di credito
+      setFormDataEditCard({
+        editCardNumber: creditCard.cardNumber,
+        editExpirationDate: creditCard.expirationDate,
+        editCvv: creditCard.cvv,
+        editName: creditCard.name,
+        editSurname: creditCard.surname,
+      });
+
+      // Mostra il modale
+      setShowModal(true);
+    } else {
+      // La carta di credito non è stata trovata, gestisci l'errore qui
+      console.log("La carta di credito non esiste");
+    }
+  }
+
+  const handleDelete = async (selectedCardIdToDelete) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/creditCards/${selectedCardIdToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (response.ok) {
+        // Se la richiesta DELETE ha esito positivo, aggiorna lo stato delle carte di credito
+        setCreditCards(
+          creditCards.filter((card) => card.id !== selectedCardIdToDelete),
+        );
+        setShowDeleteModal(false);
+        setShowModal(false);
+      } else {
+        // Gestisci l'errore della richiesta DELETE qui
+        console.log(response);
       }
     } catch (error) {
       console.log(error);
@@ -203,9 +286,10 @@ const ProfileSettings = () => {
     dispatch(logout());
     navigate("/login");
   };
+
   useEffect(() => {
-    fetchAllCreditCards(currentUserId);
-  }, [currentUserId]);
+    fetchAllCreditCards();
+  }, []);
 
   return (
     <>
@@ -216,37 +300,33 @@ const ProfileSettings = () => {
             <hr className="divisori" />
             <Form onSubmit={(event) => event.preventDefault()} className="">
               <div className="px-3">
-                <h3>Modifica i tuoi dati</h3>
-                <Form.Group controlId="formName" className="mb-3">
-                  <Form.Label className="form-label">Username</Form.Label>
+                <h3 className="green-text">Modifica i tuoi dati</h3>
+                <h6>Reinserisci i tuoi dati per apportare le modifiche</h6>
+                <h6>Anche se si vuole modificare un solo campo</h6>
+                <Form.Group controlId="formName" className="my-3">
+                  <Form.Label className="form-label green-text">
+                    Username ({userCurrent.username})
+                  </Form.Label>
                   <Form.Control
-                    value={formData.username || currentUser}
+                    value={formData.username}
                     onChange={handleInputChange}
                     name="username"
                     type="text"
+                    placeholder={userCurrent.username}
                     className="form-container mb-3"
                     required
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label className="green-text">
+                    Email ({userCurrent.email})
+                  </Form.Label>
                   <Form.Control
                     value={formData.email}
                     onChange={handleInputChange}
+                    placeholder={userCurrent.email}
                     name="email"
                     type="email"
-                    className="form-container "
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formNewPassword">
-                  <Form.Label>Nuova password</Form.Label>
-                  <Form.Control
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    name="password"
-                    type="password"
                     className="form-container "
                     required
                   />
@@ -257,7 +337,9 @@ const ProfileSettings = () => {
                   className="mb-3"
                   controlId="formNewBirthDate"
                 >
-                  <Form.Label>Nuova data di nascita</Form.Label>
+                  <Form.Label className="green-text">
+                    Data di nascita ({birthDate})
+                  </Form.Label>
                   <Form.Control
                     value={formData.birthDate}
                     onChange={handleInputChange}
@@ -282,13 +364,15 @@ const ProfileSettings = () => {
               <Accordion.Item eventKey="0" className=" bg-transparent">
                 <Accordion.Header>
                   <h5 className="m-0 accordion-header ">
-                    Aggiungi una carta di credito
+                    Aggiungi o visualizza la tua carta di credito
                   </h5>
                 </Accordion.Header>{" "}
                 <Accordion.Body className="accordion-body">
                   <Form onSubmit={fetchCreditCard}>
                     <Form.Group className="mb-3" controlId="formCardNumber">
-                      <Form.Label>Numero della carta di credito</Form.Label>
+                      <Form.Label className="green-text">
+                        Numero della carta di credito
+                      </Form.Label>
                       <Form.Control
                         type="number"
                         className="form-container"
@@ -304,7 +388,9 @@ const ProfileSettings = () => {
                           className="mb-3"
                           controlId="formExpirationDate"
                         >
-                          <Form.Label>Data di scadenza</Form.Label>
+                          <Form.Label className="green-text">
+                            Data di scadenza
+                          </Form.Label>
                           <Form.Control
                             type="date"
                             className="form-container"
@@ -317,7 +403,7 @@ const ProfileSettings = () => {
                       </Col>
                       <Col>
                         <Form.Group className="mb-3" controlId="formCVV">
-                          <Form.Label>CVV</Form.Label>
+                          <Form.Label className="green-text">CVV</Form.Label>
                           <Form.Control
                             type="number"
                             className="form-container"
@@ -332,7 +418,7 @@ const ProfileSettings = () => {
                     <Row>
                       <Col xs={"12"} sm={"6"}>
                         <Form.Group className="mb-3" controlId="formFirstName">
-                          <Form.Label>Nome</Form.Label>
+                          <Form.Label className="green-text">Nome</Form.Label>
                           <Form.Control
                             type="text"
                             className="form-container"
@@ -345,7 +431,9 @@ const ProfileSettings = () => {
                       </Col>
                       <Col>
                         <Form.Group className="mb-3" controlId="formLastName">
-                          <Form.Label>Cognome</Form.Label>
+                          <Form.Label className="green-text">
+                            Cognome
+                          </Form.Label>
                           <Form.Control
                             type="text"
                             className="form-container"
@@ -384,14 +472,14 @@ const ProfileSettings = () => {
                                 <button
                                   className="btn-modal position-absolute bg-transparent rounded-pill"
                                   onClick={() => {
-                                    dispatch(setSelectedCard());
-                                    setShowModal(true);
+                                    handleEditCard(creditCard.id);
                                   }}
                                 >
                                   ✏️
                                 </button>
                                 <Card.Body className="card-body px-1">
                                   <Image fluid className="bg-card" />
+
                                   <Card.Title>
                                     {creditCard.cardNumber}
                                   </Card.Title>
@@ -421,25 +509,28 @@ const ProfileSettings = () => {
           <Modal.Title>Modifica la tua carta di credito</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmitCard}>
             <Form.Group className="mb-3" controlId="formCardNumber">
               <Form.Label>Numero della carta di credito</Form.Label>
               <Form.Control
                 type="number"
-                value={formDataCard.cardNumber}
+                value={formDataEditCard.cardNumber}
+                placeholder={creditCardObj.cardNumber}
                 onChange={handleInputChange}
                 required
                 name="cardNumber"
               />
             </Form.Group>
-            <Row>
-              <Col>
+            <Row className="d-flex">
+              <Col xs={"12"} sm={"6"} className="d-flex">
                 <Form.Group className="mb-3" controlId="formExpirationDate">
-                  <Form.Label>Data di scadenza</Form.Label>
+                  <Form.Label>Data di scadenza"</Form.Label>
+                  <Form.Label>{expirationDate}"</Form.Label>
+
                   <Form.Control
                     type="date"
                     name="expirationDate"
-                    value={formDataCard.expirationDate}
+                    value={formDataEditCard.expirationDate}
                     onChange={handleInputChange}
                     required
                   />
@@ -451,7 +542,8 @@ const ProfileSettings = () => {
                   <Form.Control
                     type="number"
                     name="cvv"
-                    value={formDataCard.cvv}
+                    placeholder={creditCardObj.cvv}
+                    value={formDataEditCard.cvv}
                     onChange={handleInputChange}
                     required
                   />
@@ -464,9 +556,9 @@ const ProfileSettings = () => {
                   <Form.Label>Nome</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Inserisci il tuo nome"
                     name="name"
-                    value={formDataCard.name}
+                    value={formDataEditCard.name}
+                    placeholder={creditCardObj.name}
                     onChange={handleInputChange}
                     required
                   />
@@ -477,9 +569,9 @@ const ProfileSettings = () => {
                   <Form.Label>Cognome</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Inserisci il tuo cognome"
                     name="surname"
-                    value={formDataCard.surname}
+                    value={formDataEditCard.surname}
+                    placeholder={creditCardObj.surname}
                     onChange={handleInputChange}
                     required
                   />
@@ -492,13 +584,15 @@ const ProfileSettings = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Annulla
           </Button>
-          <Button type="submit" variant="primary">
+          <Button
+            type="submit"
+            variant="primary"
+            onClick={() => handleSubmitCard(selectedCardIdToDelete)}
+          >
             Salva
           </Button>
-          <Button
-            variant="danger"
-            onClick={() => fetchDeleteCreditCard(creditCards.id)}
-          >
+
+          <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
             Delete
           </Button>
         </Modal.Footer>
@@ -517,6 +611,30 @@ const ProfileSettings = () => {
           </button>
           <button type="submit" variant="primary" onClick={handleConfirm}>
             Save and Logout
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        className=""
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Vuoi eliminare veramente la tua carta di credito?
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Back
+          </button>
+          <button
+            type="submit"
+            variant="primary"
+            onClick={() => handleDelete(selectedCardIdToDelete)}
+          >
+            Save and Delete
           </button>
         </Modal.Footer>
       </Modal>
