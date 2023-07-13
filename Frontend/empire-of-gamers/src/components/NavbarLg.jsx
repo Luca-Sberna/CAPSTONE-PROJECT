@@ -59,7 +59,8 @@ const NavbarLg = () => {
         } else {
           // L'utente non ha un profilo associato, creane uno di default
           const defaultUserProfile = {
-            imgProfile: "", // Valore vuoto o un URL di immagine di default
+            imgProfile:
+              "https://th.bing.com/th/id/OIP.gg4LQf_og484KnvKc30JmgHaG6?w=221&h=206&c=7&r=0&o=5&dpr=1.8&pid=1.7", // Valore vuoto o un URL di immagine di default
           };
           const createProfileResponse = await axios.put(
             `${process.env.REACT_APP_API_URL}/userProfile/${currentUserProfile}`,
@@ -71,6 +72,7 @@ const NavbarLg = () => {
             },
           );
           setUserProfile(createProfileResponse.data);
+          window.location.reload();
         }
       } catch (error) {
         console.log(error);
