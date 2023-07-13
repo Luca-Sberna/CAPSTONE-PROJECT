@@ -1,6 +1,7 @@
 package luca.sberna.capstone.empire.of.gamers.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,9 @@ public class UserService {
 
 	public User findUserByIdAndUpdate(UUID id, UserRegistrationPayload u) throws NotFoundException {
 		User foundUser = this.findUserById(id);
-		foundUser.setIdUser(id);
 		foundUser.setUsername(u.getUsername());
 		foundUser.setEmail(u.getEmail());
+		foundUser.setBirthDate(u.getBirthDate());
 		return ur.save(foundUser);
 	}
 
@@ -82,7 +83,12 @@ public class UserService {
 	}
 
 	public User findUserByEmail(String email) throws NotFoundException {
-		return ur.findByEmail(email).orElseThrow(() -> new NotFoundException());
+		Optional<User> optionalUser = ur.findByEmail(email);
+		if (optionalUser.isPresent()) {
+			return optionalUser.get();
+		} else {
+			throw new NotFoundException();
+		}
 	}
 
 	public User findUserByUsername(String username) throws NotFoundException {

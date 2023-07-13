@@ -40,6 +40,7 @@ const LoginPage = () => {
         dispatch(setToken(data.accessToken));
         dispatch(isLoggedIn(true));
         navigate("/");
+        window.location.reload();
       } else {
         alert(data.message);
       }
