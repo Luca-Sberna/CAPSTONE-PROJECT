@@ -12,7 +12,8 @@ const initialState = {
     creditCard: '',
     creditCardId: '',
     userCurrent: {},
-    creditCardObj: {}
+    creditCardObj: {},
+    game: {}
 };
 
 const userSlice = createSlice({
@@ -63,6 +64,9 @@ const userSlice = createSlice({
         setUserCurrent(state, action) {
             state.userCurrent = action.payload;
         },
+        setGame(state, action) {
+            state.game = action.payload;
+        }
     },
 });
 
@@ -80,6 +84,7 @@ export const {
     setCreditCardObj,
     setCreditCardId,
     setUserCurrent,
+    setGame
 } = userSlice.actions;
 
 export default userSlice.reducer;

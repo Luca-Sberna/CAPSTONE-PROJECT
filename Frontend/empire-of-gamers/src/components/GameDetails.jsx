@@ -8,10 +8,20 @@ import {
   Modal,
   Button,
 } from "react-bootstrap";
+import { useParams } from "react-router";
+import Snake from "./Snake";
+import Chess from "./Chess";
 
 const GameDetails = () => {
   const [showModal, setShowModal] = useState(false);
+  const { gameId } = useParams();
 
+  let gameComponent;
+  if (gameId === "1") {
+    gameComponent = <Snake />;
+  } else if (gameId === "2") {
+    gameComponent = <Chess />;
+  }
   // Dati del gioco
   const game = {
     name: "Nome del gioco",
@@ -28,7 +38,17 @@ const GameDetails = () => {
       { name: "Utente 5", score: 60 },
     ],
   };
-
+  const handleEditGame = () => {
+    // function to handle adding a new game
+    // make Put request to backend to insert game into database
+    // make GET request to retrieve updated list of games
+    // update Redux store using slices
+  };
+  const handleDeleteGame = () => {
+    // function to handle adding a new game
+    // make delete request to backend to insert game into database
+    // update Redux store using slices
+  };
   return (
     <>
       <Container fluid className=" py-5 px-5 justify-content-center ">
@@ -80,7 +100,7 @@ const GameDetails = () => {
         </Row>
         <Row className="my-3 ">
           <Col className="justify-content-center d-flex hero-container bg-elements text-link rounded-1">
-            Finestra gioco
+            {gameComponent}
           </Col>
         </Row>
       </Container>

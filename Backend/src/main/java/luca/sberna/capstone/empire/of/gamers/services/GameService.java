@@ -24,12 +24,8 @@ public class GameService {
 	}
 
 	public Game createGame(GameRegistrationPayload payload) {
-		Game game = new Game();
-		game.setName(payload.getName());
-		game.setDescription(payload.getDescription());
-		game.setRatings(payload.getRatings());
-		game.setGameState(payload.getGameState());
-		// Puoi impostare altre proprietà del gioco se necessario
+		Game game = new Game(payload.getName(), payload.getDescription(), payload.getRatings(), payload.getInfoToPlay(),
+				payload.getCommands(), payload.getImage());
 		return gameRepository.save(game);
 	}
 
@@ -60,7 +56,6 @@ public class GameService {
 			game.setName(payload.getName());
 			game.setDescription(payload.getDescription());
 			game.setRatings(payload.getRatings());
-			game.setGameState(payload.getGameState());
 			// Puoi aggiornare altre proprietà del gioco se necessario
 			return gameRepository.save(game);
 		}

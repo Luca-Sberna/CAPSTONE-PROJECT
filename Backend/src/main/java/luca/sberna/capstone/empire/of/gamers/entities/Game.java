@@ -31,17 +31,24 @@ public class Game {
 	private Integer ratings;
 	@Enumerated(EnumType.STRING)
 	private GameState gameState;
+	private String infoToPlay;
+	private String commands;
+	private String image;
 
 	@OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Review> reviews;
 
-	public Game(String name, String description, Integer ratings, GameState gameState) {
+	public Game(String name, String description, Integer ratings, String infoToPlay, String commands, String image) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.ratings = ratings;
-		this.gameState = gameState;
+		this.gameState = GameState.PLAYABLE;
+		this.infoToPlay = infoToPlay;
+		this.commands = commands;
+		this.image = image;
+
 	}
 
 }
