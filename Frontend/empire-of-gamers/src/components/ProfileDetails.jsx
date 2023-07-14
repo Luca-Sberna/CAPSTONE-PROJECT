@@ -90,7 +90,7 @@ const ProfileDetails = () => {
           src={userProfile.imgBackground}
           alt="img-bg"
         />
-        {userCurrent.idUser === userCurrentId && (
+        {currentUserId === userCurrentId && (
           <button
             className="btn-modal position-absolute   bg-transparent rounded-pill "
             onClick={() => setShowModal(true)}
