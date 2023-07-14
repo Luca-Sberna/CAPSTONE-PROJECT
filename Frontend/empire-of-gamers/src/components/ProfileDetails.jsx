@@ -11,6 +11,8 @@ const ProfileDetails = () => {
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState({});
   const currentUser = useSelector((state) => state.user.currentUser);
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userCurrentId = userCurrent.idUser;
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -88,14 +90,14 @@ const ProfileDetails = () => {
           src={userProfile.imgBackground}
           alt="img-bg"
         />
-
-        <button
-          className="btn-modal position-absolute   bg-transparent rounded-pill "
-          onClick={() => setShowModal(true)}
-        >
-          ✏️
-        </button>
-
+        {userCurrent.idUser === userCurrentId && (
+          <button
+            className="btn-modal position-absolute   bg-transparent rounded-pill "
+            onClick={() => setShowModal(true)}
+          >
+            ✏️
+          </button>
+        )}
         <Row className="my-4 ">
           <Col
             md={3}
@@ -130,12 +132,14 @@ const ProfileDetails = () => {
             <p>Surname : {userProfile.surname}</p>
             <p>Nationality : {userProfile.nationality}</p>
             <div className="d-flex justify-content-end align-items-center">
-              <button
-                variant="primary"
-                className="bg-transparent btn-vip rounded-1 fs-5 py-0 px-3 mb-3"
-              >
-                ➕🫂
-              </button>
+              {currentUserId !== userCurrentId && (
+                <button
+                  variant="primary"
+                  className="bg-transparent btn-vip rounded-1 fs-5 py-0 px-3 mb-3"
+                >
+                  ➕🫂
+                </button>
+              )}
             </div>
           </Col>
         </Row>

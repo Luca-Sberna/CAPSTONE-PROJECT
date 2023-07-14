@@ -16,6 +16,8 @@ import axios from "axios";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userId = userCurrent.idUser;
   const [menuOpen, setMenuOpen] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const navigate = useNavigate();
@@ -198,7 +200,10 @@ const Navbar = () => {
                 id="dropdown-basic"
                 className="text-decoration-none d-flex align-items-center "
               >
-                <Link to={"/profile/:id"} className="p-0 text-decoration-none">
+                <Link
+                  to={`/profile/${userId}`}
+                  className="p-0 text-decoration-none"
+                >
                   <Image
                     fluid
                     className="profile-image "
@@ -218,7 +223,7 @@ const Navbar = () => {
                   {" "}
                   <Link
                     className="text-decoration-none text-link"
-                    to={"/profile/:id"}
+                    to={`/profile/${userId}`}
                   >
                     Profilo utente
                   </Link>
@@ -231,7 +236,7 @@ const Navbar = () => {
                   {" "}
                   <Link
                     className="text-decoration-none text-link"
-                    to={"/profile-settings/:id"}
+                    to={`/profile-settings/${userId}`}
                   >
                     Impostazioni profilo
                   </Link>
