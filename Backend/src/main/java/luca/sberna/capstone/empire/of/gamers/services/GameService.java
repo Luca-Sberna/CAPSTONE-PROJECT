@@ -56,6 +56,9 @@ public class GameService {
 			game.setName(payload.getName());
 			game.setDescription(payload.getDescription());
 			game.setRatings(payload.getRatings());
+			game.setInfoToPlay(payload.getInfoToPlay());
+			game.setCommands(payload.getCommands());
+			game.setImage(payload.getImage());
 			// Puoi aggiornare altre proprietà del gioco se necessario
 			return gameRepository.save(game);
 		}
