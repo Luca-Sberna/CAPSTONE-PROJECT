@@ -7,8 +7,9 @@ import {
   ListGroup,
   Modal,
   Button,
+  Form,
 } from "react-bootstrap";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import Snake from "./Snake";
 import Chess from "./ChessGame";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +18,27 @@ import { setGame } from "../redux/slices/userSlice";
 
 const GameDetails = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { idGame } = useParams();
   const game = useSelector((state) => state.user.game);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
+  const navigate = useNavigate();
+  const [gameData, setGameData] = useState({
+    name: "",
+    description: "",
+    ratings: "",
+    infoToPlay: "",
+    commands: "",
+    image: "",
+  });
+
+  const handleInputChange = (event) => {
+    setGameData({
+      ...gameData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   let gameComponent;
   if (idGame === "155d3957-1857-48f7-bcdc-9d56fce1712b") {
@@ -29,16 +47,53 @@ const GameDetails = () => {
     gameComponent = <Chess />;
   }
 
-  const handleEditGame = () => {
-    // function to handle adding a new game
-    // make Put request to backend to insert game into database
-    // make GET request to retrieve updated list of games
-    // update Redux store using slices
+  const handleEditGame = async (event) => {
+    event.preventDefault();
+    try {
+      const putResponse = await fetch(
+        `${process.env.REACT_APP_API_URL}/game/${idGame}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(gameData),
+        },
+      );
+      const putData = await putResponse.json();
+      if (putResponse.ok) {
+        console.log("Gioco aggiornato con successo");
+        window.location.reload();
+      } else {
+        console.log(putData.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleDeleteGame = () => {
-    // function to handle adding a new game
-    // make delete request to backend to insert game into database
-    // update Redux store using slices
+
+  const handleDeleteGame = async (idGame) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/game/${idGame}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (response.ok) {
+        setShowDeleteModal(false);
+        setShowModal(false);
+        navigate("/");
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -65,8 +120,8 @@ const GameDetails = () => {
     fetchGameDetails();
   }, [idGame, token, dispatch]);
   return (
-    <>
-      <Container fluid className=" py-5 px-5 justify-content-center bg-home">
+    <div className="bg-home">
+      <Container fluid className=" p-5 justify-content-center ">
         <Row className="py-3 text-link">
           <Col
             xs={12}
@@ -121,55 +176,123 @@ const GameDetails = () => {
           </Col>
         </Row>
       </Container>
-      <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica il gioco!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="gameImage" className="form-label">
-                Immagine del gioco
-              </label>
-              <input type="file" className="form-control" id="gameImage" />
-            </div>
 
-            <div className="mb-3">
-              <label htmlFor="firstName" className="form-label">
-                Nome del gioco
-              </label>
-              <input type="text" className="form-control" id="firstName" />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">
+      <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
+        <Form onSubmit={handleEditGame}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modifica il gioco!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label className="form-label">
+                Immagine del gioco (URL)
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="image"
+                value={gameData.image}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="form-label">Nome del gioco</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={gameData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="form-label">
                 Descrizione del gioco
-              </label>
-              <textarea className="form-control" id="description"></textarea>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="description"
+                value={gameData.description}
+                onChange={handleInputChange}
+                required
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="form-label">Ratings</Form.Label>
+              <Form.Control
+                type="number"
+                name="ratings"
+                value={gameData.ratings}
+                onChange={handleInputChange}
+                required
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="form-label">
                 Descrizione su come giocare
-              </label>
-              <textarea className="form-control" id="description"></textarea>
-            </div>
-            <div className="mb-3">
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="infoToPlay"
+                value={gameData.infoToPlay}
+                onChange={handleInputChange}
+                required
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
               <label htmlFor="commands" className="form-label">
                 Comandi
               </label>
-              <textarea className="form-control" id="commands"></textarea>
-            </div>
-          </form>
-        </Modal.Body>
+              <Form.Control
+                type="text"
+                name="commands"
+                value={gameData.commands}
+                onChange={handleInputChange}
+                required
+              ></Form.Control>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Annulla
+            </Button>
+            <Button type="submit" variant="primary">
+              Salva
+            </Button>
+            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+              Elimina
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <Modal
+        className=""
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Vuoi eliminare veramente il gioco?</Modal.Title>
+        </Modal.Header>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Annulla
-          </Button>
-          <Button type="submit" variant="primary">
-            Salva
-          </Button>
+          <button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+            Back
+          </button>
+          <button
+            type="submit"
+            variant="primary"
+            onClick={() => handleDeleteGame(idGame)}
+          >
+            Save and Delete
+          </button>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 };
 

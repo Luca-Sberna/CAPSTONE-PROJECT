@@ -124,11 +124,11 @@ const Game = () => {
         </Row>
       </Container>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Aggiungi un gioco</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleAddGame}>
+        <Form onSubmit={handleAddGame}>
+          <Modal.Header closeButton>
+            <Modal.Title>Aggiungi un gioco</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Form.Group>
               <Form.Label>Nome</Form.Label>
               <Form.Control
@@ -189,20 +189,16 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button variant="secondary" onClick={() => setShowModal(false)}>
-            Back
-          </button>
-          <button
-            type="submit"
-            variant="primary"
-            onClick={() => handleAddGame()}
-          >
-            Save Game
-          </button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <button variant="secondary" onClick={() => setShowModal(false)}>
+              Back
+            </button>
+            <button type="submit" variant="primary">
+              Save Game
+            </button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
