@@ -10,6 +10,8 @@ const Game = () => {
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   const [games, setGames] = useState([]);
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userRole = userCurrent.role;
   const [gameData, setGameData] = useState({
     name: "",
     description: "",
@@ -92,12 +94,14 @@ const Game = () => {
       <Container className="game-container overflow-hidden bg-elements rounded-1 p-2 text-link ">
         <div className="d-flex align-items-center">
           <h2 className="m-0 me-3">Games</h2>
-          <button
-            className="btn-vip rounded-1"
-            onClick={() => setShowModal(true)}
-          >
-            ➕
-          </button>
+          {userRole === "ADMIN" && (
+            <button
+              className="btn-vip rounded-1"
+              onClick={() => setShowModal(true)}
+            >
+              ➕
+            </button>
+          )}
         </div>
         <hr className="divisori" />
         <Row className="text-center">

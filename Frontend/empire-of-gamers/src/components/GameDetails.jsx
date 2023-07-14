@@ -24,6 +24,8 @@ const GameDetails = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userRole = userCurrent.role;
   const [gameData, setGameData] = useState({
     name: "",
     description: "",
@@ -129,19 +131,23 @@ const GameDetails = () => {
             className=" hero-container me-4 mb-5 bg-elements rounded-1"
           >
             <div className="d-flex justify-content-between pt-3 position-relative ">
-              <h2>{game.name}</h2>
-              <Image
-                width={100}
-                src={game.image}
-                className="position-absolute me-2 end-0 rounded-1 hero-container"
-                fluid
-              />
-              <button
-                className="btn-modal-game position-absolute   bg-transparent rounded-pill "
-                onClick={() => setShowModal(true)}
-              >
-                ✏️
-              </button>
+              <>
+                <h2>{game.name}</h2>
+                <Image
+                  width={100}
+                  src={game.image}
+                  className="position-absolute me-2 end-0 rounded-1 hero-container"
+                  fluid
+                />
+                {userRole === "ADMIN" && (
+                  <button
+                    className="btn-modal-game position-absolute   bg-transparent rounded-pill "
+                    onClick={() => setShowModal(true)}
+                  >
+                    ✏️
+                  </button>
+                )}
+              </>
             </div>
             <p>{game.description}</p>
             <p>Valutazione: {game.ratings}/5</p>
