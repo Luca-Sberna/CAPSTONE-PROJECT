@@ -115,7 +115,7 @@ const Game = () => {
                     className="p-0 text-decoration-none"
                   >
                     <img
-                      width={150}
+                      width={90}
                       src={game.image}
                       alt={game.name}
                       className="game-img"

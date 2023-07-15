@@ -19,8 +19,27 @@ const ChessGame = () => {
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [selectedPieceSquare, setSelectedPieceSquare] = useState(null);
   const [hoveredPiece, setHoveredPiece] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const getChessboardWidth = () => {
+    if (windowWidth < 576) {
+      return 280;
+    } else if (windowWidth >= 576 && windowWidth < 992) {
+      return 400;
+    } else if (windowWidth >= 992 && windowWidth < 1200) {
+      return 500;
+    } else {
+      return 600;
+    }
+  };
 
   useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
     let interval;
     if (startTime && !endTime && !gameOver) {
       interval = setInterval(() => {
@@ -29,8 +48,12 @@ const ChessGame = () => {
         setTimeElapsed(elapsedSeconds);
       }, 1000);
     }
-    return () => clearInterval(interval);
-  }, [startTime, gameOver, endTime]);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [startTime, endTime, gameOver]);
 
   const handleSquareClick = (square) => {
     const piece = chess.get(square);
@@ -121,54 +144,55 @@ const ChessGame = () => {
   };
 
   return (
-    <div className="flex-center ">
-      <h1 className="title-center">Mini Chess Game</h1>
-      <Chessboard
-        width={700}
-        position={fen}
-        onDrop={handleDrop}
-        dropOffBoard="snapback"
-        onDragStart={handleStart}
-        onSnapEnd={handleGameOver}
-        className="scacchiera"
-        onSquareClick={handleSquareClick}
-        onMouseOverSquare={handleSquareHover}
-        pieceStyle={getPieceStyle}
-        transitionDuration={200} // Aggiunto il tempo di durata della transizione
-        boardStyle={{
-          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)", // Aggiunto uno stile di ombra per il bordo
-        }}
-        squareStyles={{
-          transition: "background-color 0.3s",
-          ...(selectedSquare && {
-            [selectedSquare]: { backgroundColor: "rgba(255, 255, 0, 0.5)" },
-          }),
-          ...(selectedPieceSquare && {
-            [selectedPieceSquare]: {
-              backgroundColor: "rgba(255, 255, 0, 0.5)",
-            },
-          }),
-        }}
-      />
+    <>
+      <div className="chess-container py-2  py-sm-5">
+        <Chessboard
+          width={getChessboardWidth()}
+          position={fen}
+          onDrop={handleDrop}
+          dropOffBoard="snapback"
+          onDragStart={handleStart}
+          onSnapEnd={handleGameOver}
+          className="scacchiera"
+          onSquareClick={handleSquareClick}
+          onMouseOverSquare={handleSquareHover}
+          pieceStyle={getPieceStyle}
+          transitionDuration={200} // Aggiunto il tempo di durata della transizione
+          boardStyle={{
+            boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)", // Aggiunto uno stile di ombra per il bordo
+          }}
+          squareStyles={{
+            transition: "background-color 0.3s",
+            ...(selectedSquare && {
+              [selectedSquare]: { backgroundColor: "rgba(255, 255, 0, 0.5)" },
+            }),
+            ...(selectedPieceSquare && {
+              [selectedPieceSquare]: {
+                backgroundColor: "rgba(255, 255, 0, 0.5)",
+              },
+            }),
+          }}
+        />
 
-      {gameOver && (
-        <div className="overlay">
-          <Alert
-            variant="success"
-            className={`overlay-alert ${gameOver ? "show" : ""}`}
-          >
-            <Alert.Heading>Congratulazioni!!!</Alert.Heading>
-            <p>Scacco matto! Hai vinto la partita.</p>
-            <p>Tempo totale: {timeElapsed} secondi</p>
-            <p>Mosse totali: {moveCount}</p>
-            <hr />
-            <Button onClick={handleRestart} variant="outline-success">
-              Riprova
-            </Button>
-          </Alert>
-        </div>
-      )}
-    </div>
+        {gameOver && (
+          <div className="overlay">
+            <Alert
+              variant="success"
+              className={`overlay-alert ${gameOver ? "show" : ""}`}
+            >
+              <Alert.Heading>Congratulazioni!!!</Alert.Heading>
+              <p>Scacco matto! Hai vinto la partita.</p>
+              <p>Tempo totale: {timeElapsed} secondi</p>
+              <p>Mosse totali: {moveCount}</p>
+              <hr />
+              <Button onClick={handleRestart} variant="outline-success">
+                Riprova
+              </Button>
+            </Alert>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

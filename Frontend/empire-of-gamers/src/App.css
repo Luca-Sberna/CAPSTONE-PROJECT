@@ -502,6 +502,11 @@ body {
     opacity: unset;
 }
 
+.img-antenna {
+    top: -3.6rem;
+    right: 0;
+}
+
 .game-title {
     display: none;
 }
@@ -557,9 +562,40 @@ body {
     color: #9C27B0;
     background-color: #0000007c;
     opacity: unset;
-
-
 }
+
+.crown-vip,
+.crown-vip-mobile {
+    top: -0.95rem;
+    left: 0.2rem;
+}
+
+.crown-vip-mobile {
+    top: -0.75rem;
+    left: 1rem;
+}
+
+@media (min-width: 320px) {
+    .img-game-details {
+        right: -3.2rem;
+        top: -3.3rem;
+    }
+}
+
+@media (min-width: 767px) {
+    .img-game-details {
+        right: -2rem;
+        top: -3.3rem;
+    }
+}
+
+@media (min-width: 1300px) {
+    .img-game-details {
+        right: 0rem;
+        top: 1rem;
+    }
+}
+
 
 .img-cover,
 .img-cover-2 {
@@ -736,20 +772,62 @@ body {
 .Board {
     display: flex;
     flex-direction: column;
-    width: 250px;
-    height: 250px;
+    width: 210px;
+    height: 210px;
     background-color: lightgray;
+}
+
+.Cell {
+    width: 21px;
+    height: 21px;
+    border: 1px solid black;
+}
+
+@media (min-width: 500px) {
+    .Board {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 500px) {
+    .Cell {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (min-width: 700px) {
+    .Board {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 700px) {
+    .Cell {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .Board {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (min-width: 1000px) {
+    .Cell {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 .Row {
     display: flex;
     flex-direction: row;
-}
-
-.Cell {
-    width: 25px;
-    height: 25px;
-    border: 1px solid black;
 }
 
 .Snake {
@@ -839,5 +917,24 @@ body {
     &.highlight1,
     &.highlight2 {
         background-color: rgba(255, 255, 0, 0.5);
+    }
+}
+
+
+@media (min-width: 576px) {
+    .games-container {
+        width: 30rem;
+    }
+}
+
+@media (min-width: 991px) {
+    .games-container {
+        width: 50rem;
+    }
+}
+
+@media (min-width: 1196px) {
+    .games-container {
+        width: 50rem;
     }
 }
