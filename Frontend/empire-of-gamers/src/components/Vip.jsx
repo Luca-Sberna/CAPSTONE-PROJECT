@@ -7,12 +7,15 @@ import { setIsVip } from "../redux/slices/userSlice";
 
 const Vip = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isNotVip, setIsNotVip] = useState(false);
   const [creditCardsExist, setCreditCardsExist] = useState(false);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const idUser = userCurrent.idUser;
   const navigate = useNavigate();
+  const isVip = useSelector((state) => state.user.isVip);
+  const isVipIdUser = isVip && isVip.length > 0 ? isVip[0].user.idUser : null;
 
   useEffect(() => {
     const fetchCreditCards = async () => {
@@ -34,6 +37,30 @@ const Vip = () => {
         console.log(error);
       }
     };
+
+    const fetchVipStatus = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/vipUser/user/${idUser}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        if (response.status === 404) {
+          setIsNotVip(true);
+        } else {
+          setIsNotVip(false);
+          const data = await response.json();
+          const isVip = data.content; // Verifica se la risposta contiene dati per determinare se l'utente è un VIP
+          dispatch(setIsVip(isVip));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchVipStatus();
     fetchCreditCards();
   }, []);
 
@@ -99,12 +126,16 @@ const Vip = () => {
               distinctio
             </p>
             <Col className="d-flex justify-content-center py-4">
-              <button
-                onClick={setShowModal}
-                className="btn-vip  rounded-3 fs-4"
-              >
-                Entra nell'impero!
-              </button>
+              {isNotVip ? (
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="btn-vip  rounded-3 fs-4"
+                >
+                  Entra nell'impero!
+                </button>
+              ) : (
+                <p className="text-link">Fai già parte dell'impero!</p>
+              )}
             </Col>
           </Col>
           <Col
@@ -132,7 +163,7 @@ const Vip = () => {
       </Container>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header>
+        <Modal.Header closeButton>
           Vuoi far parte anche tu dei Vip dell'Impero?
         </Modal.Header>
         <Modal.Body>
