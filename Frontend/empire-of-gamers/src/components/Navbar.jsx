@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col, Dropdown, Image, Container } from "react-bootstrap";
-import avatar from "../assets/imgs/avatar.png";
 import NavbarLg from "./NavbarLg";
 import logo2 from "../assets/imgs/logo-7.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,11 +25,13 @@ const Navbar = () => {
   const currentUserImgProfile = useSelector((state) => state.user.imgProfile);
   const [userProfile, setUserProfile] = useState({});
   const currentUserId = useSelector((state) => state.user.currentUserId);
+  const isVip = useSelector((state) => state.user.isVip);
+  const isVipIdUser = isVip && isVip.length > 0 ? isVip[0].user.idUser : null;
 
   const handleLogout = () => {
     dispatch(logout());
     setMenuOpen(false);
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -194,7 +195,10 @@ const Navbar = () => {
           </li>
 
           <li className="mb-2 mb-lg-0 d-flex align-items-center custom-dropdown">
-            <Dropdown>
+            <Dropdown className="position-relative">
+              {isVipIdUser === userId && (
+                <div className="crown-vip-mobile position-absolute">👑</div>
+              )}
               <Dropdown.Toggle
                 variant="link"
                 id="dropdown-basic"

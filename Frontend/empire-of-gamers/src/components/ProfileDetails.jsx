@@ -10,9 +10,11 @@ const ProfileDetails = () => {
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   const [userProfile, setUserProfile] = useState({});
-  const currentUser = useSelector((state) => state.user.currentUser);
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const userCurrentId = userCurrent.idUser;
+  const isVip = useSelector((state) => state.user.isVip);
+  const isVipIdUser = isVip[0]?.user?.idUser;
+  const isVipExpirationDate = isVip.endDate;
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -20,6 +22,7 @@ const ProfileDetails = () => {
     imgProfile: "",
     imgBackground: "",
   });
+  const currentUser = useSelector((state) => state.user.currentUser);
   const currentUserId = useSelector((state) => state.user.currentUserId);
   const navigate = useNavigate();
   const handleModalInputChange = (event) => {
@@ -125,7 +128,7 @@ const ProfileDetails = () => {
             />
             <div className="d-flex justify-content-between align-items-center pt-2">
               <h2 className="m-0">{currentUser}</h2>
-              <span>👑</span>
+              {isVipIdUser === userCurrentId && <span>👑</span>}
             </div>
             <hr className="divisori" />
             <p>Name : {userProfile.name}</p>

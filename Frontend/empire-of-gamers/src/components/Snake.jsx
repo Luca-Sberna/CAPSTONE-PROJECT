@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Button } from "react-bootstrap";
-import SnakeHighScores from "./SnakeHighScores";
+import { Button, Container } from "react-bootstrap";
 
 const Snake = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -14,10 +13,14 @@ const Snake = () => {
   const [gameOver, setGameOver] = useState(false);
   const [score, setScore] = useState(0);
   const snakeRef = useRef(null);
+  const bottomRef = useRef(null);
 
   //Funzione per gestire il click sul pulsante "Inizia partita"
   function handleStartClick() {
     setGameStarted(true);
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }
 
   //Funzione per controllare se la testa del serpente ha toccato il proprio corpo o i bordi del campo
@@ -143,29 +146,41 @@ const Snake = () => {
     <>
       {!gameStarted ? (
         <>
-          <Button onClick={handleStartClick}>Inizia partita</Button>
-          <SnakeHighScores />
+          <Container className="text-center py-5 border-top border-bottom bg-black">
+            <button
+              className="btn-vip rounded-3 p-3"
+              onClick={handleStartClick}
+            >
+              Inizia partita
+            </button>
+          </Container>
         </>
       ) : (
         <div
-          className="Snake"
+          className="Snake my-3 pb-4 w-100"
           tabIndex="0"
           onKeyDown={handleKeyDown}
           ref={snakeRef}
         >
           {/* Visualizza il punteggio e il tempo */}
-          <div className="Score">
+          <div className="Score text-black ps-2">
             Score: {score} Time: {time}
           </div>{" "}
           {/* Aggiungi pulsante per riavviare il gioco */}
           {gameOver ? (
             <>
-              <div className="GameOver">Game Over</div>
-              <Button onClick={handleRestart}>Restart</Button>{" "}
-              <SnakeHighScores />
+              <Container className="text-center p-5 border-top border-bottom bg-black ">
+                <div className="GameOver pb-2">Game Over</div>
+                <button
+                  className="btn-vip rounded-3 px-3 py-1"
+                  onClick={handleRestart}
+                >
+                  Restart
+                </button>
+              </Container>
             </>
           ) : (
-            <div className="Board">
+            <div className="Board mx-auto ">
               {Array.from({ length: 10 }).map((_, row) => (
                 <div key={row} className="Row">
                   {Array.from({ length: 10 }).map((_, col) => (
@@ -184,6 +199,7 @@ const Snake = () => {
               ))}
             </div>
           )}
+          <div ref={bottomRef} />
         </div>
       )}
     </>

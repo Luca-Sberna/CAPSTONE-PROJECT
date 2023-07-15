@@ -15,6 +15,7 @@ import Chess from "./ChessGame";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setGame } from "../redux/slices/userSlice";
+import antenna from "../assets/imgs/antenna.png";
 
 const GameDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -124,11 +125,11 @@ const GameDetails = () => {
   return (
     <div className="bg-home">
       <Container fluid className=" p-5 justify-content-center ">
-        <Row className="py-3 text-link">
+        <Row className="pt-2  text-link">
           <Col
             xs={12}
             md={7}
-            className=" hero-container me-4 mb-5 bg-elements rounded-1"
+            className=" hero-container me-4 mb-4 bg-elements rounded-1"
           >
             <div className="d-flex justify-content-between pt-3 position-relative ">
               <>
@@ -136,7 +137,7 @@ const GameDetails = () => {
                 <Image
                   width={100}
                   src={game.image}
-                  className="position-absolute me-2 end-0 rounded-1 hero-container"
+                  className="img-game-details position-absolute me-2  rounded-1 hero-container"
                   fluid
                 />
                 {userRole === "ADMIN" && (
@@ -159,7 +160,7 @@ const GameDetails = () => {
           <Col
             xs={12}
             md={4}
-            className="hero-container h-75 pb-4 px-4 bg-elements rounded-1"
+            className="hero-container d-none d-md-flex h-75 pb-3 mb-5 mb-md-0 px-4 bg-elements rounded-1 "
           >
             <h3 className="pt-3">Classifica</h3>
             <ListGroup className=" ">
@@ -176,11 +177,38 @@ const GameDetails = () => {
             </ListGroup>
           </Col>
         </Row>
-        <Row className="my-3 ">
-          <Col className="justify-content-center d-flex hero-container bg-elements text-link rounded-1">
+      </Container>
+      <Container className="pb-5">
+        <Row className="games-container position-relative mx-auto pb-3">
+          <Col className="justify-content-center d-flex hero-container bg-elements text-link rounded-1 ">
+            <Image
+              className="position-absolute img-antenna"
+              width={63}
+              src={antenna}
+            />
             {gameComponent}
           </Col>
         </Row>
+
+        <Col
+          xs={12}
+          md={4}
+          className="hero-container d-md-none h-75 pb-3 my-5 mb-md-0 px-4 bg-elements rounded-1 text-link"
+        >
+          <h3 className="pt-3">Classifica mobile</h3>
+          <ListGroup className=" ">
+            {game &&
+              game.leaderboard &&
+              game.leaderboard.map((player, index) => (
+                <ListGroup.Item
+                  className="hero-container bg-elements text-link"
+                  key={index}
+                >
+                  {player.name}: {player.score}
+                </ListGroup.Item>
+              ))}
+          </ListGroup>
+        </Col>
       </Container>
 
       <Modal className="" show={showModal} onHide={() => setShowModal(false)}>

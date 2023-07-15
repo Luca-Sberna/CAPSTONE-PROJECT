@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import avatar from "../assets/imgs/avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logout,
   setCurrentUser,
   setCurrentUserId,
+  setIsVip,
 } from "../redux/slices/userSlice";
 import axios from "axios";
 
@@ -20,10 +20,12 @@ const NavbarLg = () => {
   const token = useSelector((state) => state.user.token);
   const currentUserId = useSelector((state) => state.user.currentUserId);
   const [userProfile, setUserProfile] = useState({});
+  const isVip = useSelector((state) => state.user.isVip);
+  const isVipIdUser = isVip && isVip.length > 0 ? isVip[0].user.idUser : null;
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -80,9 +82,29 @@ const NavbarLg = () => {
         console.log(error);
       }
     };
+
+    const fetchVipStatus = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/vipUser/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const data = await response.json();
+        const isVip = data.content; // Verifica se la risposta contiene dati per determinare se l'utente è un VIP
+        dispatch(setIsVip(isVip));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     if (isLoggedIn) {
       fetchCurrentUser();
       fetchCurrentUserProfile();
+      fetchVipStatus();
     }
   }, [dispatch, isLoggedIn, token, currentUserId]);
 
@@ -179,8 +201,11 @@ const NavbarLg = () => {
                         alt="Profile"
                       />
                     </Link>
-                    <span className="align-middle px-2 text-link bg-transparent">
+                    <span className="align-middle px-2 text-link bg-transparent position-relative">
                       {currentUser}
+                      {isVipIdUser === userId && (
+                        <div className="crown-vip position-absolute">👑</div>
+                      )}
                     </span>
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
