@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Image, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ProfileDetails = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteFav, setShowDeleteFav] = useState(false);
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
+  const { idGame } = useParams();
   const [userProfile, setUserProfile] = useState({});
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const userCurrentId = userCurrent.idUser;
@@ -154,23 +156,26 @@ const ProfileDetails = () => {
         </Row>
       </Container>
 
-      <Col className="hero-container rounded-4 bg-elements text-link p-3 m-3 mx-4">
-        <h3 className="mb-3">Favourite Games</h3>
-        <Col xs={6} md={4} lg={3} className="">
-          <div className="game-card pb-3">
-            {" "}
-            <Link to={"/game/:id"} className="p-0 text-decoration-none">
-              <img
-                width={100}
-                src="https://via.placeholder.com/150"
-                alt={"game-img"}
-                className="game-img"
-              />
-              <div className="game-title">{"Game Name"}</div>
-            </Link>
+      <Row className="hero-container rounded-4 bg-elements text-link p-3 m-3  gap-5">
+        <h3>Favourite Games</h3>
+        <Col xs={6} md={4} lg={2} className="">
+          <div className="game-card-fav position-relative">
+            <img
+              width={130}
+              src={""} // Utilizza game.image invece di favGames.image
+              alt={""} // Utilizza game.name invece di favGames.name
+              className="game-img-fav"
+            />
+            <span
+              onClick={() => setShowDeleteFav(true)}
+              className="position-absolute img-review start-0 fs-4 bg-danger rounded-circle"
+            >
+              🗑️
+            </span>
+            <div className="game-title">{""}</div>
           </div>
         </Col>
-      </Col>
+      </Row>
 
       <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
@@ -251,6 +256,20 @@ const ProfileDetails = () => {
             </button>
           </Modal.Footer>
         </Form>
+      </Modal>
+
+      <Modal
+        className=""
+        show={showDeleteFav}
+        onHide={() => setShowDeleteFav(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Vuoi eliminare il gioco dai tuoi preferiti?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <button onClick={() => setShowDeleteFav(false)}>Back</button>
+          <button type="submit">Save and Delete</button>
+        </Modal.Footer>
       </Modal>
     </Container>
   );

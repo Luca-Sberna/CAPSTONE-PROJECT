@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setGame } from "../redux/slices/userSlice";
 import antenna from "../assets/imgs/antenna.png";
-import Reviews from "./Reviews";
 
 const GameDetails = () => {
   const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
@@ -37,7 +36,9 @@ const GameDetails = () => {
   const token = useSelector((state) => state.user.token);
   const navigate = useNavigate();
   const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userId = userCurrent.idUser;
   const userRole = userCurrent.role;
+
   const [gameData, setGameData] = useState({
     name: "",
     description: "",
@@ -345,8 +346,13 @@ const GameDetails = () => {
             <p>Valutazione: {game.ratings}/5</p>
             <h3>Come giocare</h3>
             <p>{game.infoToPlay}</p>
-            <h3>Comandi</h3>
-            <p>{game.commands}</p>
+            <h3 className="m-0">Comandi</h3>
+            <div className="d-flex justify-content-between align-items-center pb-1">
+              <span>{game.commands}</span>
+              <span showAddToFav className="img-review fs-4">
+                +💗
+              </span>
+            </div>
           </Col>
           <Col
             xs={12}

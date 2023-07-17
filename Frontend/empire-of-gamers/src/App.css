@@ -487,31 +487,18 @@ body {
     opacity: 1;
 }
 
-.game-img {
-    cursor: pointer;
-    border-radius: 10%;
-    transition: all .2s ease-in-out;
-    opacity: 70%;
-
-}
-
-.game-img:hover {
-    transition: all .2s ease-in-out;
-    transform: scale(1.1);
-    box-shadow: 1px 7px 10px 1px #A4C639;
-    opacity: unset;
-}
-
 .img-antenna {
     top: -3.6rem;
     right: 0;
 }
 
-.game-title {
+.game-title,
+.game-title-fav {
     display: none;
 }
 
-.game-card:hover .game-title {
+.game-card:hover .game-title,
+.game-card-fav:hover .game-title {
     display: block;
 }
 
@@ -519,7 +506,8 @@ body {
     position: relative;
 }
 
-.game-title {
+.game-title,
+.game-title-fav {
     position: absolute;
     top: 78%;
     left: 63.1%;
@@ -535,9 +523,49 @@ body {
     border: 1px solid #9C27B0;
 }
 
-.game-card:hover .game-title {
+.game-card:hover .game-title,
+.game-card-fav:hover .game-title {
     opacity: 1;
 }
+
+
+.game-img {
+    cursor: pointer;
+    border-radius: 10%;
+    transition: all .2s ease-in-out;
+    opacity: 70%;
+
+}
+
+.game-img:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: 1px 7px 10px 1px #A4C639;
+    opacity: unset;
+}
+
+
+.game-img-fav {
+    cursor: pointer;
+    border-radius: 10%;
+    transition: all .2s ease-in-out;
+    opacity: 70%;
+    position: relative;
+}
+
+.game-img-fav:hover {
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    box-shadow: 1px 7px 10px 1px #A4C639;
+    opacity: unset;
+}
+
+
+.game-card-fav {
+    width: 9.5rem;
+}
+
+
 
 .divisori {
     color: #A4C639;
