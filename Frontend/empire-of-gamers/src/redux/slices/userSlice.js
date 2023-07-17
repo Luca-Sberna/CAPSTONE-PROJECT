@@ -15,9 +15,11 @@ const initialState = {
     creditCardObj: {},
     game: {},
     isVip: {},
+
 };
 
 const userSlice = createSlice({
+
     name: 'user',
     initialState,
     reducers: {
@@ -52,7 +54,6 @@ const userSlice = createSlice({
         setCurrentUserId(state, action) {
             state.currentUserId = action.payload;
         },
-
         setCreditCard(state, action) {
             state.creditCard = action.payload;
         },
@@ -70,10 +71,6 @@ const userSlice = createSlice({
         },
         setIsVip(state, action) {
             state.isVip = action.payload;
-        },
-
-        removeVipStatus(state) {
-            state.isVip = {}; // Rimuovi lo stato VIP
         },
     },
 });
@@ -94,7 +91,7 @@ export const {
     setUserCurrent,
     setGame,
     setIsVip,
-    removeVipStatus
+    removeVipStatus,
 } = userSlice.actions;
 
 export default userSlice.reducer;
