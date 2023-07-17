@@ -189,7 +189,6 @@ const NavbarLg = () => {
                     id="dropdown-basic"
                     className="text-decoration-none d-flex align-items-center bg-transparent "
                   >
-                    {" "}
                     <Link
                       to={`/profile/${userId}`}
                       className="p-0 text-decoration-none"
@@ -214,7 +213,6 @@ const NavbarLg = () => {
                       href="#action1"
                       className="dropdown-custom-hover text-link"
                     >
-                      {" "}
                       <Link
                         className="text-decoration-none text-link"
                         to={`/profile/${userId}`}
@@ -230,9 +228,8 @@ const NavbarLg = () => {
                         className="text-decoration-none text-link"
                         to={`/profile-settings/${userId}`}
                       >
-                        {" "}
                         Impostazioni profilo
-                      </Link>{" "}
+                      </Link>
                     </Dropdown.Item>
                     <Dropdown.Divider className="elements" />
                     <Dropdown.Item
