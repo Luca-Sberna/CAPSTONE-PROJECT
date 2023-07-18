@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Button, Container } from "react-bootstrap";
+import { setCurrentGame } from "../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Snake = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [time, setTime] = useState(0);
   const [snake, setSnake] = useState([[0, 0]]);
+  const dispatch = useDispatch();
   const [food, setFood] = useState([
     Math.floor(Math.random() * 10),
     Math.floor(Math.random() * 10),
@@ -14,10 +18,94 @@ const Snake = () => {
   const [score, setScore] = useState(0);
   const snakeRef = useRef(null);
   const bottomRef = useRef(null);
+  const token = useSelector((state) => state.user.token);
+  const currentGame = useSelector((state) => state.user.currentGame);
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userId = userCurrent.idUser;
+
+  const fetchSaveScore = async () => {
+    try {
+      if (currentGame) {
+        const { score: initialScore } = currentGame;
+        let response;
+
+        try {
+          response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/ranking/user/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        } catch (error) {
+          if (error.response && error.response.status === 404) {
+            // L'utente non ha uno score associato, effettua una richiesta POST
+            await axios.post(
+              `${process.env.REACT_APP_API_URL}/ranking`,
+              {
+                score: initialScore,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            return; // Esce dalla funzione in caso di richiesta POST effettuata
+          } else {
+            throw error; // Rilancia l'errore in caso di errori diversi da 404
+          }
+        }
+
+        if (response.data.content.length > 0) {
+          // L'utente ha già uno score associato, effettua una richiesta PUT
+          const rankingId = response.data.content[0].id;
+          const updatedScore = response.data.content[0].score + score;
+          await axios.put(
+            `${process.env.REACT_APP_API_URL}/ranking/${rankingId}`,
+            {
+              score: updatedScore,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        } else {
+          // L'utente non ha uno score associato, effettua una richiesta POST
+          await axios.post(
+            `${process.env.REACT_APP_API_URL}/ranking`,
+            {
+              score: initialScore,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        }
+      }
+    } catch (error) {
+      console.log(
+        "Si è verificato un errore durante il salvataggio dello score:",
+        error,
+      );
+    }
+  };
 
   //Funzione per gestire il click sul pulsante "Inizia partita"
   function handleStartClick() {
     setGameStarted(true);
+    dispatch(
+      setCurrentGame({
+        gameId: "155d3957-1857-48f7-bcdc-9d56fce1712b",
+        score: score, // punteggio iniziale
+      }),
+    );
+
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -82,6 +170,7 @@ const Snake = () => {
         moveSnake();
         if (checkCollision()) {
           setGameOver(true);
+          dispatch(fetchSaveScore);
           clearInterval(interval);
         }
       }, 500);
@@ -105,19 +194,19 @@ const Snake = () => {
     }
   }, [gameStarted, gameOver]);
 
-  //Funzione per gestire la pressione dei tasti per cambiare direzione
+  // Funzione per gestire la pressione dei tasti per cambiare direzione
   function handleKeyDown(event) {
     switch (event.keyCode) {
-      case 37:
+      case 65: // Tasto A per sinistra
         if (direction !== "right") setDirection("left");
         break;
-      case 38:
+      case 87: // Tasto W per su
         if (direction !== "down") setDirection("up");
         break;
-      case 39:
+      case 68: // Tasto D per destra
         if (direction !== "left") setDirection("right");
         break;
-      case 40:
+      case 83: // Tasto S per giù
         if (direction !== "up") setDirection("down");
         break;
       default:
@@ -131,6 +220,10 @@ const Snake = () => {
     setFood([Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]);
     setDirection("right");
     setGameOver(false);
+    setCurrentGame({
+      gameId: "155d3957-1857-48f7-bcdc-9d56fce1712b",
+      score: score, // punteggio iniziale
+    });
     setScore(0);
     setTime(0);
   }

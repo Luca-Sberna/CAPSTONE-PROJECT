@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const initialState = {
     users: [],
@@ -15,7 +16,8 @@ const initialState = {
     creditCardObj: {},
     game: {},
     isVip: {},
-
+    ranking: {},
+    currentGame: null
 };
 
 const userSlice = createSlice({
@@ -72,8 +74,16 @@ const userSlice = createSlice({
         setIsVip(state, action) {
             state.isVip = action.payload;
         },
+        setRanking(state, action) {
+            state.ranking = action.payload;
+        },
+        setCurrentGame(state, action) {
+            state.currentGame = action.payload;
+        },
     },
 });
+
+
 
 export const {
     fetchUsersStart,
@@ -92,6 +102,9 @@ export const {
     setGame,
     setIsVip,
     removeVipStatus,
+    setRanking,
+    setCurrentGame
+
 } = userSlice.actions;
 
 export default userSlice.reducer;

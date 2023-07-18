@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from '../slices/userSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -23,7 +24,7 @@ const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false, // Disabilita il controllo serializzabile per gli slice che utilizzano funzioni non serializzabili come gli action creator thunk
-    }),
+    }).concat(thunk),
 });
 
 const persistor = persistStore(store);

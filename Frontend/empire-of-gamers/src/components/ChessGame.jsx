@@ -3,6 +3,9 @@ import "../App.css";
 import Chessboard from "chessboardjsx";
 import { ChessInstance, ShortMove } from "chess.js";
 import { Alert, Button } from "react-bootstrap";
+import { setCurrentGame } from "../redux/slices/userSlice";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const Chess = require("chess.js").Chess;
 
@@ -11,8 +14,7 @@ const ChessGame = () => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"),
   );
   const [fen, setFen] = useState(chess.fen());
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -20,6 +22,12 @@ const ChessGame = () => {
   const [selectedPieceSquare, setSelectedPieceSquare] = useState(null);
   const [hoveredPiece, setHoveredPiece] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [score, setScore] = useState(0);
+  const token = useSelector((state) => state.user.token);
+  const currentGame = useSelector((state) => state.user.currentGame);
+  const userCurrent = useSelector((state) => state.user.userCurrent);
+  const userId = userCurrent.idUser;
+  const dispatch = useDispatch();
 
   const getChessboardWidth = () => {
     if (windowWidth < 576) {
@@ -33,6 +41,79 @@ const ChessGame = () => {
     }
   };
 
+  const fetchSaveScore = async () => {
+    try {
+      if (currentGame) {
+        const { score: initialScore } = currentGame;
+        let response;
+
+        try {
+          response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/ranking/user/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        } catch (error) {
+          if (error.response && error.response.status === 404) {
+            // L'utente non ha uno score associato, effettua una richiesta POST
+            await axios.post(
+              `${process.env.REACT_APP_API_URL}/ranking`,
+              {
+                score: initialScore,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            );
+            return; // Esce dalla funzione in caso di richiesta POST effettuata
+          } else {
+            throw error; // Rilancia l'errore in caso di errori diversi da 404
+          }
+        }
+
+        if (response.data.content.length > 0) {
+          // L'utente ha già uno score associato, effettua una richiesta PUT
+          const rankingId = response.data.content[0].id;
+          const updatedScore = response.data.content[0].score + score;
+          await axios.put(
+            `${process.env.REACT_APP_API_URL}/ranking/${rankingId}`,
+            {
+              score: updatedScore,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        } else {
+          // L'utente non ha uno score associato, effettua una richiesta POST
+          await axios.post(
+            `${process.env.REACT_APP_API_URL}/ranking`,
+            {
+              score: initialScore,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          );
+        }
+      }
+    } catch (error) {
+      console.log(
+        "Si è verificato un errore durante il salvataggio dello score:",
+        error,
+      );
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -41,19 +122,19 @@ const ChessGame = () => {
     window.addEventListener("resize", handleResize);
 
     let interval;
-    if (startTime && !endTime && !gameOver) {
+    if (startTime && !gameOver) {
       interval = setInterval(() => {
-        const now = Date.now();
-        const elapsedSeconds = Math.floor((now - startTime) / 1000);
-        setTimeElapsed(elapsedSeconds);
+        setTimeElapsed((elapsedSeconds) => elapsedSeconds + 1);
       }, 1000);
+      return () => clearInterval(interval);
     }
 
     return () => {
       clearInterval(interval);
       window.removeEventListener("resize", handleResize);
+      fetchSaveScore();
     };
-  }, [startTime, endTime, gameOver]);
+  }, [startTime, gameOver]);
 
   const handleSquareClick = (square) => {
     const piece = chess.get(square);
@@ -67,6 +148,21 @@ const ChessGame = () => {
     try {
       const result = chess.move(move);
       if (result !== null) {
+        if (!startTime) {
+          setStartTime(true);
+        }
+        const capturedPiece = result.captured;
+        if (capturedPiece) {
+          const pieceValue = {
+            p: 1, // pedone
+            r: 2, // torre
+            n: 2, // cavallo
+            b: 2, // alfiere
+            q: 3, // regina
+          };
+          const pieceScore = pieceValue[capturedPiece.toLowerCase()];
+          setScore((prevScore) => prevScore + pieceScore);
+        }
         setTimeout(() => {
           const moves = chess.moves();
           if (moves.length > 0) {
@@ -110,22 +206,38 @@ const ChessGame = () => {
     const newChess = new Chess();
     setChess(newChess);
     setFen(newChess.fen());
-    setStartTime(null);
-    setEndTime(null);
+    setStartTime(false);
     setMoveCount(0);
     setGameOver(false);
+    setTimeElapsed(0);
+    setScore(0);
+    setCurrentGame({
+      gameId: "f69314d6-23c1-48d1-aa8c-1ec30071c603",
+      score: score, // punteggio iniziale
+    });
   };
 
   const handleGameOver = () => {
-    setEndTime(Date.now());
     setGameOver(true);
+    setStartTime(false);
+
+    if (startTime) {
+      const elapsedSeconds = Math.floor(startTime / 1000);
+      setTimeElapsed(elapsedSeconds);
+    }
+
+    fetchSaveScore();
   };
 
   const handleStart = (sourceSquare) => {
     setSelectedSquare(sourceSquare);
     setSelectedPieceSquare(sourceSquare);
-    setStartTime(Date.now());
+    setStartTime(true);
     setHoveredPiece(null); // Ripulisci lo stato di hoveredPiece al trascinamento del pezzo
+    setCurrentGame({
+      gameId: "f69314d6-23c1-48d1-aa8c-1ec30071c603",
+      score: score, // punteggio iniziale
+    });
   };
 
   const handleSquareHover = (square, piece) => {
@@ -143,9 +255,22 @@ const ChessGame = () => {
     return {};
   };
 
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+    return `${formattedMinutes}:${formattedSeconds}`;
+  };
+
   return (
     <>
-      <div className="chess-container py-2  py-sm-5">
+      <div className="chess-container py-2  py-sm-4">
+        <div className="d-flex gap-5">
+          <p>time: {formatTime(timeElapsed)}</p>
+          <p>score: {score}</p>
+          <p>moves: {moveCount}</p>
+        </div>
         <Chessboard
           width={getChessboardWidth()}
           position={fen}
@@ -184,6 +309,7 @@ const ChessGame = () => {
               <p>Scacco matto! Hai vinto la partita.</p>
               <p>Tempo totale: {timeElapsed} secondi</p>
               <p>Mosse totali: {moveCount}</p>
+              <p>score: {score}</p>
               <hr />
               <Button onClick={handleRestart} variant="outline-success">
                 Riprova

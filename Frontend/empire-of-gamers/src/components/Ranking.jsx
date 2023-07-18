@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Navbar from "./Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setRanking } from "../redux/slices/userSlice";
 
 const Ranking = () => {
-  const rankingData = [
-    { position: 1, user: "User 1", score: 100 },
-    { position: 2, user: "User 2", score: 90 },
-    { position: 3, user: "User 3", score: 80 },
-    // Aggiungi altri dati della classifica ottenuti dalla fetch
-  ];
+  const token = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
+  const ranking = useSelector((state) => state.user.ranking);
+
+  useEffect(() => {
+    const getAllScore = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/ranking?page=0&size=10&sortBy=score`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const ranking = response.data.content;
+        ranking.sort((a, b) => b.score - a.score);
+        console.log(ranking);
+        dispatch(setRanking(ranking));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getAllScore();
+  }, []);
 
   return (
     <Container fluid className="px-xs-2 px-md-0 pt-5">
@@ -26,13 +49,15 @@ const Ranking = () => {
             <h5>Score</h5>
           </Col>
         </Row>
-        {rankingData.map((item) => (
-          <Row key={item.position}>
-            <Col xs={3}>{item.position}.</Col>
-            <Col xs={6}>{item.user}</Col>
-            <Col xs={3}>{item.score}</Col>
-          </Row>
-        ))}
+        {ranking &&
+          ranking.map((score, index) => (
+            <Row key={score.id}>
+              <Col>{index + 1}</Col>{" "}
+              {/* Mostra la posizione in base all'indice */}
+              <Col xs={6}>{score.user?.username}</Col>
+              <Col xs={3}>{score.score}</Col>
+            </Row>
+          ))}
       </Container>
     </Container>
   );
