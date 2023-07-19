@@ -370,7 +370,7 @@ const GameDetails = () => {
               alt="img"
               width={220}
             />
-            <h3 className="pt-3">Classifica</h3>
+            <h3 className="pt-3">Classifica {game.name}</h3>
             <ListGroup className=" ">
               {game &&
                 game.leaderboard &&
@@ -522,7 +522,7 @@ const GameDetails = () => {
           md={4}
           className="hero-container d-md-none h-75 pb-3 my-5 mb-md-0 px-4 bg-elements rounded-1 text-link position-relative"
         >
-          <h3 className="pt-3  bottom-0">Classifica mobile</h3>
+          <h3 className="pt-3  bottom-0">Classifica mobile {game.name}</h3>
           <Image
             className="coming-soon-img-games position-absolute "
             src={comingSoon}

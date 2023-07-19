@@ -17,7 +17,8 @@ const initialState = {
     game: {},
     isVip: {},
     ranking: {},
-    currentGame: null
+    currentGame: null,
+
 };
 
 const userSlice = createSlice({
@@ -25,6 +26,9 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        setUsers(state, action) {
+            state.users = action.payload;
+        },
         fetchUsersStart(state) {
             state.loading = true;
             state.error = null;
@@ -86,6 +90,7 @@ const userSlice = createSlice({
 
 
 export const {
+    setUsers,
     fetchUsersStart,
     fetchUsersSuccess,
     fetchUsersFailure,
