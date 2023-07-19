@@ -987,3 +987,22 @@ body {
     top: -2.7rem;
     right: 3rem;
 }
+
+.text-friend {
+    color: #A4C639;
+}
+
+.text-friend:hover {
+    color: #FF5722;
+}
+
+.btn-friend {
+    background-color: rgba(0, 0, 0, 0.495);
+    border: 1px solid #9C27B0;
+    cursor: pointer;
+}
+
+.btn-friend:hover {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid #A4C639;
+}
