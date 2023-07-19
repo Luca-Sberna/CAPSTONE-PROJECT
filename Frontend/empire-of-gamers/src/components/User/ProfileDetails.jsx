@@ -89,7 +89,10 @@ const ProfileDetails = () => {
 
   return (
     <Container fluid className="bg-home px-0 py-5 ">
-      <Container className="rounded-1 hero-container rounded-5 px-5 pb-3   background-image position-relative">
+      <Container
+        data-aos="zoom-in-down"
+        className="rounded-1 hero-container rounded-5 px-5 pb-3   background-image position-relative"
+      >
         <Image
           className="img-cover position-absolute rounded-5"
           src={userProfile.imgBackground}
@@ -130,7 +133,7 @@ const ProfileDetails = () => {
             />
             <div className="d-flex justify-content-between align-items-center pt-2">
               <h2 className="m-0">{currentUser}</h2>
-              {isVipIdUser === userCurrentId && <span>👑</span>}
+              {isVipIdUser && isVipIdUser === userCurrentId && <span>👑</span>}
             </div>
             <hr className="divisori" />
             <p>Name : {userProfile.name}</p>
@@ -156,7 +159,10 @@ const ProfileDetails = () => {
         </Row>
       </Container>
 
-      <Row className="hero-container rounded-4 bg-elements text-link p-3 m-3  gap-5">
+      <Row
+        data-aos="zoom-in-up"
+        className="hero-container rounded-4 bg-elements text-link p-3 m-3  gap-5"
+      >
         <h3>Favourite Games</h3>
         <Col xs={6} md={4} lg={2} className="">
           <div className="game-card-fav position-relative">

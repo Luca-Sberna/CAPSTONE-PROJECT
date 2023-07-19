@@ -92,7 +92,7 @@ public class UserService {
 	}
 
 	public User findUserByUsername(String username) throws NotFoundException {
-		return ur.findByUsername(username).orElseThrow(() -> new NotFoundException());
+		return ur.findByUsername(username, Sort.by("username")).orElseThrow(() -> new NotFoundException());
 	}
 
 	public void deleteAllUsers() {

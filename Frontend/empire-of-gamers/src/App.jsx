@@ -1,19 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import NotFound from "./components/NotFound";
-import Vip from "./components/Vip";
-import Ranking from "./components/Ranking";
+import Vip from "./components/User/Vip";
+import Ranking from "./components/GlobalRanking/Ranking";
 import AboutUs from "./components/AboutUs";
-import ProfileDetails from "./components/ProfileDetails";
-import GameDetails from "./components/GameDetails";
-import Navbar from "./components/Navbar";
-import Friend from "./components/Friend";
+import ProfileDetails from "./components/User/ProfileDetails";
+import GameDetails from "./components/Games/GameDetails";
+import Navbar from "./components/Nav/Navbar";
+import Friend from "./components/Friend/Friend";
 import { Container } from "react-bootstrap";
-import ProfileSettings from "./components/ProfileSettings";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
+import ProfileSettings from "./components/User/ProfileSettings";
+import Login from "./components/Login-Signup/Login";
+import SignUp from "./components/Login-Signup/SignUp";
+import Social from "./components/Social/Social";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfileDetails />} />
           <Route path="/profile-settings/:id" element={<ProfileSettings />} />
           <Route path="/game/:idGame" element={<GameDetails />} />
+          <Route path="/social" element={<Social />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

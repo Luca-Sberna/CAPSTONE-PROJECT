@@ -7,7 +7,7 @@ import {
   setCurrentUser,
   setCurrentUserId,
   setIsVip,
-} from "../redux/slices/userSlice";
+} from "../../redux/slices/userSlice";
 import axios from "axios";
 
 const NavbarLg = () => {
@@ -141,7 +141,7 @@ const NavbarLg = () => {
               className=" d-flex align-items-center me-2 me-xxl-0 custom-dropdown"
             >
               <Link
-                to={"/"}
+                to={"/social"}
                 className="text-link link-navbar-lg text-decoration-none  px-2 py-3 rounded-1"
               >
                 Empire Social{" "}
@@ -210,6 +210,7 @@ const NavbarLg = () => {
                   <Dropdown.Menu className="bg-elements mt-1 ms-5 overflow-hidden">
                     {/* Esempi di elementi nella dropdown */}
                     <Dropdown.Item
+                      data-aos="flip-up"
                       href="#action1"
                       className="dropdown-custom-hover text-link"
                     >
@@ -221,6 +222,7 @@ const NavbarLg = () => {
                       </Link>
                     </Dropdown.Item>
                     <Dropdown.Item
+                      data-aos="flip-up"
                       href="#action2"
                       className="dropdown-custom-hover text-link"
                     >
@@ -233,6 +235,7 @@ const NavbarLg = () => {
                     </Dropdown.Item>
                     <Dropdown.Divider className="elements" />
                     <Dropdown.Item
+                      data-aos="flip-up"
                       href="#action3"
                       className="dropdown-custom-hover text-link"
                       onClick={handleLogout}

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
-import hero from "../assets/imgs/hero-img.png";
-import snake from "../assets/imgs/snake.png";
+import hero from "../../assets/imgs/hero-img.png";
+import snake from "../../assets/imgs/snake.png";
 import { Link } from "react-router-dom";
-import king from "../assets/imgs/king.png";
+import king from "../../assets/imgs/king.png";
 
 import $ from "jquery";
 

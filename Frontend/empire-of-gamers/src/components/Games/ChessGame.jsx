@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import "../../App.css";
 import Chessboard from "chessboardjsx";
 import { ChessInstance, ShortMove } from "chess.js";
 import { Alert, Button } from "react-bootstrap";
-import { setCurrentGame } from "../redux/slices/userSlice";
+import { setCurrentGame } from "../../redux/slices/userSlice";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 

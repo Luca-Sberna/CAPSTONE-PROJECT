@@ -3,7 +3,7 @@ import { Button, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setGame } from "../redux/slices/userSlice";
+import { setGame } from "../../redux/slices/userSlice";
 
 const Game = () => {
   const [showModal, setShowModal] = useState(false);

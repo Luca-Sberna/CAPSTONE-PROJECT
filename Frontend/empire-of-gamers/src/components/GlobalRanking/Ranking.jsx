@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import Navbar from "./Navbar";
+import Navbar from "../Nav/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setRanking } from "../redux/slices/userSlice";
+import { setRanking } from "../../redux/slices/userSlice";
 
 const Ranking = () => {
   const token = useSelector((state) => state.user.token);

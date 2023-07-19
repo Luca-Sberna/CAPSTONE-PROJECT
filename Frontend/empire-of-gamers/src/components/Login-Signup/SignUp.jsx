@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { setUserId, setUsername } from "../redux/slices/userSlice";
+import { setUserId, setUsername } from "../../redux/slices/userSlice";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -65,7 +65,7 @@ const SignUp = () => {
   };
 
   return (
-    <Container fluid className=" py-5">
+    <Container data-aos="flip-up" fluid className=" py-5">
       <Row className="justify-content-center text-link ">
         <Col xs={11} className="px-0">
           <div className="hero-container rounded-1 bg-elements px-3">

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Row, Col, Dropdown, Image, Container } from "react-bootstrap";
-import NavbarLg from "./NavbarLg";
-import logo2 from "../assets/imgs/logo-7.png";
+import NavbarLg from "../Nav/NavbarLg";
+import logo2 from "../../assets/imgs/logo-7.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logout,
@@ -10,7 +10,7 @@ import {
   setCurrentUserEmail,
   setCurrentUserId,
   setUserCurrent,
-} from "../redux/slices/userSlice";
+} from "../../redux/slices/userSlice";
 import axios from "axios";
 
 const Navbar = () => {
@@ -221,6 +221,7 @@ const Navbar = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu className=" bg-elements mt-1 ms-5 overflow-hidden ">
                 <Dropdown.Item
+                  data-aos="flip-up"
                   href="#action1"
                   className="dropdown-custom-hover text-link"
                 >
@@ -234,6 +235,7 @@ const Navbar = () => {
                 </Dropdown.Item>
 
                 <Dropdown.Item
+                  data-aos="flip-up"
                   href="#action1"
                   className="dropdown-custom-hover text-link"
                 >
@@ -249,6 +251,7 @@ const Navbar = () => {
                 <Dropdown.Divider className="elements " />
 
                 <Dropdown.Item
+                  data-aos="flip-up"
                   href="#action3"
                   className="dropdown-custom-hover text-link"
                   onClick={handleLogout}

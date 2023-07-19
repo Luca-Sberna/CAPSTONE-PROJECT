@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import Navbar from "./Navbar";
+import Navbar from "../Nav/Navbar";
 import Footer from "./Footer";
 import { Row, Col, Container } from "react-bootstrap";
-import Friend from "./Friend";
+import Friend from "../Friend/Friend";
 import HomeContent from "./HomeContent";
-import { setIsVip } from "../redux/slices/userSlice";
+import { setIsVip } from "../../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {

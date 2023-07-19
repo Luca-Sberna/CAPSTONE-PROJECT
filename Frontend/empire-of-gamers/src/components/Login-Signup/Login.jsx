@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import { isLoggedIn, setToken } from "../redux/slices/userSlice";
+import { isLoggedIn, setToken } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
@@ -49,7 +49,10 @@ const LoginPage = () => {
     }
   };
   return (
-    <Container className="hero-container rounded-1 bg-elements p-2 mt-5">
+    <Container
+      data-aos="flip-up"
+      className="hero-container rounded-1 bg-elements p-2 mt-5"
+    >
       <Row className=" justify-content-center text-link">
         <Col xs={12} sm={8} md={6} lg={4}>
           <h2>Login</h2>
