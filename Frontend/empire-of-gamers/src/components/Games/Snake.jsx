@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Button, Container } from "react-bootstrap";
-import { setCurrentGame } from "../redux/slices/userSlice";
+import { setCurrentGame } from "../../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 

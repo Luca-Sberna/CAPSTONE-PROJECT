@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { setIsVip } from "../redux/slices/userSlice";
+import { setIsVip } from "../../redux/slices/userSlice";
 
 const Vip = () => {
   const [showModal, setShowModal] = useState(false);

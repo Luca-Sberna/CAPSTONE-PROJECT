@@ -73,4 +73,15 @@ public class UserController {
 		UUID userId = userDetails.getIdUser();
 		return userService.findUserById(userId);
 	}
+
+	@GetMapping("/username/{username}")
+	public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+		try {
+			User user = userService.findUserByUsername(username);
+			return ResponseEntity.ok(user);
+		} catch (NotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }

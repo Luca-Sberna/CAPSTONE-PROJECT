@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
-import avatar from "../assets/imgs/avatar.png";
+import avatar from "../../assets/imgs/avatar.png";
 import { Link } from "react-router-dom";
 
 const FriendList = () => {

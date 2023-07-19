@@ -419,6 +419,7 @@ body {
 .img-ranking {
     top: 1.3rem;
     right: -1.8rem;
+    z-index: 100;
 }
 
 .img-game {
@@ -426,6 +427,8 @@ body {
     top: -2rem;
     right: 0;
     position: absolute;
+    z-index: 100;
+
 }
 
 .img-hero {
@@ -977,4 +980,10 @@ body {
 .img-review:hover {
     transition: all .2s ease-in-out;
     transform: scale(1.15);
+}
+
+
+.coming-soon-img-games {
+    top: -2.7rem;
+    right: 3rem;
 }

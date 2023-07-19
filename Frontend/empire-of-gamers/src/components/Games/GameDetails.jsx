@@ -16,8 +16,9 @@ import Snake from "./Snake";
 import Chess from "./ChessGame";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setGame } from "../redux/slices/userSlice";
-import antenna from "../assets/imgs/antenna.png";
+import { setGame } from "../../redux/slices/userSlice";
+import antenna from "../../assets/imgs/antenna.png";
+import comingSoon from "../../assets/imgs/coming-soon.png";
 
 const GameDetails = () => {
   const [showDeleteReviewModal, setShowDeleteReviewModal] = useState(false);
@@ -315,10 +316,12 @@ const GameDetails = () => {
     fetchGameDetails();
   }, [idGame, token, dispatch, userCurrent]);
   return (
-    <div className="bg-home">
+    <div className="bg-home ">
       <Container fluid className=" p-5 justify-content-center ">
         <Row className="pt-2  text-link">
           <Col
+            data-aos="flip-left"
+            data-aos-duration="1000"
             xs={12}
             md={7}
             className=" hero-container me-4 mb-4 bg-elements rounded-1"
@@ -355,10 +358,18 @@ const GameDetails = () => {
             </div>
           </Col>
           <Col
+            data-aos="fade-down-left"
+            data-aos-duration="1000"
             xs={12}
             md={4}
-            className="hero-container d-none d-md-flex h-75 pb-3 mb-5 mb-md-0 px-4 bg-elements rounded-1 "
+            className="hero-container position-relative d-none d-md-flex h-75 pb-3 mb-5 mb-md-0 px-4 bg-elements rounded-1 "
           >
+            <Image
+              className="coming-soon-img-games position-absolute "
+              src={comingSoon}
+              alt="img"
+              width={220}
+            />
             <h3 className="pt-3">Classifica</h3>
             <ListGroup className=" ">
               {game &&
@@ -376,7 +387,12 @@ const GameDetails = () => {
         </Row>
       </Container>
       <Container className="pb-5">
-        <Row className="games-container position-relative mx-auto pb-3">
+        <Row
+          data-aos="flip-left"
+          data-aos-easing="ease-out-cubic"
+          data-aos-duration="1500"
+          className="games-container position-relative mx-auto pb-3"
+        >
           <Col className="justify-content-center d-flex hero-container bg-elements text-link rounded-1 ">
             <Image
               className="position-absolute img-antenna"
@@ -504,9 +520,15 @@ const GameDetails = () => {
         <Col
           xs={12}
           md={4}
-          className="hero-container d-md-none h-75 pb-3 my-5 mb-md-0 px-4 bg-elements rounded-1 text-link"
+          className="hero-container d-md-none h-75 pb-3 my-5 mb-md-0 px-4 bg-elements rounded-1 text-link position-relative"
         >
-          <h3 className="pt-3">Classifica mobile</h3>
+          <h3 className="pt-3  bottom-0">Classifica mobile</h3>
+          <Image
+            className="coming-soon-img-games position-absolute "
+            src={comingSoon}
+            alt="img"
+            width={200}
+          />
           <ListGroup className=" ">
             {game &&
               game.leaderboard &&

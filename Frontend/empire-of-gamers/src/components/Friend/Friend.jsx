@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
-import friends from "../assets/imgs/friends.png";
+import friends from "../../assets/imgs/friends.png";
 import FriendList from "./FriendList";
 
 const Friend = () => {
