@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Container, Dropdown, Image, Row } from "react-bootstrap";
 import friends from "../../assets/imgs/friends.png";
 import FriendList from "./FriendList";
+import { useSelector } from "react-redux";
 
 const Friend = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -12,13 +12,15 @@ const FriendList = () => {
   const onlineText = "green-text"; // Aggiungi il nome della classe per il testo online
   const offlineText = "orange-text"; // Aggiungi il nome della classe per il testo offline
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleRemoveFriend = (user) => {
     dispatch(removeFriend(user)); // Rimuovi l'utente dalla lista di amici utilizzando l'azione "removeFriend"
   };
   return (
     <div className="friend-list-container">
-      {friendList &&
+      {isLoggedIn &&
+        friendList &&
         friendList.map((friend) => (
           <Row
             className="friend-list d-flex align-items-center px-2 py-3 bg-transparent "
