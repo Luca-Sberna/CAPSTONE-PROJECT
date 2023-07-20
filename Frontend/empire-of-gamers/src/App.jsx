@@ -15,6 +15,7 @@ import ProfileSettings from "./components/User/ProfileSettings";
 import Login from "./components/Login-Signup/Login";
 import SignUp from "./components/Login-Signup/SignUp";
 import Social from "./components/Social/Social";
+import ProfileSelectedDetails from "./components/User/ProfileSelectedDetails";
 
 function App() {
   return (
@@ -30,7 +31,14 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile/:id" element={<ProfileDetails />} />
-          <Route path="/profile-settings/:id" element={<ProfileSettings />} />
+          <Route
+            path="/profile-selected/:id"
+            element={<ProfileSelectedDetails />}
+          />
+          <Route
+            path="/profile-settings/:idUser"
+            element={<ProfileSettings />}
+          />
           <Route path="/game/:idGame" element={<GameDetails />} />
           <Route path="/social" element={<Social />} />
           <Route path="*" element={<NotFound />} />

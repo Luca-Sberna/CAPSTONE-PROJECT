@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setGame } from "../../redux/slices/userSlice";
+import $ from "jquery";
 
 const Game = () => {
   const [showModal, setShowModal] = useState(false);
@@ -12,6 +13,7 @@ const Game = () => {
   const [games, setGames] = useState([]);
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const userRole = userCurrent.role;
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [gameData, setGameData] = useState({
     name: "",
     description: "",
@@ -71,6 +73,18 @@ const Game = () => {
   };
 
   useEffect(() => {
+    $(".special-text-link").on("mouseenter", function () {
+      var colors = getComputedStyle(document.documentElement)
+        .getPropertyValue("--random-color")
+        .split(", ");
+      var randomColor = colors[Math.floor(Math.random() * colors.length)];
+      $(this).css("color", randomColor);
+    });
+
+    $(".special-text-link").on("mouseleave", function () {
+      $(this).css("color", ""); // Ripristina il colore originale
+    });
+
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -104,29 +118,37 @@ const Game = () => {
           )}
         </div>
         <hr className="divisori" />
-        <Row className="text-center">
-          {games &&
-            games.map((game, index) => (
-              <Col key={index} xs={6} md={4} lg={3} className="mb-3">
-                <div className="game-card pb-3">
-                  {" "}
-                  <Link
-                    to={`/game/${game.idGame}`}
-                    className="p-0 text-decoration-none"
-                  >
-                    <img
-                      width={90}
-                      src={game.image}
-                      alt={game.name}
-                      className="game-img"
-                    />
-                    <div className="game-title">{game.name}</div>
-                  </Link>
-                </div>
-              </Col>
-            ))}
-        </Row>
+
+        {isLoggedIn ? (
+          <Row className="text-center">
+            {games &&
+              games.map((game, index) => (
+                <Col key={index} xs={6} md={4} lg={3} className="mb-3">
+                  <div className="game-card pb-3">
+                    {" "}
+                    <Link
+                      to={`/game/${game.idGame}`}
+                      className="p-0 text-decoration-none"
+                    >
+                      <img
+                        width={90}
+                        src={game.image}
+                        alt={game.name}
+                        className="game-img"
+                      />
+                      <div className="game-title">{game.name}</div>
+                    </Link>
+                  </div>
+                </Col>
+              ))}
+          </Row>
+        ) : (
+          <div className="text-center special-text-link">
+            Loggati per visualizzare i giochi
+          </div>
+        )}
       </Container>
+
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Form onSubmit={handleAddGame}>
           <Modal.Header closeButton>

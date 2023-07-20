@@ -16,7 +16,12 @@ import Snake from "./Snake";
 import Chess from "./ChessGame";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setGame } from "../../redux/slices/userSlice";
+import {
+  addGameFav,
+  removeFriend,
+  removeGameFav,
+  setGame,
+} from "../../redux/slices/userSlice";
 import antenna from "../../assets/imgs/antenna.png";
 import comingSoon from "../../assets/imgs/coming-soon.png";
 
@@ -39,6 +44,7 @@ const GameDetails = () => {
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const userId = userCurrent.idUser;
   const userRole = userCurrent.role;
+  const gamesList = useSelector((state) => state.user.favGamesList); // Ottieni la lista di amici dallo state
 
   const [gameData, setGameData] = useState({
     name: "",
@@ -315,6 +321,15 @@ const GameDetails = () => {
     getAllReviews();
     fetchGameDetails();
   }, [idGame, token, dispatch, userCurrent]);
+
+  const handleAddGameFav = (game) => {
+    dispatch(addGameFav(game)); // Aggiungi l'utente alla lista di amici utilizzando l'azione "addFriend"
+  };
+
+  const handleRemoveGameFav = (game) => {
+    dispatch(removeGameFav(game)); // Rimuovi l'utente dalla lista di amici utilizzando l'azione "removeFriend"
+  };
+
   return (
     <div className="bg-home ">
       <Container fluid className=" p-5 justify-content-center ">
@@ -352,9 +367,17 @@ const GameDetails = () => {
             <h3 className="m-0">Comandi</h3>
             <div className="d-flex justify-content-between align-items-center pb-1">
               <span>{game.commands}</span>
-              <span showAddToFav className="img-review fs-4">
-                +💗
-              </span>
+              {Array.isArray(gamesList) &&
+              gamesList.some((game) => game.idGame === idGame) ? (
+                <span onClick={() => handleRemoveGameFav(game)}>-💗</span>
+              ) : (
+                <span
+                  onClick={() => handleAddGameFav(game)}
+                  className="img-review fs-4"
+                >
+                  +💗
+                </span>
+              )}
             </div>
           </Col>
           <Col

@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { setIsVip } from "../../redux/slices/userSlice";
+import $ from "jquery";
 
 const Vip = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +17,21 @@ const Vip = () => {
   const navigate = useNavigate();
   const isVip = useSelector((state) => state.user.isVip);
   const isVipIdUser = isVip && isVip.length > 0 ? isVip[0].user.idUser : null;
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   useEffect(() => {
+    $(".special-text-link").on("mouseenter", function () {
+      var colors = getComputedStyle(document.documentElement)
+        .getPropertyValue("--random-color")
+        .split(", ");
+      var randomColor = colors[Math.floor(Math.random() * colors.length)];
+      $(this).css("color", randomColor);
+    });
+
+    $(".special-text-link").on("mouseleave", function () {
+      $(this).css("color", ""); // Ripristina il colore originale
+    });
+
     const fetchCreditCards = async () => {
       try {
         const headers = new Headers({
@@ -96,6 +110,7 @@ const Vip = () => {
       <Container fluid className="pb-5 bg-home">
         <Row className="gap-4 pt-5 px-2 ps-md-4 pe-md-1">
           <Col
+            data-aos="zoom-in-up"
             xs={"12"}
             md={"7"}
             className="hero-container bg-elements h-75 p-2 rounded-1"
@@ -134,11 +149,14 @@ const Vip = () => {
                   Entra nell'impero!
                 </button>
               ) : (
-                <p className="text-link">Fai già parte dell'impero!</p>
+                <p className="text-link special-text-link">
+                  Fai già parte dell'impero, oppure non sei loggato!
+                </p>
               )}
             </Col>
           </Col>
           <Col
+            data-aos="zoom-in-left"
             xs={"12"}
             md={"4"}
             className="hero-container  bg-elements mb-5 p-2 h-75 rounded-1"
