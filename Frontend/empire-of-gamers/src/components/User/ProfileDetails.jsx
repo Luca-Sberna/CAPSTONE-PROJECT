@@ -3,8 +3,10 @@ import { Container, Row, Col, Image, Modal, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { removeFriend, removeGameFav } from "../../redux/slices/userSlice";
 
 const ProfileDetails = () => {
+  const [selectedGameId, setSelectedGameId] = useState(null);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn); // Stato di accesso dell'utente
   const [showModal, setShowModal] = useState(false);
   const [showDeleteFav, setShowDeleteFav] = useState(false);
@@ -15,8 +17,11 @@ const ProfileDetails = () => {
   const userCurrent = useSelector((state) => state.user.userCurrent);
   const userCurrentId = userCurrent.idUser;
   const isVip = useSelector((state) => state.user.isVip);
+  const gamesFav = useSelector((state) => state.user.favGamesList);
   const isVipIdUser = isVip[0]?.user?.idUser;
   const isVipExpirationDate = isVip.endDate;
+  const game = useSelector((state) => state.user.game);
+  const gamesList = useSelector((state) => state.user.favGamesList); // Ottieni la lista di amici dallo state
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -85,6 +90,11 @@ const ProfileDetails = () => {
         "Si è verificato un errore durante la richiesta. Riprova più tardi.",
       );
     }
+  };
+
+  const handleRemoveGameFav = (idGame) => {
+    dispatch(removeGameFav(idGame)); // Rimuovi il gioco dai preferiti utilizzando l'azione "removeGameFav"
+    setShowDeleteFav(false);
   };
 
   return (
@@ -164,23 +174,28 @@ const ProfileDetails = () => {
         className="hero-container rounded-4 bg-elements text-link p-3 m-3  gap-5"
       >
         <h3>Favourite Games</h3>
-        <Col xs={6} md={4} lg={2} className="">
-          <div className="game-card-fav position-relative">
-            <img
-              width={130}
-              src={""} // Utilizza game.image invece di favGames.image
-              alt={""} // Utilizza game.name invece di favGames.name
-              className="game-img-fav"
-            />
-            <span
-              onClick={() => setShowDeleteFav(true)}
-              className="position-absolute img-review start-0 fs-4 bg-danger rounded-circle"
-            >
-              🗑️
-            </span>
-            <div className="game-title">{""}</div>
-          </div>
-        </Col>
+        {gamesFav &&
+          gamesFav.map((game) => (
+            <Col xs={6} md={4} lg={2} className="">
+              <div className="game-card-fav position-relative">
+                <img
+                  width={130}
+                  src={game.image} // Utilizza game.image invece di favGames.image
+                  alt={game.name} // Utilizza game.name invece di favGames.name
+                  className="game-img-fav"
+                />
+                <span
+                  onClick={() => {
+                    setShowDeleteFav(true);
+                  }}
+                  className="position-absolute img-review start-0 fs-4 bg-danger rounded-circle d-none"
+                >
+                  🗑️
+                </span>
+                <div className="game-title">{game.name}</div>
+              </div>
+            </Col>
+          ))}
       </Row>
 
       <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
@@ -273,8 +288,13 @@ const ProfileDetails = () => {
           <Modal.Title>Vuoi eliminare il gioco dai tuoi preferiti?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <button onClick={() => setShowDeleteFav(false)}>Back</button>
-          <button type="submit">Save and Delete</button>
+          <button onHide={() => setShowDeleteFav(false)}>Back</button>
+          <button
+            onClick={() => handleRemoveGameFav(game.idGame)}
+            type="submit"
+          >
+            Save and Delete
+          </button>
         </Modal.Footer>
       </Modal>
     </Container>

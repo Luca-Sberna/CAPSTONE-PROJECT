@@ -18,7 +18,10 @@ const initialState = {
     isVip: {},
     ranking: {},
     currentGame: null,
-
+    friendsList: [],
+    favGamesList: [],
+    userSelected: {},
+    userProfileSelected: {},
 };
 
 const userSlice = createSlice({
@@ -84,6 +87,72 @@ const userSlice = createSlice({
         setCurrentGame(state, action) {
             state.currentGame = action.payload;
         },
+        addFriend: (state, action) => {
+            const friendToAdd = action.payload;
+            // Verifica se friendsList è un array, altrimenti inizializzalo come un array vuoto
+            if (!Array.isArray(state.friendsList)) {
+                state.friendsList = [];
+            }
+            // Verifica se l'amico non è già presente nella lista prima di aggiungerlo
+            let isFriendPresent = false;
+            for (const friend of state.friendsList) {
+                if (friend.idUser === friendToAdd.idUser) {
+                    isFriendPresent = true;
+                    break;
+                }
+            }
+            if (!isFriendPresent) {
+                state.friendsList.push(friendToAdd);
+            }
+        },
+        removeFriend: (state, action) => {
+            const friendToRemove = action.payload;
+            // Verifica se friendsList è un array, altrimenti inizializzalo come un array vuoto
+            if (!Array.isArray(state.friendsList)) {
+                state.friendsList = [];
+            }
+            // Filtra l'amico dalla lista
+            state.friendsList = state.friendsList.filter(
+                (friend) => friend.idUser !== friendToRemove.idUser
+            );
+        },
+        addGameFav: (state, action) => {
+            const gameToAdd = action.payload;
+            // Verifica se friendsList è un array, altrimenti inizializzalo come un array vuoto
+            if (!Array.isArray(state.favGamesList)) {
+                state.favGamesList = [];
+            }
+            // Verifica se l'amico non è già presente nella lista prima di aggiungerlo
+            let isGamePresent = false;
+            for (const game of state.favGamesList) {
+                if (game.idGame === gameToAdd.idGame) {
+                    isGamePresent = true;
+                    break;
+                }
+            }
+            if (!isGamePresent) {
+                state.favGamesList.push(gameToAdd);
+            }
+        },
+        removeGameFav: (state, action) => {
+            const gameToRemove = action.payload;
+            // Verifica se favGamesList è un array, altrimenti inizializzalo come un array vuoto
+            if (!Array.isArray(state.favGamesList)) {
+                state.favGamesList = [];
+            }
+            // Filtra il gioco dalla lista dei preferiti e restituisci un nuovo array
+            state.favGamesList = state.favGamesList.filter(
+                (game) => game.idGame !== gameToRemove.idGame
+            );
+        },
+
+        setUserSelected(state, action) {
+            state.userSelected = action.payload;
+        },
+        setUserProfileSelected(state, action) {
+            state.userProfileSelected = action.payload;
+        },
+
     },
 });
 
@@ -108,8 +177,13 @@ export const {
     setIsVip,
     removeVipStatus,
     setRanking,
-    setCurrentGame
-
+    setCurrentGame,
+    addFriend,
+    removeFriend,
+    addGameFav,
+    removeGameFav,
+    setUserSelected,
+    setUserProfileSelected
 } = userSlice.actions;
 
 export default userSlice.reducer;

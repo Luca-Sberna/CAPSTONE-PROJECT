@@ -2,78 +2,50 @@ import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import avatar from "../../assets/imgs/avatar.png";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFriend } from "../../redux/slices/userSlice";
 
 const FriendList = () => {
   const onlineImg = <span className=" bg-transparent">🟢</span>;
   const offlineImg = <span className=" bg-transparent">🔴</span>;
-  const friendList = [
-    {
-      id: 1,
-      username: "username11111111111111111111111111111",
-      isOnline: true,
-    },
-    {
-      id: 2,
-      username: "username2",
-      isOnline: false,
-    },
-    {
-      id: 3,
-      username: "username3",
-      isOnline: true,
-    },
-    {
-      id: 4,
-      username: "username4",
-      isOnline: true,
-    },
-    // Aggiungi altri amici alla lista
-  ];
+  const friendList = useSelector((state) => state.user.friendsList);
+  const onlineText = "green-text"; // Aggiungi il nome della classe per il testo online
+  const offlineText = "orange-text"; // Aggiungi il nome della classe per il testo offline
+  const dispatch = useDispatch();
 
+  const handleRemoveFriend = (user) => {
+    dispatch(removeFriend(user)); // Rimuovi l'utente dalla lista di amici utilizzando l'azione "removeFriend"
+  };
   return (
     <div className="friend-list-container">
-      {friendList.map((friend) => (
-        <Row
-          className="friend-list d-flex align-items-center px-1 py-3 bg-transparent"
-          key={friend.id}
-        >
-          <Col xs={12} className="custom-dropdown">
-            <Row className="align-items-center">
-              <Col xs={2} className="p-0 py-2 ms-1">
-                {" "}
-                <Link to={"/profile/:id"} className="p-0 text-decoration-none">
-                  <Image
-                    fluid
-                    className="profile-image rounded-circle ms-2"
-                    src={avatar}
-                    alt="profile-img"
-                  />
-                </Link>
-              </Col>
-              <Col className="bg-transparent pe-0 text-truncate custom-dropdown-friends">
-                <span className="friend-content-element mb-2">
-                  {friend.username.length > 11
-                    ? friend.username.substring(0, 11) + "..."
-                    : friend.username}
-                </span>
-              </Col>
-
-              <Row className="px-0 bg-transparent">
-                <Col className="bg-transparent d-flex justify-content-end px-0">
-                  <span
-                    className={`friend-status bg-transparent  ${
-                      friend.isOnline ? "online" : "offline"
-                    }`}
-                  >
-                    {friend.isOnline ? onlineImg : offlineImg}
-                  </span>
-                  <span className="friend-list-icon bg-transparent">🗑️</span>
-                </Col>
-              </Row>
-            </Row>
-          </Col>
-        </Row>
-      ))}
+      {friendList &&
+        friendList.map((friend) => (
+          <Row
+            className="friend-list d-flex align-items-center px-2 py-3 bg-transparent "
+            key={friend.idUser}
+          >
+            <Col
+              className={`${friend.isOnline ? onlineText : offlineText}`} // Applica la classe corretta in base allo stato online/offline
+            >
+              {friend.username}
+            </Col>{" "}
+            <Col className="bg-transparent d-flex justify-content-end px-0">
+              <span
+                className={`friend-status bg-transparent  ${
+                  friend.isOnline ? "online" : "offline"
+                }`}
+              >
+                {friend.isOnline ? onlineImg : offlineImg}
+              </span>
+              <span
+                onClick={() => handleRemoveFriend(friend)}
+                className="friend-list-icon bg-transparent"
+              >
+                🗑️
+              </span>
+            </Col>
+          </Row>
+        ))}
     </div>
   );
 };
