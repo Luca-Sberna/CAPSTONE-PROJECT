@@ -293,7 +293,7 @@ const ProfileSettings = () => {
 
   return (
     <>
-      <Container fluid className=" bg-home-ranking py-5 px-3 px-sm-4 px-md-5">
+      <Container fluid className=" bg-home py-5 px-3 px-sm-4 px-md-5">
         <Row data-aos="zoom-in-down" className="pb-5  ">
           <Col className="hero-container bg-elements rounded-1 text-link p-2 ">
             <h2>Profile Settings</h2>

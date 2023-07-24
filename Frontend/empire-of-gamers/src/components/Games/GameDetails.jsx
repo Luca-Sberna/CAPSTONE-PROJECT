@@ -501,14 +501,14 @@ const GameDetails = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="btn-vip bg-black"
+                className="btn-vip bg-black rounded-1"
               >
                 previous
               </button>
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentReviews.length < reviewsPerPage}
-                className="btn-vip bg-black"
+                className="btn-vip bg-black rounded-1"
               >
                 next
               </button>

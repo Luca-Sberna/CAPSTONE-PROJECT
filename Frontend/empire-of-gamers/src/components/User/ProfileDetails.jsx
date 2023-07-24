@@ -174,7 +174,8 @@ const ProfileDetails = () => {
         className="hero-container rounded-4 bg-elements text-link p-3 m-3  gap-5"
       >
         <h3>Favourite Games</h3>
-        {gamesFav &&
+
+        {gamesFav.length > 0 ? (
           gamesFav.map((game) => (
             <Col xs={6} md={4} lg={2} className="">
               <div className="game-card-fav position-relative">
@@ -195,7 +196,12 @@ const ProfileDetails = () => {
                 <div className="game-title">{game.name}</div>
               </div>
             </Col>
-          ))}
+          ))
+        ) : (
+          <p className="orange-text">
+            Prova e aggiungi un gioco ai preferiti !
+          </p>
+        )}
       </Row>
 
       <Modal className="" show={showModal} onHide={() => setShowModal(false)}>

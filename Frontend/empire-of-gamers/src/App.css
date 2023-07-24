@@ -1032,3 +1032,86 @@ body {
 .confirm-modal {
     background-color: rgba(0, 0, 0, 0.711);
 }
+
+/* ----------------------swiper about us  ---------------------*/
+
+#app {
+    height: 100%
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+}
+
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    position: relative;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper {
+    width: 250px;
+    height: 80vh;
+}
+
+@media (min-width: 1000px) {
+    .swiper {
+        width: 500px;
+        height: 80vh;
+    }
+}
+
+@media (min-width: 1500px) {
+    .swiper {
+        width: 900px;
+        height: 80vh;
+    }
+}
+
+.swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 32.1px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.swiper-slide:nth-child(1n) {
+    background-color: #FF5722;
+    color: #000;
+}
+
+.swiper-slide:nth-child(2n) {
+    background-color: #A4C639;
+}
+
+.swiper-slide:nth-child(3n) {
+    background-color: #9C27B0;
+}
