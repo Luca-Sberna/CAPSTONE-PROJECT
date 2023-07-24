@@ -45,7 +45,22 @@ const GameDetails = () => {
   const userId = userCurrent.idUser;
   const userRole = userCurrent.role;
   const gamesList = useSelector((state) => state.user.favGamesList); // Ottieni la lista di amici dallo state
+  const reviewsPerPage = 4; // Number of reviews to display per page
+  const [currentPage, setCurrentPage] = useState(1); // Current page number
 
+  // Calculate the index of the last review on the current page
+  const lastIndex = currentPage * reviewsPerPage;
+
+  // Calculate the index of the first review on the current page
+  const firstIndex = lastIndex - reviewsPerPage;
+
+  // Slice the reviews array to get the reviews for the current page
+  const currentReviews = reviews.slice(firstIndex, lastIndex);
+
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   const [gameData, setGameData] = useState({
     name: "",
     description: "",
@@ -369,7 +384,12 @@ const GameDetails = () => {
               <span>{game.commands}</span>
               {Array.isArray(gamesList) &&
               gamesList.some((game) => game.idGame === idGame) ? (
-                <span onClick={() => handleRemoveGameFav(game)}>-💗</span>
+                <span
+                  className="img-review"
+                  onClick={() => handleRemoveGameFav(game)}
+                >
+                  -💗
+                </span>
               ) : (
                 <span
                   onClick={() => handleAddGameFav(game)}
@@ -466,7 +486,7 @@ const GameDetails = () => {
               .map((review) => (
                 <div
                   key={review.idReview}
-                  className="hero-container bg-elements mb-4 p-1 rounded-2"
+                  className="hero-container bg-elements mb-3 p-1 rounded-2"
                 >
                   <div className="d-flex align-items-center gap-3">
                     <h6 className="m-0 green-text">{review.user.username}</h6>
@@ -477,7 +497,22 @@ const GameDetails = () => {
                 </div>
               ))}
 
-            <hr className="divisori" />
+            <div className="d-flex justify-content-between mb-3">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="btn-vip bg-black rounded-1"
+              >
+                previous
+              </button>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentReviews.length < reviewsPerPage}
+                className="btn-vip bg-black rounded-1"
+              >
+                next
+              </button>
+            </div>
 
             {!showForm && !hasReviewed && (
               <div className="bg-elements rounded-2  hero-container d-flex align-items-center justify-content-center">
@@ -567,17 +602,22 @@ const GameDetails = () => {
         </Col>
       </Container>
 
-      <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
+      <Modal
+        className="pt-5 confirm-modal"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
         <Form onSubmit={handleEditGame}>
           <Modal.Header closeButton>
             <Modal.Title>Modifica il gioco!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">
+              <Form.Label className="form-label orange-text">
                 Immagine del gioco (URL)
               </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="image"
                 value={gameData.image}
@@ -587,8 +627,11 @@ const GameDetails = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">Nome del gioco</Form.Label>
+              <Form.Label className="form-label orange-text">
+                Nome del gioco
+              </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="name"
                 value={gameData.name}
@@ -598,10 +641,11 @@ const GameDetails = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">
+              <Form.Label className="form-label orange-text">
                 Descrizione del gioco
               </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="description"
                 value={gameData.description}
@@ -611,8 +655,11 @@ const GameDetails = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">Ratings</Form.Label>
+              <Form.Label className="form-label orange-text">
+                Ratings
+              </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="number"
                 name="ratings"
                 value={gameData.ratings}
@@ -622,10 +669,11 @@ const GameDetails = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">
+              <Form.Label className="form-label orange-text">
                 Descrizione su come giocare
               </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="infoToPlay"
                 value={gameData.infoToPlay}
@@ -635,10 +683,11 @@ const GameDetails = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <label htmlFor="commands" className="form-label">
+              <label htmlFor="commands" className="form-label orange-text">
                 Comandi
               </label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="commands"
                 value={gameData.commands}
@@ -648,21 +697,33 @@ const GameDetails = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
+            <button
+              className="btn-vip rounded-1 border-black"
+              variant="secondary"
+              onClick={() => setShowModal(false)}
+            >
               Annulla
-            </Button>
-            <Button type="submit" variant="primary">
+            </button>
+            <button
+              className="btn-vip rounded-1 border-black"
+              type="submit"
+              variant="primary"
+            >
               Salva
-            </Button>
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+            </button>
+            <button
+              className="btn-vip rounded-1 border-black"
+              variant="danger"
+              onClick={() => setShowDeleteModal(true)}
+            >
               Elimina
-            </Button>
+            </button>
           </Modal.Footer>
         </Form>
       </Modal>
 
       <Modal
-        className=""
+        className="confirm-modal pt-5"
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
       >
@@ -670,10 +731,15 @@ const GameDetails = () => {
           <Modal.Title>Vuoi eliminare veramente il gioco?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+          <button
+            className="btn-vip rounded-1 border-black"
+            variant="secondary"
+            onClick={() => setShowDeleteModal(false)}
+          >
             Back
           </button>
           <button
+            className="btn-vip rounded-1 border-black"
             type="submit"
             variant="primary"
             onClick={() => handleDeleteGame(idGame)}
@@ -684,7 +750,7 @@ const GameDetails = () => {
       </Modal>
 
       <Modal
-        className=""
+        className="confirm-modal pt-5"
         show={showDeleteReviewModal}
         onHide={() => setShowDeleteReviewModal(false)}
       >
@@ -692,8 +758,14 @@ const GameDetails = () => {
           <Modal.Title>Vuoi eliminare veramente la tua recensione?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <button onClick={() => setShowDeleteReviewModal(false)}>Back</button>
           <button
+            className="btn-vip rounded-1 border-black"
+            onClick={() => setShowDeleteReviewModal(false)}
+          >
+            Back
+          </button>
+          <button
+            className="btn-vip rounded-1 border-black"
             type="submit"
             onClick={() => handleDeleteReview(reviewIdToDelete)}
           >
@@ -703,7 +775,7 @@ const GameDetails = () => {
       </Modal>
 
       <Modal
-        className=""
+        className="pt-5 confirm-modal"
         show={showEditReviewModal}
         onHide={() => setShowEditReviewModal(false)}
       >
@@ -713,8 +785,9 @@ const GameDetails = () => {
           </Modal.Header>
           <ModalBody>
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">Rating</Form.Label>
+              <Form.Label className="form-label orange-text">Rating</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="number"
                 name="rating"
                 value={reviewData.rating}
@@ -723,8 +796,11 @@ const GameDetails = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label className="form-label">Comment</Form.Label>
+              <Form.Label className="form-label orange-text">
+                Comment
+              </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="comment"
                 value={reviewData.comment}
@@ -734,8 +810,14 @@ const GameDetails = () => {
             </Form.Group>
           </ModalBody>
           <Modal.Footer>
-            <button onClick={() => setShowEditReviewModal(false)}>Back</button>
             <button
+              className="btn-vip rounded-1 border-black"
+              onClick={() => setShowEditReviewModal(false)}
+            >
+              Back
+            </button>
+            <button
+              className="btn-vip rounded-1 border-black"
               type="submit"
               onClick={() => handleEditReview(reviewIdToEdit)}
             >

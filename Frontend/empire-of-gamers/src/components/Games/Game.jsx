@@ -149,15 +149,20 @@ const Game = () => {
         )}
       </Container>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal
+        className="pt-5 confirm-modal"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
         <Form onSubmit={handleAddGame}>
           <Modal.Header closeButton>
             <Modal.Title>Aggiungi un gioco</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group>
-              <Form.Label>Nome</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Nome</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="name"
                 value={gameData.name}
@@ -165,9 +170,10 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Descrizione</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Descrizione</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="description"
                 value={gameData.description}
@@ -175,9 +181,10 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Valutazione</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Valutazione</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="number"
                 name="ratings"
                 value={gameData.ratings}
@@ -185,9 +192,10 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Come giocare</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Come giocare</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="infoToPlay"
                 value={gameData.infoToPlay}
@@ -195,9 +203,10 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Comandi</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Comandi</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="commands"
                 value={gameData.commands}
@@ -205,9 +214,10 @@ const Game = () => {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Immagine (URL)</Form.Label>
+            <Form.Group className="pb-3">
+              <Form.Label className="orange-text">Immagine (URL)</Form.Label>
               <Form.Control
+                className="hero-container"
                 type="text"
                 name="image"
                 value={gameData.image}
@@ -217,10 +227,18 @@ const Game = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <button variant="secondary" onClick={() => setShowModal(false)}>
+            <button
+              className="btn-vip rounded-1 border-black"
+              variant="secondary"
+              onClick={() => setShowModal(false)}
+            >
               Back
             </button>
-            <button type="submit" variant="primary">
+            <button
+              className="btn-vip rounded-1 border-black"
+              type="submit"
+              variant="primary"
+            >
               Save Game
             </button>
           </Modal.Footer>

@@ -47,7 +47,7 @@ const Hero = () => {
       <Row className="text-center position-relative mt-3 py-1 hero-container">
         <Col>
           <p className="fs-4 green-text">
-            Ogni mese , una nuova stagione! Icnredibili premi attendono i primi
+            Ogni mese , una nuova stagione! Incredibili premi attendono i primi
             10 classificati dell'Impero!
           </p>
           <Image

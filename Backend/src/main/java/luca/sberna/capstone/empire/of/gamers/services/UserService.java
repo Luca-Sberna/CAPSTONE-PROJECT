@@ -25,12 +25,14 @@ public class UserService {
 	@Autowired
 	private UserRepository ur;
 
-	public Page<User> findAllUsers(int page, int size, String sortBy) {
-		if (size < 0)
-			size = 10;
-		if (size > 100)
-			size = 20;
-		Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+	public Page<User> findAllUsers(int page, int size, String sortBy, String searchValue) {
+		Sort sort = Sort.by(sortBy);
+		Pageable pageable = PageRequest.of(page, size, sort);
+
+		if (searchValue != null && !searchValue.isEmpty()) {
+			return ur.findByUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(searchValue, searchValue, pageable);
+		}
+
 		return ur.findAll(pageable);
 	}
 
@@ -92,7 +94,7 @@ public class UserService {
 	}
 
 	public User findUserByUsername(String username) throws NotFoundException {
-		return ur.findByUsername(username, Sort.by("username")).orElseThrow(() -> new NotFoundException());
+		return ur.findByUsername(username).orElseThrow(() -> new NotFoundException());
 	}
 
 	public void deleteAllUsers() {

@@ -107,7 +107,7 @@ const Vip = () => {
 
   return (
     <>
-      <Container fluid className="pb-5 bg-home">
+      <Container fluid className="pb-5 bg-home-ranking">
         <Row className="gap-4 pt-5 px-2 ps-md-4 pe-md-1">
           <Col
             data-aos="zoom-in-up"
@@ -180,16 +180,23 @@ const Vip = () => {
         </Row>
       </Container>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal
+        className="pt-5 confirm-modal"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
         <Modal.Header closeButton>
           Vuoi far parte anche tu dei Vip dell'Impero?
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="orange-text">
           Se non hai carte di credito associate sarai indirizzato nella sezione
           apposita
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn-vip" onClick={handleBecomeVip}>
+          <button
+            className="btn-vip rounded-1 border-black"
+            onClick={handleBecomeVip}
+          >
             Diventa Vip!
           </button>
         </Modal.Footer>

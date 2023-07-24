@@ -133,14 +133,14 @@ const Social = () => {
               <hr className="divisori m-0" />
               <div className="d-flex justify-content-between py-2">
                 <button
-                  className="btn-vip"
+                  className="btn-vip rounded-1"
                   onClick={handlePrevPage}
                   disabled={currentPage === 0}
                 >
                   Previous Page
                 </button>
                 <button
-                  className="btn-vip"
+                  className="btn-vip rounded-1"
                   onClick={handleNextPage}
                   disabled={currentPage === lastPage}
                 >
