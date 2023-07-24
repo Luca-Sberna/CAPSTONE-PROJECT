@@ -40,10 +40,11 @@ DIAGRAMMA ER:
 
 
 COME UTILIZZARE L'APP:
-Per avviare correttamente l'app è necessario creare i due file env sia nel front-end che nel back-end con le relative chiavi segrete e dati sensibili 
+
+Per avviare correttamente l'app è necessario creare i due file env sia nel front-end che nel back-end con le relative chiavi segrete e dati sensibili <br/>
 esempio front-end
 ![image](https://github.com/Luca-Sberna/CAPSTONE-PROJECT/assets/123188715/efa7209c-8311-428a-8467-c780594ec331)
-esempio back-end
+esempio back-end <br/>
 ![image](https://github.com/Luca-Sberna/CAPSTONE-PROJECT/assets/123188715/a18e8552-fd63-4c02-9935-1d2ed1894744)
 
 
