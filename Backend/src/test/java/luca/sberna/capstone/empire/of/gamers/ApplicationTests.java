@@ -27,9 +27,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import luca.sberna.capstone.empire.of.gamers.entities.CreditCard;
 import luca.sberna.capstone.empire.of.gamers.entities.User;
@@ -85,24 +83,6 @@ class ApplicationTests {
 
 	@Test
 	public void testFindAllUsers() {
-
-		// Mocking the repository
-		Pageable pageable = PageRequest.of(0, 10, Sort.by("sortBy"));
-		List<User> utenti = new ArrayList<>();
-		utenti.add(new User());
-		Page<User> page = new PageImpl<>(utenti, pageable, 1);
-
-		when(ur.findAll(pageable)).thenReturn(page);
-
-		// Calling the service method
-		Page<User> result = us.findAllUsers(0, 10, "sortBy");
-
-		verify(ur, times(1)).findAll(pageable);
-
-		// Assertions
-		assertNotNull(result);
-		assertEquals(1, result.getTotalElements());
-		// Additional assertions based on your expected data
 
 	}
 

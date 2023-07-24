@@ -40,7 +40,6 @@ const LoginPage = () => {
         dispatch(setToken(data.accessToken));
         dispatch(isLoggedIn(true));
         navigate("/");
-        window.location.reload();
       } else {
         alert(data.message);
       }
@@ -48,6 +47,7 @@ const LoginPage = () => {
       console.log(error);
     }
   };
+
   return (
     <Container
       data-aos="flip-up"

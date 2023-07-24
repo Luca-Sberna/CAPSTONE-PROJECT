@@ -1006,3 +1006,29 @@ body {
     background-color: rgb(0, 0, 0);
     border: 1px solid #A4C639;
 }
+
+/* -------------- modals ----------------------- */
+
+
+.modal-header {
+    border: 1px solid #9C27B0;
+    border-bottom: none;
+    background-color: #A4C639;
+}
+
+.modal-body {
+    border: 1px solid #9C27B0;
+    border-top: none;
+    background-color: #A4C639;
+
+}
+
+.modal-footer {
+    border: 1px solid #9C27B0;
+    background-color: #A4C639;
+
+}
+
+.confirm-modal {
+    background-color: rgba(0, 0, 0, 0.711);
+}

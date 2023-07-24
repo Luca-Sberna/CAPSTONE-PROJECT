@@ -98,7 +98,7 @@ const ProfileDetails = () => {
   };
 
   return (
-    <Container fluid className="bg-home px-0 py-5 ">
+    <Container fluid className="bg-home-ranking px-0 py-5 ">
       <Container
         data-aos="zoom-in-down"
         className="rounded-1 hero-container rounded-5 px-5 pb-3   background-image position-relative"
@@ -199,80 +199,90 @@ const ProfileDetails = () => {
       </Row>
 
       <Modal className="" show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modifica il tuo profilo</Modal.Title>
-        </Modal.Header>
-        <Modal.Header>
+        <Modal.Header className="modal-header" closeButton>
           <Modal.Title>
-            Inserisci tutti i dati e aggiorna la pagina!
+            {" "}
+            Inserisci tutti i dati per aggiornare il tuo profilo!
           </Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleModalSubmit}>
-          <Modal.Body>
+          <Modal.Body className="modal-body">
             <Form.Group controlId="formProfileImage" className="mb-3">
-              <Form.Label className="form-label">
+              <Form.Label className="form-label orange-text">
                 Profile Image (URL)
               </Form.Label>
               <Form.Control
                 value={formData.imgProfile}
                 onChange={handleModalInputChange}
                 type="text"
-                className="form-control"
+                className="form-control hero-container selected"
                 name="imgProfile"
               />
             </Form.Group>
 
             <Form.Group controlId="formBackgroundImage" className="mb-3">
-              <Form.Label className="form-label">
+              <Form.Label className="form-label orange-text">
                 Background Image (URL)
               </Form.Label>
               <Form.Control
                 value={formData.imgBackground}
                 onChange={handleModalInputChange}
                 type="text"
-                className="form-control"
+                className="form-control hero-container"
                 name="imgBackground"
               />
             </Form.Group>
 
             <Form.Group controlId="formName" className="mb-3">
-              <Form.Label className="form-label">Name</Form.Label>
+              <Form.Label className="form-label orange-text">Name</Form.Label>
               <Form.Control
                 name="name"
                 value={formData.name}
                 type="text"
-                className="form-control"
+                className="form-control hero-container"
                 onChange={handleModalInputChange}
               />
             </Form.Group>
 
             <Form.Group controlId="formSurname" className="mb-3">
-              <Form.Label className="form-label">Surname</Form.Label>
+              <Form.Label className="form-label orange-text">
+                Surname
+              </Form.Label>
               <Form.Control
                 onChange={handleModalInputChange}
                 value={formData.surname}
                 name="surname"
                 type="text"
-                className="form-control"
+                className="form-control hero-container"
               />
             </Form.Group>
 
             <Form.Group controlId="formNationality" className="mb-3">
-              <Form.Label className="form-label">Nationality</Form.Label>
+              <Form.Label className="form-label orange-text">
+                Nationality
+              </Form.Label>
               <Form.Control
                 onChange={handleModalInputChange}
                 value={formData.nationality}
                 name="nationality"
                 type="text"
-                className="form-control"
+                className="form-control hero-container"
               />
             </Form.Group>
           </Modal.Body>
-          <Modal.Footer>
-            <button variant="secondary" onClick={() => setShowModal(false)}>
+          <Modal.Footer className="modal-footer">
+            <button
+              className="btn-vip border-black"
+              variant="secondary"
+              onClick={() => setShowModal(false)}
+            >
               Back
             </button>
-            <button type="submit" variant="primary">
+            <button
+              className="btn-vip border-black"
+              type="submit"
+              variant="primary"
+            >
               Save
             </button>
           </Modal.Footer>

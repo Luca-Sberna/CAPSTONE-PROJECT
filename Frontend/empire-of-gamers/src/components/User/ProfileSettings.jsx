@@ -293,7 +293,7 @@ const ProfileSettings = () => {
 
   return (
     <>
-      <Container fluid className=" bg-home py-5 px-3 px-sm-4 px-md-5">
+      <Container fluid className=" bg-home-ranking py-5 px-3 px-sm-4 px-md-5">
         <Row data-aos="zoom-in-down" className="pb-5  ">
           <Col className="hero-container bg-elements rounded-1 text-link p-2 ">
             <h2>Profile Settings</h2>
@@ -453,7 +453,8 @@ const ProfileSettings = () => {
                   <hr className="divisori" />
                   <h4>Le tue carte di credito</h4>
                   <Row xs={1} md={2} className="g-4 py-4">
-                    {creditCards.length > 0 &&
+                    {creditCards &&
+                      creditCards.length > 0 &&
                       creditCards.map((creditCard, index) => {
                         const expirationDate =
                           creditCard.expirationDate.substring(0, 10); // Estrarre solo l'anno, il mese e il giorno
@@ -504,15 +505,22 @@ const ProfileSettings = () => {
         </Row>
       </Container>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal
+        className="pt-5"
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Modifica la tua carta di credito</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmitCard}>
             <Form.Group className="mb-3" controlId="formCardNumber">
-              <Form.Label>Numero della carta di credito</Form.Label>
+              <Form.Label className="orange-text">
+                Numero della carta di credito
+              </Form.Label>
               <Form.Control
+                className="hero-container"
                 type="number"
                 value={formDataEditCard.cardNumber}
                 placeholder={creditCardObj.cardNumber}
@@ -524,10 +532,15 @@ const ProfileSettings = () => {
             <Row className="d-flex">
               <Col xs={"12"} sm={"6"} className="d-flex">
                 <Form.Group className="mb-3" controlId="formExpirationDate">
-                  <Form.Label>Data di scadenza"</Form.Label>
-                  <Form.Label>{expirationDate}"</Form.Label>
+                  <Form.Label className="orange-text">
+                    Data di scadenza"
+                  </Form.Label>
+                  <Form.Label className="orange-text">
+                    {expirationDate}"
+                  </Form.Label>
 
                   <Form.Control
+                    className="hero-container"
                     type="date"
                     name="expirationDate"
                     value={formDataEditCard.expirationDate}
@@ -538,8 +551,9 @@ const ProfileSettings = () => {
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formCVV">
-                  <Form.Label>CVV</Form.Label>
+                  <Form.Label className="orange-text">CVV</Form.Label>
                   <Form.Control
+                    className="hero-container"
                     type="number"
                     name="cvv"
                     placeholder={creditCardObj.cvv}
@@ -553,8 +567,9 @@ const ProfileSettings = () => {
             <Row>
               <Col>
                 <Form.Group className="mb-3" controlId="formFirstName">
-                  <Form.Label>Nome</Form.Label>
+                  <Form.Label className="orange-text">Nome</Form.Label>
                   <Form.Control
+                    className="hero-container"
                     type="text"
                     name="name"
                     value={formDataEditCard.name}
@@ -566,8 +581,9 @@ const ProfileSettings = () => {
               </Col>
               <Col>
                 <Form.Group className="mb-3" controlId="formLastName">
-                  <Form.Label>Cognome</Form.Label>
+                  <Form.Label className="orange-text">Cognome</Form.Label>
                   <Form.Control
+                    className="hero-container"
                     type="text"
                     name="surname"
                     value={formDataEditCard.surname}
@@ -580,25 +596,38 @@ const ProfileSettings = () => {
             </Row>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+        <Modal.Footer className="d-flex justify-content-between">
+          <button
+            className="btn-vip border-black rounded-1"
+            variant="secondary"
+            onClick={() => setShowModal(false)}
+          >
             Annulla
-          </Button>
-          <Button
+          </button>
+          <button
+            className="btn-vip border-black rounded-1"
             type="submit"
             variant="primary"
             onClick={() => handleSubmitCard(selectedCardIdToDelete)}
           >
             Salva
-          </Button>
+          </button>
 
-          <Button variant="danger" onClick={() => setShowDeleteModal(true)}>
+          <button
+            className="btn-vip border-danger rounded-1"
+            variant="danger"
+            onClick={() => setShowDeleteModal(true)}
+          >
             Delete
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
 
-      <Modal className="" show={showAlert} onHide={() => setShowAlert(false)}>
+      <Modal
+        className="pt-5 ps-1 confirm-modal"
+        show={showAlert}
+        onHide={() => setShowAlert(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>
             Vuoi modificare i dati sensibili del tuo profilo?
@@ -606,17 +635,26 @@ const ProfileSettings = () => {
         </Modal.Header>
         <Modal.Body>Dovrai effettuare di nuovo il login</Modal.Body>
         <Modal.Footer>
-          <button variant="secondary" onClick={() => setShowModal(false)}>
+          <button
+            className="btn-vip border-black rounded-1"
+            variant="secondary"
+            onClick={() => setShowModal(false)}
+          >
             Back
           </button>
-          <button type="submit" variant="primary" onClick={handleConfirm}>
+          <button
+            className="btn-vip border-black rounded-1"
+            type="submit"
+            variant="primary"
+            onClick={handleConfirm}
+          >
             Save and Logout
           </button>
         </Modal.Footer>
       </Modal>
 
       <Modal
-        className=""
+        className="pt-5 ps-1 confirm-modal"
         show={showDeleteModal}
         onHide={() => setShowDeleteModal(false)}
       >
@@ -626,10 +664,15 @@ const ProfileSettings = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+          <button
+            className="btn-vip border-black rounded-1"
+            variant="secondary"
+            onClick={() => setShowDeleteModal(false)}
+          >
             Back
           </button>
           <button
+            className="btn-vip border-black rounded-1"
             type="submit"
             variant="primary"
             onClick={() => handleDelete(selectedCardIdToDelete)}

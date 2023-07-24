@@ -38,10 +38,11 @@ public class UserController {
 		return userService.createUser(body);
 	}
 
+	// Aggiornamento in UserController
 	@GetMapping("")
 	public Page<User> getUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "idUser") String sortBy) {
-		return userService.findAllUsers(page, size, sortBy);
+			@RequestParam(defaultValue = "idUser") String sortBy, @RequestParam(required = false) String searchValue) {
+		return userService.findAllUsers(page, size, sortBy, searchValue);
 	}
 
 	@GetMapping("/{userId}")
