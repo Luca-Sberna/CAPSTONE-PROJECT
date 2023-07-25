@@ -9,6 +9,7 @@ import "swiper/css/effect-cards";
 
 // import required modules
 import { EffectCards } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   return (
@@ -68,10 +69,32 @@ const AboutUs = () => {
             miei contatti:
             <ul className="list-unstyled pt-3">
               <li className="text-primary">
-                LinkedIn: [Inserisci il link al tuo profilo LinkedIn qui]
+                <Link
+                  target="_blank"
+                  to={
+                    "https://www.linkedin.com/in/luca-sberna-full-stack-developer/"
+                  }
+                >
+                  LinkedIn
+                </Link>
               </li>
-              <li className="orange-text">
-                Email: [Inserisci il tuo indirizzo email qui]
+              <li>
+                <a
+                  target="_blank"
+                  className="orange-text"
+                  href="mailto:sberna.luca.ibiza@gmail.com"
+                >
+                  Email
+                </a>
+              </li>
+              <li>
+                <Link
+                  target="_blank"
+                  className="text-black"
+                  to={"https://github.com/Luca-Sberna"}
+                >
+                  GitHub
+                </Link>
               </li>
             </ul>
           </p>
