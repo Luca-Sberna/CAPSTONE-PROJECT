@@ -60,6 +60,8 @@ const AboutUs = () => {
               <li className="green-text">Bcrypt & Converter</li>
               <li className="green-text"> JSON Web Token (JWT)</li>
               <li className="green-text">PostgreSQL</li>
+              <li className="green-text">Aos Scroll Animation</li>
+              <li className="green-text">Swiper</li>
             </ul>
           </p>
         </SwiperSlide>
