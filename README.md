@@ -59,3 +59,28 @@ FEATURES/AGGIUSTAMENTI FUTURI :
 
 In futuro, verrà implementata una classifica per ogni gioco, una pagina social dove gli utenti possono comunicare tra loro, una sezione news dove verranno mostrati tutti i vari aggiornamenti o update del sito,  e la grafica verrà aggiornata in linea moderna in base al tipo di app 
 
+
+COME CONTATTARMI : 
+
+<a
+                  target="_blank"
+                  to={
+                    "https://www.linkedin.com/in/luca-sberna-full-stack-developer/"
+                  }
+                >
+                  LinkedIn
+                </a>
+ <a
+                  target="_blank"
+                  className="text-black"
+                  to={"https://github.com/Luca-Sberna"}
+                >
+                  GitHub
+                </a>
+<a
+                  target="_blank"
+                  className="orange-text"
+                  href="mailto:sberna.luca.ibiza@gmail.com"
+                >EMAIL
+                
+                </a>
