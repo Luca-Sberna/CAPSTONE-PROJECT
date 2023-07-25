@@ -279,13 +279,6 @@ const ProfileDetails = () => {
           <Modal.Footer className="modal-footer">
             <button
               className="btn-vip border-black"
-              variant="secondary"
-              onClick={() => setShowModal(false)}
-            >
-              Back
-            </button>
-            <button
-              className="btn-vip border-black"
               type="submit"
               variant="primary"
             >
