@@ -62,25 +62,16 @@ In futuro, verrà implementata una classifica per ogni gioco, una pagina social 
 
 COME CONTATTARMI : 
 
-<a
-                  target="_blank"
-                  href={
-                    "https://www.linkedin.com/in/luca-sberna-full-stack-developer/"
-                  }
-                >
-                  LinkedIn
-                </a>
- <a
-                  target="_blank"
-                  className="text-black"
-                  href={"https://github.com/Luca-Sberna"}
-                >
-                  GitHub
-                </a>
-<a
-                  target="_blank"
-                  className="orange-text"
-                  href="mailto:sberna.luca.ibiza@gmail.com"
-                >EMAIL
+                 LinkedIn:     https://www.linkedin.com/in/luca-sberna-full-stack-developer/
+                 
                 
-                </a>
+            
+
+               GitHub:   https://github.com/Luca-Sberna
+                
+                  
+                
+ EMAIL : sberna.luca.ibiza@gmail.com
+              
+                
+              
