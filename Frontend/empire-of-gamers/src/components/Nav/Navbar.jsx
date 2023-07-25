@@ -9,6 +9,7 @@ import {
   setCurrentUser,
   setCurrentUserEmail,
   setCurrentUserId,
+  setRanking,
   setUserCurrent,
 } from "../../redux/slices/userSlice";
 import axios from "axios";
@@ -92,9 +93,30 @@ const Navbar = () => {
         console.log(error);
       }
     };
+
+    const getAllScore = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/ranking?page=0&size=10&sortBy=score`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        const ranking = response.data.content;
+        ranking.sort((a, b) => b.score - a.score);
+        console.log(ranking);
+        dispatch(setRanking(ranking));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     if (isLoggedIn) {
       fetchCurrentUser();
       fetchCurrentUserProfile();
+      getAllScore();
     }
   }, [dispatch, isLoggedIn, token, currentUserId, currentUserImgProfile]);
   return (
