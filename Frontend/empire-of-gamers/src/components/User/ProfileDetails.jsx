@@ -18,8 +18,7 @@ const ProfileDetails = () => {
   const userCurrentId = userCurrent.idUser;
   const isVip = useSelector((state) => state.user.isVip);
   const gamesFav = useSelector((state) => state.user.favGamesList);
-  const isVipIdUser = isVip[0]?.user?.idUser;
-  const isVipExpirationDate = isVip.endDate;
+  const isVipIdUser = isVip?.user?.idUser;
   const game = useSelector((state) => state.user.game);
   const gamesList = useSelector((state) => state.user.favGamesList); // Ottieni la lista di amici dallo state
   const [formData, setFormData] = useState({
