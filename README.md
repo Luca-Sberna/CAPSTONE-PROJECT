@@ -66,7 +66,7 @@ LinkedIn:  https://www.linkedin.com/in/luca-sberna-full-stack-developer/
                  
 GitHub:  https://github.com/Luca-Sberna
                               
- EMAIL : sberna.luca.ibiza@gmail.com
+Email : sberna.luca.ibiza@gmail.com
               
                 
               
