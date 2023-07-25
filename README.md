@@ -64,7 +64,7 @@ COME CONTATTARMI :
 
 <a
                   target="_blank"
-                  to={
+                  href={
                     "https://www.linkedin.com/in/luca-sberna-full-stack-developer/"
                   }
                 >
@@ -73,7 +73,7 @@ COME CONTATTARMI :
  <a
                   target="_blank"
                   className="text-black"
-                  to={"https://github.com/Luca-Sberna"}
+                  href={"https://github.com/Luca-Sberna"}
                 >
                   GitHub
                 </a>
