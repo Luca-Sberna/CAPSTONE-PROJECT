@@ -70,6 +70,7 @@ const ChessGame = () => {
                 },
               },
             );
+
             return; // Esce dalla funzione in caso di richiesta POST effettuata
           } else {
             throw error; // Rilancia l'errore in caso di errori diversi da 404

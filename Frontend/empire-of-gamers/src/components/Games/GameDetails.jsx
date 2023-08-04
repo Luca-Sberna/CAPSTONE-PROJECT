@@ -485,6 +485,8 @@ const GameDetails = () => {
               .filter((review) => review.user.idUser !== userCurrent.idUser)
               .map((review) => (
                 <div
+                  data-aos="flip-up"
+                  data-aos-duration="1000"
                   key={review.idReview}
                   className="hero-container bg-elements mb-3 p-1 rounded-2"
                 >

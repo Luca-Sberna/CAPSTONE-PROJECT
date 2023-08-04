@@ -129,6 +129,7 @@ const Navbar = () => {
           <Col className="px-0 d-flex align-items-center justify-content-between navbar-lg ">
             <Link
               to={"/"}
+              onClick={() => {}}
               className="logo text-decoration-none special-text-link p-0 "
             >
               <Image width={51} src={logo2} alt="logo" className=" " />
