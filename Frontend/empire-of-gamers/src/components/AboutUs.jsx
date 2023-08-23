@@ -62,6 +62,7 @@ const AboutUs = () => {
               <li className="green-text">PostgreSQL</li>
               <li className="green-text">Aos Scroll Animation</li>
               <li className="green-text">Swiper</li>
+              <li className="green-text">ChessJs</li>
             </ul>
           </p>
         </SwiperSlide>

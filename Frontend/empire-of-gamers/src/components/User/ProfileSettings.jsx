@@ -637,13 +637,6 @@ const ProfileSettings = () => {
         <Modal.Footer>
           <button
             className="btn-vip border-black rounded-1"
-            variant="secondary"
-            onClick={() => setShowModal(false)}
-          >
-            Back
-          </button>
-          <button
-            className="btn-vip border-black rounded-1"
             type="submit"
             variant="primary"
             onClick={handleConfirm}

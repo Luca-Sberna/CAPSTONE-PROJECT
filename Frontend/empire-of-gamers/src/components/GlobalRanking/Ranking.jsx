@@ -23,8 +23,8 @@ const Ranking = () => {
         );
         const ranking = response.data.content;
         ranking.sort((a, b) => b.score - a.score);
-        console.log(ranking);
-        dispatch(setRanking(ranking));
+        const topTen = ranking.slice(0, 10);
+        dispatch(setRanking(topTen));
       } catch (error) {
         console.log(error);
       }
